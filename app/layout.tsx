@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { AuthModal } from "@/components/auth/AuthModal";
 import "@/styles/globals.css";
 import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
