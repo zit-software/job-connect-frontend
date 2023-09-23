@@ -8,10 +8,7 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
 
 import { link as linkStyles } from "@nextui-org/theme";
 
@@ -20,10 +17,9 @@ import NextLink from "next/link";
 import clsx from "clsx";
 
 import { ThemeSwitch } from "@/components/theme-switch";
-import { FacebookIcon, GithubIcon, SearchIcon } from "@/components/icons";
+import { FacebookIcon, GithubIcon } from "@/components/icons";
 
 import { Logo } from "@/components/icons";
-import { Dispatch, SetStateAction, useState } from "react";
 import { AuthModal } from "./auth/AuthModal";
 import { useDisclosure } from "@nextui-org/react";
 

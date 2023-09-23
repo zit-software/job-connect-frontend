@@ -10,10 +10,29 @@ import {
   Button,
   Input,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import * as Yup from "yup";
-import { Formik } from "formik";
+import { Formik, FormikProps } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LoginDTO, RegisterDTO } from "@/app/services/auth.service";
+import authService from "@/app/services/auth.service";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/config/firebase";
+const modalVariants = {
+  hidden: {
+    opacity: 0,
+    y: 50,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      damping: 15,
+      stiffness: 100,
+    },
+  },
+};
 export const AuthModal = ({
   open,
   onOpenChange,
@@ -21,21 +40,26 @@ export const AuthModal = ({
   open: boolean;
   onOpenChange: () => void;
 }) => {
-  const [modalType, setModalType] = useState("login");
-  const modalVariants = {
-    hidden: {
-      opacity: 0,
-      y: 50,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        damping: 15,
-        stiffness: 100,
-      },
-    },
+  const [modalType, setModalType] = useState("Login");
+
+  const handleLogin = async (values: LoginDTO) => {
+    const response = await authService.login(values);
+    console.log(response);
+  };
+  const handleRegister = async (values: RegisterDTO) => {
+    const response = await authService.register(values);
+    console.log(response);
+  };
+  const handleChangeModal = () => {
+    setModalType(modalType === "Login" ? "Register" : "Login");
+  };
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    const userDetail = await signInWithPopup(auth, provider);
+    console.log(userDetail);
+    authService.socialLogin({
+      accessToken: userDetail.user.accessToken,
+    });
   };
   return (
     <Modal isOpen={open} placement="center" onOpenChange={onOpenChange}>
@@ -45,81 +69,160 @@ export const AuthModal = ({
             <ModalHeader className="flex flex-col gap-1">
               {modalType.toUpperCase()}
             </ModalHeader>
-            <Formik
-              initialValues={{
-                email: "",
-                password: "",
-              }}
-              validateOnChange
-              validationSchema={Yup.object().shape({
-                email: Yup.string()
-                  .required("Your email cannot be empty!")
-                  .email("Invalid Email!"),
-                password: Yup.string()
-                  .required("Your password cannot be empty")
-                  .min(8, "Password must be longer than 8 characters"),
-              })}
-              onSubmit={() => {
-                console.log("Submitted");
-              }}
-            >
-              {({ handleChange, values, errors }) => (
-                <>
-                  <motion.div
-                    key={modalType}
-                    initial="hidden"
-                    variants={modalVariants}
-                    animate="visible"
-                  >
-                    <ModalBody>
-                      <Input
-                        errorMessage={errors.email}
-                        value={values.email}
-                        name="email"
-                        label="Email"
-                        placeholder="Enter your email"
-                        variant="bordered"
-                        autoFocus
-                        onChange={handleChange}
-                      />
-                      <Input
-                        errorMessage={errors.password}
-                        value={values.password}
-                        name="password"
-                        label="Password"
-                        placeholder="Enter your password"
-                        variant="bordered"
-                        type="password"
-                        autoFocus
-                        onChange={handleChange}
-                      />
-                    </ModalBody>
-                  </motion.div>
-                  <ModalFooter>
-                    <Button
-                      startContent={<FontAwesomeIcon icon={faGoogle} />}
-                      variant="light"
+            {modalType === "Login" ? (
+              <Formik
+                key={modalType}
+                initialValues={{
+                  email: "",
+                  password: "",
+                }}
+                validationSchema={Yup.object().shape({
+                  email: Yup.string()
+                    .required("Your email cannot be empty!")
+                    .email("Invalid Email!"),
+                  password: Yup.string()
+                    .required("Your password cannot be empty")
+                    .min(8, "Password must be longer than 8 characters"),
+                })}
+                onSubmit={handleLogin}
+              >
+                {({ handleChange, values, errors, handleSubmit }) => (
+                  <form onSubmit={handleSubmit}>
+                    <motion.div
+                      key={modalType}
+                      initial="hidden"
+                      variants={modalVariants}
+                      animate="visible"
                     >
-                      Login with Google
-                    </Button>
-                    <Button type="submit" color="primary">
-                      {modalType.toUpperCase()}
-                    </Button>
-                    <Button
-                      color="primary"
-                      variant="light"
-                      onPress={() =>
-                        setModalType(
-                          modalType === "Login" ? "Register" : "Login"
-                        )
-                      }
+                      <ModalBody>
+                        <Input
+                          isInvalid={!!errors.email}
+                          errorMessage={errors.email}
+                          value={values.email}
+                          name="email"
+                          label="Email"
+                          placeholder="Enter your email"
+                          onChange={handleChange}
+                        />
+                        <Input
+                          isInvalid={!!errors.password}
+                          errorMessage={errors.password}
+                          value={values.password}
+                          name="password"
+                          label="Password"
+                          placeholder="Enter your password"
+                          type="password"
+                          onChange={handleChange}
+                        />
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button
+                          startContent={<FontAwesomeIcon icon={faGoogle} />}
+                          variant="light"
+                          onClick={handleGoogleLogin}
+                        >
+                          Login with Google
+                        </Button>
+                        <Button type="submit" color="primary">
+                          Submit
+                        </Button>
+                        <Button
+                          color="primary"
+                          variant="light"
+                          onPress={handleChangeModal}
+                        >
+                          Or {modalType === "Login" ? "Register" : "Login"}
+                        </Button>
+                      </ModalFooter>
+                    </motion.div>
+                  </form>
+                )}
+              </Formik>
+            ) : (
+              <Formik
+                key={modalType}
+                initialValues={{
+                  email: "",
+                  password: "",
+                  rePassword: "",
+                }}
+                validationSchema={Yup.object().shape({
+                  email: Yup.string()
+                    .required("Your email cannot be empty!")
+                    .email("Invalid Email!"),
+                  password: Yup.string()
+                    .required("Your password cannot be empty")
+                    .min(8, "Password must be longer than 8 characters"),
+                  rePassword: Yup.string().oneOf(
+                    [Yup.ref("password")],
+                    "Passwords must match"
+                  ),
+                })}
+                onSubmit={handleRegister}
+              >
+                {({ handleChange, values, errors, handleSubmit }) => (
+                  <form onSubmit={handleSubmit}>
+                    <motion.div
+                      key={modalType}
+                      initial="hidden"
+                      variants={modalVariants}
+                      animate="visible"
                     >
-                      Or {modalType === "Login" ? "Register" : "Login"}
-                    </Button>
-                  </ModalFooter>
-                </>
-              )}
-            </Formik>
+                      <ModalBody>
+                        <Input
+                          isInvalid={!!errors.email}
+                          errorMessage={errors.email}
+                          value={values.email}
+                          name="email"
+                          label="Email"
+                          placeholder="Enter your email"
+                          onChange={handleChange}
+                        />
+                        <Input
+                          isInvalid={!!errors.password}
+                          errorMessage={errors.password}
+                          value={values.password}
+                          name="password"
+                          label="Password"
+                          placeholder="Enter your password"
+                          type="password"
+                          onChange={handleChange}
+                        />
+                        <Input
+                          isInvalid={!!errors.rePassword}
+                          errorMessage={errors.rePassword}
+                          value={values.rePassword}
+                          name="rePassword"
+                          label="Re-password"
+                          placeholder="Re-enter your password"
+                          type="password"
+                          onChange={handleChange}
+                        />
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button
+                          startContent={<FontAwesomeIcon icon={faGoogle} />}
+                          variant="light"
+                          onClick={handleGoogleLogin}
+                        >
+                          Login with Google
+                        </Button>
+                        <Button type="submit" color="primary">
+                          Submit
+                        </Button>
+                        <Button
+                          color="primary"
+                          variant="light"
+                          onPress={handleChangeModal}
+                        >
+                          Or {modalType === "Login" ? "Register" : "Login"}
+                        </Button>
+                      </ModalFooter>
+                    </motion.div>
+                  </form>
+                )}
+              </Formik>
+            )}
           </>
         )}
       </ModalContent>
