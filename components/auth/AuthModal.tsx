@@ -56,9 +56,8 @@ export const AuthModal = ({
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     const userDetail = await signInWithPopup(auth, provider);
-    console.log(userDetail);
     authService.socialLogin({
-      accessToken: userDetail.user.accessToken,
+      accessToken: (userDetail.user as any).accessToken,
     });
   };
   return (
