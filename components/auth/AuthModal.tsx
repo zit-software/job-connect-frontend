@@ -14,8 +14,8 @@ import { useRef, useState } from "react";
 import * as Yup from "yup";
 import { Formik, FormikProps } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { LoginDTO, RegisterDTO } from "@/app/services/auth.service";
-import authService from "@/app/services/auth.service";
+import { LoginDTO, RegisterDTO } from "@/services/auth.service";
+import authService from "@/services/auth.service";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/config/firebase";
 const modalVariants = {
