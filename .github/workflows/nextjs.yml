@@ -75,7 +75,7 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Create firebase_credential.json
         run: |
-          cp ./config/firebase_credential.json.example ./config/firebase_credential.json
+          echo ${{ secrets.FIREBASE_CREDENTIAL }} > config/firebase_credential.json
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Static HTML export with Next.js
