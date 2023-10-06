@@ -48,7 +48,7 @@ export default function CustomNavbarItem({ item }: NavbarItemProps) {
 								key={index}
 								className={clsx(
 									{
-										'p-4 my-1 bg-gray-100':
+										'my-1 bg-gray-100':
 											typeof child !== 'string',
 									},
 									styles.navbarItem,
@@ -59,7 +59,7 @@ export default function CustomNavbarItem({ item }: NavbarItemProps) {
 								) : (
 									<Link
 										href={child.href}
-										className='flex items-center gap-2 text-medium'
+										className='flex items-center gap-2 text-medium p-3'
 									>
 										{child.icon}
 										<div className='flex-1'>
