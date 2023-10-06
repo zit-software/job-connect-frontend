@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { IconSvgProps } from '@/types';
+import logo from '@/assets/images/logo.png';
 
 export const Logo: React.FC<IconSvgProps> = ({
 	size = 36,
 	width,
 	height,
 	...props
-}) => <img height={size || height} width={size || width} src='/zit-logo.png' />;
+	// eslint-disable-next-line jsx-a11y/alt-text
+}) => <img height={size || height} width={size || width} src={logo.src} />;
 
 export const FacebookIcon: React.FC<IconSvgProps> = ({
 	size = 24,

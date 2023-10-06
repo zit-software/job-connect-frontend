@@ -1,23 +1,22 @@
 'use client';
-import { motion } from 'framer-motion';
+import { auth } from '@/config/firebase';
+import authService, { LoginDTO, RegisterDTO } from '@/services/auth.service';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-	Modal,
-	ModalContent,
-	ModalHeader,
-	ModalBody,
-	ModalFooter,
 	Button,
 	Input,
+	Modal,
+	ModalBody,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
 } from '@nextui-org/react';
-import { useRef, useState } from 'react';
-import * as Yup from 'yup';
-import { Formik, FormikProps } from 'formik';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LoginDTO, RegisterDTO } from '@/services/auth.service';
-import authService from '@/services/auth.service';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '@/config/firebase';
+import { Formik } from 'formik';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import * as Yup from 'yup';
 const modalVariants = {
 	hidden: {
 		opacity: 0,
