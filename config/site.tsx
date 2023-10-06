@@ -13,6 +13,11 @@ export const siteConfig = {
 					href: '/jobs',
 					icon: <i className='bx bx-search' />,
 				},
+				{
+					label: 'Việc làm hot',
+					href: '/hot-jobs',
+					icon: <i className='bx bxs-hot' />,
+				},
 				'|',
 				{
 					label: 'Việc làm đã ứng tuyển',
@@ -29,6 +34,7 @@ export const siteConfig = {
 					label: 'Việc làm phù hợp',
 					href: '/recommended-jobs',
 					icon: <i className='bx bxs-magic-wand'></i>,
+					hot: true,
 				},
 			],
 		},

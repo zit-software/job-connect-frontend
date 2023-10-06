@@ -5,6 +5,7 @@ import '@/styles/globals.css';
 import { Link } from '@nextui-org/link';
 import clsx from 'clsx';
 import { Metadata } from 'next';
+import { Toaster } from 'react-hot-toast';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
@@ -59,6 +60,8 @@ export default function RootLayout({
 						</footer>
 					</div>
 				</Providers>
+
+				<Toaster />
 			</body>
 		</html>
 	);

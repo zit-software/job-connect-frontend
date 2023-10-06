@@ -43,6 +43,7 @@ export default function CustomNavbarItem({ item }: NavbarItemProps) {
 					{item.children.map((child, index) => {
 						return (
 							<DropdownItem
+								textValue={index.toString()}
 								key={index}
 								className={clsx({
 									'p-4 my-1 bg-gray-100':
@@ -58,6 +59,11 @@ export default function CustomNavbarItem({ item }: NavbarItemProps) {
 									>
 										{child.icon}
 										{child.label}
+										{child.hot && (
+											<span className='bg-gradient-to-tr from-green-500 to-blue-400 px-4 text-sm font-bold text-white rounded-md py-1'>
+												Hot
+											</span>
+										)}
 									</Link>
 								)}
 							</DropdownItem>

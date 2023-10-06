@@ -1,10 +1,25 @@
 'use client';
 import logo from '@/assets/images/logo.png';
 import { title } from '@/components/primitives';
+import { auth } from '@/config/firebase';
+import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
 import { Button, Image } from '@nextui-org/react';
 import clsx from 'clsx';
+import toast from 'react-hot-toast';
 
 export default function AuthPage() {
+	const handleSignIn = async () => {
+		try {
+			const provider = new GoogleAuthProvider();
+
+			const { user } = await signInWithPopup(auth, provider);
+
+			const token = await user.getIdToken();
+		} catch (error: any) {
+			toast.error(error.message);
+		}
+	};
+
 	return (
 		<div className='container max-w-[1280px] border rounded-2xl shadow-xl my-4 mx-auto bg-white'>
 			<div className='grid grid-cols-2'>
@@ -35,6 +50,7 @@ export default function AuthPage() {
 						size='lg'
 						variant='shadow'
 						className='mt-4'
+						onClick={handleSignIn}
 					>
 						<i className='bx bxl-google'></i> Tiếp tục với tài khoản
 						Google
