@@ -7,8 +7,15 @@ export const Logo: React.FC<IconSvgProps> = ({
 	width,
 	height,
 	...props
-	// eslint-disable-next-line jsx-a11y/alt-text
-}) => <img height={size || height} width={size || width} src={logo.src} />;
+}) => (
+	// eslint-disable-next-line @next/next/no-img-element
+	<img
+		height={size || height}
+		width={size || width}
+		src={logo.src}
+		alt='Logo'
+	/>
+);
 
 export const FacebookIcon: React.FC<IconSvgProps> = ({
 	size = 24,
