@@ -9,9 +9,8 @@ import {
 	NavbarMenuToggle,
 	Navbar as NextUINavbar,
 } from '@nextui-org/navbar';
-import { useDisclosure } from '@nextui-org/react';
+import { Button, useDisclosure } from '@nextui-org/react';
 import NextLink from 'next/link';
-import { AuthModal } from './auth/AuthModal';
 import CustomNavbarItem from './custom-navbar-item';
 
 export const Navbar = () => {
@@ -46,19 +45,15 @@ export const Navbar = () => {
 					</ul>
 				</NavbarContent>
 
-				<NavbarContent className='sm:hidden basis-1 pl-4' justify='end'>
-					<Link
-						isExternal
-						href={siteConfig.links.github}
-						aria-label='Github'
-					>
-						<GithubIcon className='text-default-500' />
-					</Link>
-					<ThemeSwitch />
-					<NavbarMenuToggle />
+				<NavbarContent
+					className='hidden lg:flex basis-1 pl-4'
+					justify='end'
+				>
+					<Button color='primary'>
+						<NextLink href='/auth'>Đăng nhập</NextLink>
+					</Button>
 				</NavbarContent>
 			</NextUINavbar>
-			<AuthModal open={isOpen} onOpenChange={onOpenChange} />
 		</>
 	);
 };
