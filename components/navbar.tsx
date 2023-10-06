@@ -49,9 +49,9 @@ export const Navbar = () => {
 					className='hidden lg:flex basis-1 pl-4'
 					justify='end'
 				>
-					<Button color='primary'>
-						<NextLink href='/auth'>Đăng nhập</NextLink>
-					</Button>
+					<NextLink href='/auth'>
+						<Button color='primary'>Đăng nhập</Button>
+					</NextLink>
 				</NavbarContent>
 			</NextUINavbar>
 		</>

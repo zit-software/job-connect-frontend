@@ -6,6 +6,8 @@ import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
 import { Button, Image } from '@nextui-org/react';
 import clsx from 'clsx';
 import toast from 'react-hot-toast';
+import jobProposalLottie from '@/assets/lotties/job-proposal.json';
+import Lottie from 'lottie-react';
 
 export default function AuthPage() {
 	const handleSignIn = async () => {
@@ -68,7 +70,9 @@ export default function AuthPage() {
 						của chúng tôi.
 					</p>
 				</div>
-				<div className='col-span-2 md:col-span-1'></div>
+				<div className='col-span-2 md:col-span-1'>
+					<Lottie animationData={jobProposalLottie} />
+				</div>
 			</div>
 		</div>
 	);
