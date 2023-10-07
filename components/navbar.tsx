@@ -1,12 +1,9 @@
 'use client';
-import { GithubIcon, Logo } from '@/components/icons';
-import { ThemeSwitch } from '@/components/theme-switch';
+import { Logo } from '@/components/icons';
 import { siteConfig } from '@/config/site';
-import { Link } from '@nextui-org/link';
 import {
 	NavbarBrand,
 	NavbarContent,
-	NavbarMenuToggle,
 	Navbar as NextUINavbar,
 } from '@nextui-org/navbar';
 import { Button, useDisclosure } from '@nextui-org/react';
