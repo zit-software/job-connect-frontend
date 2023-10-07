@@ -1,11 +1,12 @@
-import '@/styles/globals.css';
-import { Metadata } from 'next';
-import { siteConfig } from '@/config/site';
-import { fontSans } from '@/config/fonts';
-import { Providers } from './providers';
 import { Navbar } from '@/components/navbar';
+import { fontSans } from '@/config/fonts';
+import { siteConfig } from '@/config/site';
+import '@/styles/globals.css';
 import { Link } from '@nextui-org/link';
 import clsx from 'clsx';
+import { Metadata } from 'next';
+import { Toaster } from 'react-hot-toast';
+import { Providers } from './providers';
 
 export const metadata: Metadata = {
 	title: {
@@ -34,7 +35,7 @@ export default function RootLayout({
 			<head />
 			<body
 				className={clsx(
-					'min-h-screen bg-background font-sans antialiased',
+					'min-h-screen font-sans antialiased bg-blue-50',
 					fontSans.variable,
 				)}
 			>
@@ -43,9 +44,7 @@ export default function RootLayout({
 				>
 					<div className='relative flex flex-col h-screen'>
 						<Navbar />
-						<main className='container mx-auto max-w-7xl pt-16 px-6 flex-grow'>
-							{children}
-						</main>
+						{children}
 						<footer className='w-full flex items-center justify-center py-3'>
 							<Link
 								isExternal
@@ -61,6 +60,8 @@ export default function RootLayout({
 						</footer>
 					</div>
 				</Providers>
+
+				<Toaster />
 			</body>
 		</html>
 	);
