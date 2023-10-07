@@ -89,37 +89,42 @@ function SkillList({ onSubmit }: SkillListProps) {
 			<ModalHeader>Kỹ năng</ModalHeader>
 
 			<ModalBody>
-				<Input
-					placeholder='Nhập tên kỹ năng để tìm kiếm'
-					startContent={
-						<i className='bx bx-search-alt-2 text-2xl text-gray-500'></i>
-					}
-					className='sticky top-0 z-10'
-					variant='underlined'
-					value={searchText}
-					onChange={(event) => setSearchText(event.target.value)}
-					endContent={isLoading && <Spinner />}
-				/>
+				<div className='sticky top-0 z-10 bg-background'>
+					<Input
+						placeholder='Nhập tên kỹ năng để tìm kiếm'
+						startContent={
+							<i className='bx bx-search-alt-2 text-2xl text-gray-500'></i>
+						}
+						className='mb-2'
+						variant='underlined'
+						value={searchText}
+						onChange={(event) => setSearchText(event.target.value)}
+						endContent={isLoading && <Spinner />}
+					/>
 
-				<h3 className='text-default-600'>Kỹ năng đã chọn</h3>
+					<h3 className='text-default-600'>Kỹ năng đã chọn</h3>
 
-				<div ref={selectedSkillParent} className='flex gap-1 flex-wrap'>
-					{selectedSkills.map((skill) => (
-						<Chip
-							key={skill.id}
-							color='primary'
-							variant='dot'
-							onClose={() => removeSkill(skill.id)}
-						>
-							{skill.name}
-						</Chip>
-					))}
+					<div
+						ref={selectedSkillParent}
+						className='flex gap-1 flex-wrap'
+					>
+						{selectedSkills.map((skill) => (
+							<Chip
+								key={skill.id}
+								color='primary'
+								variant='dot'
+								onClose={() => removeSkill(skill.id)}
+							>
+								{skill.name}
+							</Chip>
+						))}
 
-					{selectedSkillIds.length === 0 && (
-						<span className='text-default-600 text-center text-sm w-full'>
-							Bạn chưa chọn kỹ năng nào
-						</span>
-					)}
+						{selectedSkillIds.length === 0 && (
+							<span className='text-default-600 text-center text-sm w-full italic'>
+								Bạn chưa chọn kỹ năng nào
+							</span>
+						)}
+					</div>
 				</div>
 
 				<CheckboxGroup

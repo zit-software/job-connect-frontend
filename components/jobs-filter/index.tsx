@@ -8,11 +8,6 @@ import {
 	Checkbox,
 	CheckboxGroup,
 	Input,
-	Modal,
-	ModalBody,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
 	Spinner,
 } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
