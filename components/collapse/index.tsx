@@ -1,29 +1,15 @@
-import { motion, MotionProps } from 'framer-motion';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { HTMLAttributes } from 'react';
 
 export type CollapseProps = {
 	open?: boolean;
 	children?: React.ReactNode;
-} & HTMLAttributes<HTMLDivElement> &
-	MotionProps;
-
+} & HTMLAttributes<HTMLDivElement>;
 export default function Collapse({ open, children, ...props }: CollapseProps) {
+	const [parent] = useAutoAnimate();
 	return (
-		open && (
-			<motion.div
-				{...props}
-				initial={{
-					opacity: 0,
-				}}
-				animate={{
-					opacity: 1,
-				}}
-				exit={{
-					opacity: 0,
-				}}
-			>
-				{children}
-			</motion.div>
-		)
+		<div {...props} ref={parent}>
+			{open && children}
+		</div>
 	);
 }
