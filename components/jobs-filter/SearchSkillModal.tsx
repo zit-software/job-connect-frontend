@@ -1,3 +1,4 @@
+import emptyLottie from '@/assets/lotties/empty.json';
 import useDebounce from '@/hooks/useDebounce';
 import skillService, { Skill } from '@/services/skill.service';
 import { Paginationable } from '@/types/paginationable';
@@ -18,21 +19,24 @@ import {
 import Lottie from 'lottie-react';
 import { useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
-import emptyLottie from '@/assets/lotties/empty.json';
+import { cachedSkills } from './cached-skills';
 
 export type SearchSkillModalProps = {
 	isOpen: boolean;
+	selectedSkills?: Skill[];
 	onFinish?: (skills: Skill[]) => void;
 	onClose: () => void;
 };
 
 interface SkillListProps {
+	selectedSkills?: Skill[];
 	onSubmit?: (skills: Skill[]) => void;
 }
 
-const cachedSkills: Skill[] = [];
-
-function SkillList({ onSubmit }: SkillListProps) {
+function SkillList({
+	selectedSkills: _selectedSkills = [],
+	onSubmit,
+}: SkillListProps) {
 	const [skillList, setSkillList] = useState<Paginationable<Skill>>();
 	const [searchText, setSearchText] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +57,9 @@ function SkillList({ onSubmit }: SkillListProps) {
 
 				setSkillList(res);
 
-				cachedSkills.push(...res.content);
+				for (const skill of res.content) {
+					cachedSkills.set(skill.id.toString(), skill);
+				}
 			} catch (error: any) {
 				toast.error(error.message);
 			} finally {
@@ -63,10 +69,7 @@ function SkillList({ onSubmit }: SkillListProps) {
 	}, [debouncedSearchText]);
 
 	const selectedSkills = useMemo<Skill[]>(() => {
-		return selectedSkillIds.map(
-			(skillId) =>
-				cachedSkills.find((skill) => skill.id === parseInt(skillId))!,
-		);
+		return selectedSkillIds.map((skillId) => cachedSkills.get(skillId)!);
 	}, [selectedSkillIds]);
 
 	const renderedSkillList = useMemo<Skill[]>(() => {
@@ -79,6 +82,12 @@ function SkillList({ onSubmit }: SkillListProps) {
 			}) || []
 		);
 	}, [selectedSkillIds, skillList]);
+
+	useEffect(() => {
+		setSelectedSkillIds(
+			_selectedSkills.map((skill) => skill.id.toString()),
+		);
+	}, [_selectedSkills]);
 
 	const removeSkill = (id: number) => {
 		setSelectedSkillIds((prev) => prev.filter((sk) => parseInt(sk) !== id));
@@ -166,13 +175,20 @@ function SkillList({ onSubmit }: SkillListProps) {
 }
 
 export default function SearchSkillModal({
+	selectedSkills = [],
 	onFinish,
 	...props
 }: SearchSkillModalProps) {
 	return (
 		<Modal scrollBehavior='inside' placement='top' {...props}>
 			<ModalContent>
-				{() => <SkillList key='content' onSubmit={onFinish} />}
+				{() => (
+					<SkillList
+						key='content'
+						selectedSkills={selectedSkills}
+						onSubmit={onFinish}
+					/>
+				)}
 			</ModalContent>
 		</Modal>
 	);

@@ -1,38 +1,15 @@
 'use client';
 
 import Collapse from '@/components/collapse';
-import skillService, { Skill } from '@/services/skill.service';
-import { Paginationable } from '@/types/paginationable';
-import {
-	Button,
-	Checkbox,
-	CheckboxGroup,
-	Input,
-	Spinner,
-} from '@nextui-org/react';
-import { useEffect, useState } from 'react';
-import SearchSkillModal from './SearchSkillModal';
+import { Button, Checkbox, CheckboxGroup, Input } from '@nextui-org/react';
+import { useState } from 'react';
+import SkillFilter from './SkillFilter';
+import { Skill } from '@/services/skill.service';
 
 export default function JobsFilter() {
 	const [showFilter, setShowFilter] = useState(false);
-	const [showSkillFilterModal, setShowSkillFilterModal] = useState(false);
-	const [skillList, setSkillList] = useState<Paginationable<Skill>>();
-
-	useEffect(() => {
-		(async () => {
-			const res = await skillService.getAllSkills();
-
-			setSkillList(res);
-		})();
-	}, []);
-
-	const handleShowSkillFilterModal = () => {
-		setShowSkillFilterModal(true);
-	};
-
-	const handleCloseSkillFilterModal = () => {
-		setShowSkillFilterModal(false);
-	};
+	const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
+	const [searchText, setSearchText] = useState('');
 
 	return (
 		<>
@@ -46,6 +23,8 @@ export default function JobsFilter() {
 					startContent={
 						<i className='bx bx-search-alt-2 text-2xl text-gray-500'></i>
 					}
+					value={searchText}
+					onChange={(event) => setSearchText(event.target.value)}
 				/>
 
 				<Button
@@ -63,33 +42,7 @@ export default function JobsFilter() {
 				<div className='bg-background p-4 rounded-xl shadow-lg border'>
 					<div className='grid grid-cols-2 gap-1'>
 						<div className='col-span-1'>
-							<CheckboxGroup label='Kỹ năng'>
-								{skillList ? (
-									skillList.content.map(({ id, name }) => (
-										<Checkbox
-											key={id}
-											value={id.toString()}
-										>
-											{name}
-										</Checkbox>
-									))
-								) : (
-									<Spinner />
-								)}
-							</CheckboxGroup>
-
-							<Button
-								variant='flat'
-								color='primary'
-								size='sm'
-								className='mt-2'
-								endContent={
-									<i className='bx bx-right-arrow-alt'></i>
-								}
-								onClick={handleShowSkillFilterModal}
-							>
-								Xem thêm
-							</Button>
+							<SkillFilter onChange={setSelectedSkills} />
 						</div>
 
 						<div className='col-span-1'>
@@ -101,11 +54,6 @@ export default function JobsFilter() {
 					</div>
 				</div>
 			</Collapse>
-
-			<SearchSkillModal
-				isOpen={showSkillFilterModal}
-				onClose={handleCloseSkillFilterModal}
-			/>
 		</>
 	);
 }
