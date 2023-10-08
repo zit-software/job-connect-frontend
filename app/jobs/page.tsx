@@ -1,3 +1,7 @@
+'use client';
+
+import JobItem from '@/components/job-item';
+/* eslint-disable @next/next/no-img-element */
 import JobsFilter from '@/components/jobs-filter';
 import { title } from '@/components/primitives';
 import clsx from 'clsx';
@@ -12,7 +16,21 @@ export default function JobsPage() {
 
 			<JobsFilter />
 
-			<div className='bg-background shadow-lg rounded-xl border p-2 mt-4'></div>
+			<div className='bg-background shadow-lg rounded-xl border p-2 mt-4 columns-2 gap-2'>
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+				<JobItem />
+			</div>
 		</div>
 	);
 }
