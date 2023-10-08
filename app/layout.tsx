@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 	description: siteConfig.description,
 	themeColor: [
 		{ media: '(prefers-color-scheme: light)', color: 'white' },
-		{ media: '(prefers-color-scheme: dark)', color: 'black' },
+		{ media: '(prefers-color-scheme: dark)', color: 'white' },
 	],
 	icons: {
 		icon: '/favicon.ico',
@@ -40,7 +40,11 @@ export default function RootLayout({
 				)}
 			>
 				<Providers
-					themeProps={{ attribute: 'class', defaultTheme: 'dark' }}
+					themeProps={{
+						attribute: 'class',
+						defaultTheme: 'light',
+						themes: ['light'],
+					}}
 				>
 					<div className='relative flex flex-col h-screen'>
 						<Navbar />
