@@ -53,6 +53,7 @@ function SkillList({
 				setIsLoading(true);
 				const res = await skillService.getAllSkills({
 					name: debouncedSearchText,
+					pageSize: 100,
 				});
 
 				setSkillList(res);
@@ -141,12 +142,10 @@ function SkillList({
 					value={selectedSkillIds}
 					onChange={(value) => setSelectedSkillIds(value as string[])}
 				>
-					<div
-						ref={skillListParent}
-						className='flex flex-col gap-2 min-h-[370px]'
-					>
+					<div ref={skillListParent} className='gap-2 min-h-[370px]'>
 						{renderedSkillList.map((skill) => (
 							<Checkbox
+								className='block w-full'
 								key={skill.id}
 								value={skill.id.toString()}
 							>

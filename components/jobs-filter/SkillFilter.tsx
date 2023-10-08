@@ -122,7 +122,7 @@ export default function SkillFilter({ onChange }: SkillFilterProps) {
 				variant='flat'
 				color='primary'
 				size='sm'
-				className='mt-2'
+				className='my-1'
 				endContent={<i className='bx bx-right-arrow-alt'></i>}
 				onClick={handleShowSkillFilterModal}
 			>
