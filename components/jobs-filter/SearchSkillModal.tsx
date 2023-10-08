@@ -51,7 +51,7 @@ function SkillList({
 		(async () => {
 			try {
 				setIsLoading(true);
-				const res = await skillService.searchSkills({
+				const res = await skillService.getAllSkills({
 					name: debouncedSearchText,
 				});
 

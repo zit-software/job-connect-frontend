@@ -9,9 +9,17 @@ export interface Skill {
 	updatedAt: Date | string;
 }
 
-export interface SearchSkillOption {
-	name: string;
+export interface GetAllSkillOptions {
+	name?: string;
+	pageNo?: number;
+	pageSize?: number;
 }
+
+const defaultGetAllSkillOptions: GetAllSkillOptions = {
+	name: '',
+	pageNo: 0,
+	pageSize: 10,
+};
 
 class SkillService {
 	private client: AxiosInstance;
@@ -20,13 +28,11 @@ class SkillService {
 		this.client = createHttpClient('skill');
 	}
 
-	async getAllSkills() {
-		return (await this.client.get('')) as Paginationable<Skill>;
-	}
-
-	async searchSkills({ name }: SearchSkillOption) {
+	async getAllSkills(
+		options: GetAllSkillOptions = defaultGetAllSkillOptions,
+	) {
 		return (await this.client.get('', {
-			params: { name },
+			params: options,
 		})) as Paginationable<Skill>;
 	}
 }

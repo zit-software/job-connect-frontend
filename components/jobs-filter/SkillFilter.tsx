@@ -89,7 +89,7 @@ export default function SkillFilter({ onChange }: SkillFilterProps) {
 						key={skill.id}
 						variant='dot'
 						color='primary'
-						className='mb-2'
+						className='mb-1'
 						onClose={() => removeSkill(skill.id.toString())}
 					>
 						{skill.name}
@@ -101,13 +101,14 @@ export default function SkillFilter({ onChange }: SkillFilterProps) {
 				value={selectedSkillIds}
 				onChange={(value) => setSelectedSkillIds(value as string[])}
 			>
-				<div
-					className='flex flex-col gap-2'
-					ref={sortedSkillListParent}
-				>
+				<div className='columns-2 gap-1' ref={sortedSkillListParent}>
 					{sortedSkillList.length ? (
 						sortedSkillList.map(({ id, name }) => (
-							<Checkbox key={id} value={id.toString()}>
+							<Checkbox
+								key={id}
+								value={id.toString()}
+								className='block'
+							>
 								{name}
 							</Checkbox>
 						))
