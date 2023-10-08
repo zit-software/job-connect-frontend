@@ -25,11 +25,11 @@ export default function AuthPage() {
 	return (
 		<div className='container max-w-[1280px] border rounded-2xl shadow-xl my-4 mx-auto bg-white'>
 			<div className='grid grid-cols-2'>
-				<div className='col-span-2 md:col-span-1 flex flex-col gap-2 items-center p-8 border-r'>
+				<div className='col-span-2 md:col-span-1 flex flex-col justify-center gap-2 items-center p-8 border-r'>
 					<Lottie
 						animationData={logoLottie}
 						alt='Logo'
-						className='w-48 rounded-[48px] shadow-xl shadow-blue-100 overflow-hidden'
+						className='w-48 rounded-[48px] shadow-xl shadow-blue-100 overflow-hidden h-48 bg-blue-200'
 					/>
 
 					<h2
@@ -71,7 +71,10 @@ export default function AuthPage() {
 					</p>
 				</div>
 				<div className='col-span-2 md:col-span-1'>
-					<Lottie animationData={jobProposalLottie} />
+					<Lottie
+						animationData={jobProposalLottie}
+						className='aspect-square'
+					/>
 				</div>
 			</div>
 		</div>
