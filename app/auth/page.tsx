@@ -1,13 +1,13 @@
 'use client';
-import logo from '@/assets/images/logo.png';
+import jobProposalLottie from '@/assets/lotties/job-proposal.json';
+import logoLottie from '@/assets/lotties/logo.json';
 import { title } from '@/components/primitives';
 import { auth } from '@/config/firebase';
 import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
-import { Button, Image } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
-import toast from 'react-hot-toast';
-import jobProposalLottie from '@/assets/lotties/job-proposal.json';
 import Lottie from 'lottie-react';
+import toast from 'react-hot-toast';
 
 export default function AuthPage() {
 	const handleSignIn = async () => {
@@ -25,11 +25,11 @@ export default function AuthPage() {
 	return (
 		<div className='container max-w-[1280px] border rounded-2xl shadow-xl my-4 mx-auto bg-white'>
 			<div className='grid grid-cols-2'>
-				<div className='col-span-2 md:col-span-1 flex flex-col gap-2 items-center p-8 border-r'>
-					<Image
-						src={logo.src}
+				<div className='col-span-2 md:col-span-1 flex flex-col justify-center gap-2 items-center p-8 border-r'>
+					<Lottie
+						animationData={logoLottie}
 						alt='Logo'
-						className='w-48 rounded-[48px] shadow-xl shadow-blue-100'
+						className='w-48 rounded-[48px] shadow-xl shadow-blue-100 overflow-hidden h-48 bg-blue-200'
 					/>
 
 					<h2
@@ -71,7 +71,10 @@ export default function AuthPage() {
 					</p>
 				</div>
 				<div className='col-span-2 md:col-span-1'>
-					<Lottie animationData={jobProposalLottie} />
+					<Lottie
+						animationData={jobProposalLottie}
+						className='aspect-square'
+					/>
 				</div>
 			</div>
 		</div>
