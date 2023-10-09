@@ -3,6 +3,7 @@ import jobProposalLottie from '@/assets/lotties/job-proposal.json';
 import logoLottie from '@/assets/lotties/logo.json';
 import { title } from '@/components/primitives';
 import { auth } from '@/config/firebase';
+import authService from '@/services/auth.service';
 import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
 import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
@@ -17,6 +18,10 @@ export default function AuthPage() {
 			const { user } = await signInWithPopup(auth, provider);
 
 			const token = await user.getIdToken();
+			const response = await authService.socialLogin({
+				accessToken: token,
+			});
+			window.localStorage.setItem('expiration', response.data.expiration);
 		} catch (error: any) {
 			toast.error(error.message);
 		}
