@@ -1,32 +1,50 @@
-import { GithubIcon } from '@/components/icons';
-import { title } from '@/components/primitives';
-import { siteConfig } from '@/config/site';
-import { Link } from '@nextui-org/link';
-import { button as buttonStyles } from '@nextui-org/theme';
-import NextLink from 'next/link';
+'use client';
+
+import Carousel from 'react-multi-carousel';
+
+const responsive = {
+	superLargeDesktop: {
+		breakpoint: { max: 4000, min: 3000 },
+		items: 5,
+	},
+	desktop: {
+		breakpoint: { max: 3000, min: 1024 },
+		items: 3,
+	},
+	tablet: {
+		breakpoint: { max: 1024, min: 464 },
+		items: 2,
+	},
+	mobile: {
+		breakpoint: { max: 464, min: 0 },
+		items: 1,
+	},
+};
 
 export default function Home() {
 	return (
-		<section className='flex flex-col items-center justify-center gap-4 py-8 md:py-10'>
-			<div className='inline-block w-100 text-center justify-center'>
-				<h1 className={title({ color: 'violet' })}>Connecting </h1>
-				<h1 className={title()}>IT Recruiters and Applicants</h1>
-			</div>
+		<div className='container mx-auto max-w-[1280px]'>
+			<Carousel responsive={responsive} className='my-4 -mx-2'>
+				<div className='px-2'>
+					<div className='h-64 bg-gradient-to-tr from-blue-500 to-green-500 rounded-xl'></div>
+				</div>
 
-			<div className='flex gap-3'>
-				<Link
-					isExternal
-					as={NextLink}
-					className={buttonStyles({
-						variant: 'bordered',
-						radius: 'full',
-					})}
-					href={siteConfig.links.github}
-				>
-					<GithubIcon size={20} />
-					GitHub
-				</Link>
-			</div>
-		</section>
+				<div className='px-2'>
+					<div className='h-64 bg-gradient-to-tr from-red-500 to-yellow-500 rounded-xl'></div>
+				</div>
+
+				<div className='px-2'>
+					<div className='h-64 bg-gradient-to-tr from-blue-500 to-violet-500 rounded-xl'></div>
+				</div>
+
+				<div className='px-2'>
+					<div className='h-64 bg-gradient-to-tr from-red-500 to-red-700 rounded-xl'></div>
+				</div>
+
+				<div className='px-2'>
+					<div className='h-64 bg-gradient-to-tr from-violet-500 to-pink-500 rounded-xl'></div>
+				</div>
+			</Carousel>
+		</div>
 	);
 }
