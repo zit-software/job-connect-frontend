@@ -31,6 +31,8 @@ const initialValues: RegisterRequestDto = {
 	fullName: '',
 	phoneNumber: '',
 	userRole: 'APPLICANT',
+	dob: '',
+	gender: '',
 };
 
 const validationSchema = Yup.object().shape({
@@ -40,6 +42,8 @@ const validationSchema = Yup.object().shape({
 	userRole: Yup.string()
 		.required('Vui lòng chọn vai trò của bạn')
 		.oneOf(['APPLICANT', 'RECRUITER']),
+	dob: Yup.date().required('Vui lòng nhập ngày sinh'),
+	gender: Yup.string().required('Vui lòng chọn giới tính'),
 });
 
 const maxStep = 3;
@@ -114,7 +118,13 @@ export default function RegisterPage() {
 				validationSchema={validationSchema}
 				onSubmit={handleSubmit}
 			>
-				{({ values, errors, handleSubmit, handleChange }) => (
+				{({
+					values,
+					errors,
+					handleSubmit,
+					handleChange,
+					setFieldValue,
+				}) => (
 					<form
 						className='flex flex-col gap-4 mt-6 mx-auto'
 						ref={formParent}
@@ -150,12 +160,22 @@ export default function RegisterPage() {
 								/>
 
 								<Input
+									name='dob'
 									label='Ngày sinh'
 									placeholder='DD/MM/YYYY'
 									type='date'
+									onChange={handleChange}
+									value={values.dob}
+									isInvalid={!!errors.dob}
+									errorMessage={errors.dob}
 								/>
 
 								<Select
+									name='gender'
+									value={values.gender}
+									isInvalid={!!errors.gender}
+									errorMessage={errors.gender}
+									onChange={handleChange}
 									label='Giới tính'
 									placeholder='Chọn giới tính'
 								>
@@ -165,6 +185,9 @@ export default function RegisterPage() {
 
 									<SelectItem key='FEMALE' value='FEMALE'>
 										Nữ
+									</SelectItem>
+									<SelectItem key='OTHER' value='OTHER'>
+										Khác
 									</SelectItem>
 								</Select>
 							</>

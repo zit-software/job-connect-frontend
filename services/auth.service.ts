@@ -11,6 +11,8 @@ export interface RegisterRequestDto {
 	fullName: string;
 	phoneNumber: string;
 	accessToken: string;
+	dob: string;
+	gender: string;
 }
 
 export interface RegisterResponseDto {
