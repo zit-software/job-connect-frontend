@@ -58,7 +58,7 @@ function JobCard(props: JobCardProps) {
 							{props.workType}
 						</Chip>
 					</div>
-					<div className='flex justify-center flex-wrap gap-2'>
+					<div className='flex justify-center align-middle flex-wrap gap-2'>
 						{props.skills.map((skill, index) => (
 							<Chip key={index}>{skill}</Chip>
 						))}

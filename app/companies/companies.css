@@ -1,0 +1,33 @@
+a {
+	cursor: pointer;
+}
+a.selected {
+	font-weight: 600;
+}
+a.selected::after {
+	content: '';
+	height: 2px;
+	background-color: black;
+	width: 60px;
+	position: relative;
+	top: 0;
+	margin: auto;
+	display: block;
+}
+h1.title {
+	background: -webkit-linear-gradient(#0d11f5, #7476f7);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+p.company-description {
+	--max-lines: 8;
+	overflow: hidden;
+	-webkit-line-clamp: var(--max-lines);
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+}
+p.address {
+	text-align: end;
+	color: grey;
+	font-style: italic;
+}

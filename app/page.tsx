@@ -28,7 +28,7 @@ const mockedJob: JobCardProps = {
 	title: 'Lập trình viên Frontend',
 	companyName: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
 	address: 'TP. Cần Thơ',
-	skills: ['NextJS', 'ReactJS', 'TypeScript'],
+	skills: ['NextJS', 'ReactJS', 'TypeScript', 'Java Spring Boot'],
 	workType: 'Fulltime',
 	minSalary: 10000000,
 	maxSalary: 15000000,
