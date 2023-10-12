@@ -1,11 +1,12 @@
 'use client';
 
+import JobCard, { JobCardProps } from '@/components/home/jobCard';
 import Carousel from 'react-multi-carousel';
 
 const responsive = {
 	superLargeDesktop: {
 		breakpoint: { max: 4000, min: 3000 },
-		items: 5,
+		items: 4,
 	},
 	desktop: {
 		breakpoint: { max: 3000, min: 1024 },
@@ -17,34 +18,56 @@ const responsive = {
 	},
 	mobile: {
 		breakpoint: { max: 464, min: 0 },
-		items: 1,
+		items: 2,
 	},
+};
+
+const mockedJob: JobCardProps = {
+	jobId: 1,
+	companyImage: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
+	title: 'Lập trình viên Frontend',
+	companyName: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
+	address: 'TP. Cần Thơ',
+	skills: ['NextJS', 'ReactJS', 'TypeScript'],
+	workType: 'Fulltime',
+	minSalary: 10000000,
+	maxSalary: 15000000,
 };
 
 export default function Home() {
 	return (
 		<div className='container mx-auto max-w-[1280px]'>
-			<Carousel responsive={responsive} className='my-4 -mx-2'>
-				<div className='px-2'>
-					<div className='h-64 bg-gradient-to-tr from-blue-500 to-green-500 rounded-xl'></div>
-				</div>
-
-				<div className='px-2'>
-					<div className='h-64 bg-gradient-to-tr from-red-500 to-yellow-500 rounded-xl'></div>
-				</div>
-
-				<div className='px-2'>
-					<div className='h-64 bg-gradient-to-tr from-blue-500 to-violet-500 rounded-xl'></div>
-				</div>
-
-				<div className='px-2'>
-					<div className='h-64 bg-gradient-to-tr from-red-500 to-red-700 rounded-xl'></div>
-				</div>
-
-				<div className='px-2'>
-					<div className='h-64 bg-gradient-to-tr from-violet-500 to-pink-500 rounded-xl'></div>
-				</div>
-			</Carousel>
+			<div className='mt-5'>
+				<h1 className='font-bold italic text-3xl'>
+					Top việc làm hiện tại
+				</h1>
+				<Carousel
+					responsive={responsive}
+					className='my-4 -mx-2'
+					autoPlaySpeed={2500}
+					autoPlay
+					infinite
+				>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+				</Carousel>
+			</div>
 		</div>
 	);
 }
