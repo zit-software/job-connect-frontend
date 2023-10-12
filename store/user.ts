@@ -5,9 +5,6 @@ export interface UserState {
 	fullName: string;
 	email: string;
 	avatar: string;
-	token: string;
-	refreshToken: string;
-	isAuth: boolean;
 }
 
 export const userSlice = createSlice({
@@ -24,6 +21,6 @@ export const userSlice = createSlice({
 
 export const { setUser } = userSlice.actions;
 
-export const selectCount = (state: RootState) => state.user;
+export const selectUser = (state: RootState) => state.user;
 
 export default userSlice.reducer;
