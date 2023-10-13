@@ -1,12 +1,23 @@
 import { Company } from '@/models/Company';
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 
 interface CompanyCardProps {
 	company: Company;
 }
 function CompanyCard(props: CompanyCardProps) {
+	const router = useRouter();
+	const handleClick = (id: number) => {
+		console.log(id);
+		router.push(`/companies/${id}`);
+	};
 	return (
-		<Card className=''>
+		<Card
+			isHoverable
+			isPressable
+			onPress={() => handleClick(props.company.id)}
+			className='cursor-pointer'
+		>
 			<CardHeader className='h-[100px] md:h-[220px]'>
 				<div className='relative w-full'>
 					<img

@@ -7,11 +7,17 @@ import './companies.css';
 import { Input, Spinner } from '@nextui-org/react';
 import { Company } from '@/models/Company';
 import CompanyCard from '@/components/company/CompanyCard';
+import { useRouter } from 'next/navigation';
 function Companies() {
 	const [selectedTab, setSelectedTabs] = useState('all');
 	const [search, setSearch] = useState('');
 	const [isSearching, setIsSearching] = useState(false);
 	const [autoAnimateParent] = useAutoAnimate();
+
+	const router = useRouter();
+	const handleClick = (id: number) => {
+		router.push(`/companies/${id}`);
+	};
 
 	const mockedCompanies: Company[] = [
 		{
@@ -119,7 +125,10 @@ function Companies() {
 							key={company.id}
 							className='col-span-12 sm:col-span-6 md:col-span-3'
 						>
-							<CompanyCard company={company}></CompanyCard>
+							<CompanyCard
+								onClick={handleClick}
+								company={company}
+							></CompanyCard>
 						</div>
 					))}
 				</div>
