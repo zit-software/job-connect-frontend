@@ -5,7 +5,9 @@ import { title } from '@/components/primitives';
 import { auth } from '@/config/firebase';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import authService from '@/services/auth.service';
+import tokenService from '@/services/token.service';
 import { setIdToken } from '@/store/idToken';
+import { setUser } from '@/store/user';
 import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth';
 import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
@@ -25,9 +27,9 @@ export default function AuthPage() {
 			setIsSigningIn(true);
 			const provider = new GoogleAuthProvider();
 
-			const { user } = await signInWithPopup(auth, provider);
+			const { user: _user } = await signInWithPopup(auth, provider);
 
-			const idToken = await user.getIdToken();
+			const idToken = await _user.getIdToken();
 
 			const isRegistered = await authService.checkUser({
 				accessToken: idToken,
@@ -36,10 +38,20 @@ export default function AuthPage() {
 			if (!isRegistered.isUser) {
 				dispatch(setIdToken(idToken));
 
-				router.push(`/auth/register`);
+				return router.push(`/auth/register`);
 			}
+
+			const { accessToken } = await authService.socialLogin({
+				accessToken: idToken,
+			});
+
+			tokenService.accessToken = accessToken;
+
+			const user = await authService.identify();
+
+			dispatch(setUser(user));
 		} catch (error: any) {
-			toast.error(error.message);
+			console.log(error);
 		} finally {
 			setIsSigningIn(false);
 		}

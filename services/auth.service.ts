@@ -2,9 +2,13 @@ import { UserState } from '@/store/user';
 import createHttpClient from '@/utils/createHttpClient';
 import { AxiosInstance } from 'axios';
 
-export interface LoginDto {
-	email: string;
-	password: string;
+export interface LoginRequestDto {
+	accessToken: string;
+}
+
+export interface LoginResponseDto {
+	accessToken: string;
+	refreshToken: string;
 }
 export interface RegisterRequestDto {
 	userRole: 'APPLICANT' | 'RECRUITER';
@@ -17,6 +21,7 @@ export interface RegisterRequestDto {
 
 export interface RegisterResponseDto {
 	accessToken: string;
+	refreshToken: string;
 }
 
 export interface SocialLoginDto {
@@ -38,8 +43,11 @@ class AuthService {
 		this.client = createHttpClient('auth');
 	}
 
-	async login(body: LoginDto) {
-		return this.client.post('/login', body);
+	async socialLogin(body: LoginRequestDto) {
+		return (await this.client.post(
+			'/social-login',
+			body,
+		)) as LoginResponseDto;
 	}
 
 	async register(body: RegisterRequestDto) {
@@ -47,10 +55,6 @@ class AuthService {
 			'/register',
 			body,
 		)) as RegisterResponseDto;
-	}
-
-	async socialLogin(body: SocialLoginDto) {
-		return this.client.post('/social-login', body);
 	}
 
 	async checkUser(body: CheckUserRequestDto) {

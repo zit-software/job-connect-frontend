@@ -3,6 +3,8 @@ class TokenService {
 	private _accessToken = '';
 
 	constructor() {
+		if (typeof window === 'undefined') return;
+
 		this._accessToken = localStorage.getItem(this._accessTokenKey) || '';
 	}
 
