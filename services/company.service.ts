@@ -1,4 +1,3 @@
-import { Paginationable } from '@/types/paginationable';
 import createHttpClient from '@/utils/createHttpClient';
 import { AxiosInstance } from 'axios';
 

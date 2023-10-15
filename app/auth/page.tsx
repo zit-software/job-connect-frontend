@@ -51,7 +51,7 @@ export default function AuthPage() {
 
 			dispatch(setUser(user));
 		} catch (error: any) {
-			console.log(error);
+			toast.error(error.message);
 		} finally {
 			setIsSigningIn(false);
 		}

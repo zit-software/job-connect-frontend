@@ -12,6 +12,7 @@ import {
 } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import SkillFilter from './SkillFilter';
+import WorkTypeFiltter from './WorkTypeFiltter';
 
 export default function JobsFilter() {
 	const [showFilter, setShowFilter] = useState(false);
@@ -69,10 +70,7 @@ export default function JobsFilter() {
 						</div>
 
 						<div className='col-span-2 md:col-span-1'>
-							<CheckboxGroup label='Hình thức'>
-								<Checkbox value='remote'>Remote</Checkbox>
-								<Checkbox value='on-site'>On-Site</Checkbox>
-							</CheckboxGroup>
+							<WorkTypeFiltter />
 						</div>
 					</div>
 				</div>

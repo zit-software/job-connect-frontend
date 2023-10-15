@@ -118,13 +118,7 @@ export default function RegisterPage() {
 				validationSchema={validationSchema}
 				onSubmit={handleSubmit}
 			>
-				{({
-					values,
-					errors,
-					handleSubmit,
-					handleChange,
-					setFieldValue,
-				}) => (
+				{({ values, errors, handleSubmit, handleChange }) => (
 					<form
 						className='flex flex-col gap-4 mt-6 mx-auto'
 						ref={formParent}
