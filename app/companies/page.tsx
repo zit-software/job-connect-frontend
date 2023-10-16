@@ -125,10 +125,7 @@ function Companies() {
 							key={company.id}
 							className='col-span-12 sm:col-span-6 md:col-span-3'
 						>
-							<CompanyCard
-								onClick={handleClick}
-								company={company}
-							></CompanyCard>
+							<CompanyCard company={company}></CompanyCard>
 						</div>
 					))}
 				</div>
