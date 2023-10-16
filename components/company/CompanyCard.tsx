@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Company } from '@/models/Company';
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';

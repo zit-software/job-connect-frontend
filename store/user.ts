@@ -2,9 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '.';
 
 export interface UserState {
+	id: number;
 	fullName: string;
 	email: string;
 	avatar: string;
+	phoneNumber: string;
+	userRole: 'APPLICANT' | 'RECRUITER';
+	gender: 'MALE' | 'FEMALE';
+	role: 'USER' | 'ADMIN';
 }
 
 export const userSlice = createSlice({

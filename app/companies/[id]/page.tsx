@@ -1,13 +1,15 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 'use client';
+import CompanySection from '@/components/company/CompanySection';
 import { Company } from '@/models/Company';
 import companyService from '@/services/company.service';
-import { Button, Divider } from '@nextui-org/react';
+import { faLocationDot, faMap } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '@nextui-org/react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import './company-detail.css';
-import CompanySection from '@/components/company/CompanySection';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot, faMap } from '@fortawesome/free-solid-svg-icons';
 
 function Contact({ address }: { address: string }) {
 	return (
@@ -55,7 +57,7 @@ function CompanyDetail() {
 			setCompany(response.data);
 			setIsLoading(false);
 		})();
-	}, []);
+	}, [id]);
 	return (
 		<div className='container max-w-[1280px] mx-auto my-5'>
 			<header className='grid grid-cols-12'>

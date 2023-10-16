@@ -6,12 +6,23 @@ import {
 	NavbarContent,
 	Navbar as NextUINavbar,
 } from '@nextui-org/navbar';
-import { Button, useDisclosure } from '@nextui-org/react';
+import {
+	Avatar,
+	Button,
+	Dropdown,
+	DropdownItem,
+	DropdownMenu,
+	DropdownTrigger,
+} from '@nextui-org/react';
 import NextLink from 'next/link';
 import CustomNavbarItem from './custom-navbar-item';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { useRouter } from 'next/navigation';
 
 export const Navbar = () => {
-	const { isOpen, onOpenChange } = useDisclosure();
+	const user = useSelector((state: RootState) => state.user);
+	const router = useRouter();
 
 	return (
 		<>
@@ -46,9 +57,49 @@ export const Navbar = () => {
 					className='hidden lg:flex basis-1 pl-4'
 					justify='end'
 				>
-					<NextLink href='/auth'>
-						<Button color='primary'>Đăng nhập</Button>
-					</NextLink>
+					{user ? (
+						<>
+							<Dropdown size='lg' placement='bottom-end'>
+								<DropdownTrigger>
+									<Avatar src={user.avatar} />
+								</DropdownTrigger>
+
+								<DropdownMenu aria-label='Account menu'>
+									<DropdownItem
+										startContent={
+											<i className='bx bx-user'></i>
+										}
+										onClick={() => router.push('/profile')}
+									>
+										Thông tin cá nhân
+									</DropdownItem>
+
+									<DropdownItem
+										startContent={
+											<i className='bx bx-cog'></i>
+										}
+										onClick={() => router.push('/settings')}
+									>
+										Cài đặt
+									</DropdownItem>
+
+									<DropdownItem
+										color='danger'
+										startContent={
+											<i className='bx bx-log-out'></i>
+										}
+										onClick={() => router.push('/logout')}
+									>
+										Đăng xuất
+									</DropdownItem>
+								</DropdownMenu>
+							</Dropdown>
+						</>
+					) : (
+						<NextLink href='/auth'>
+							<Button color='primary'>Đăng nhập</Button>
+						</NextLink>
+					)}
 				</NavbarContent>
 			</NextUINavbar>
 		</>
