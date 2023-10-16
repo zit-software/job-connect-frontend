@@ -41,15 +41,20 @@ export default function AuthPage() {
 				return router.push(`/auth/register`);
 			}
 
-			const { accessToken } = await authService.socialLogin({
-				accessToken: idToken,
-			});
+			const { accessToken, refreshToken } = await authService.socialLogin(
+				{
+					accessToken: idToken,
+				},
+			);
 
 			tokenService.accessToken = accessToken;
+			tokenService.refreshToken = refreshToken;
 
 			const user = await authService.identify();
 
 			dispatch(setUser(user));
+
+			router.push('/');
 		} catch (error: any) {
 			toast.error(error.message);
 		} finally {

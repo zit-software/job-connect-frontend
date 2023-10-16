@@ -1,13 +1,13 @@
 'use client';
 import jobProposalLottie from '@/assets/lotties/job-proposal.json';
-import Lottie from 'lottie-react';
+import CompanyCard from '@/components/company/CompanyCard';
+import { Company } from '@/models/Company';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { Input, Spinner, Tab, Tabs } from '@nextui-org/react';
+import Lottie from 'lottie-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import './companies.css';
-import { Input, Spinner } from '@nextui-org/react';
-import { Company } from '@/models/Company';
-import CompanyCard from '@/components/company/CompanyCard';
-import { useRouter } from 'next/navigation';
 function Companies() {
 	const [selectedTab, setSelectedTabs] = useState('all');
 	const [search, setSearch] = useState('');
@@ -70,29 +70,15 @@ function Companies() {
 		<div className='container max-w-[1440px] mx-auto my-5'>
 			<div className='grid grid-cols-12 bg-gradient-to-b rounded-2xl from-blue-200 to-blue-100 w-full p-10'>
 				<div className='col-span-12 md:col-span-9'>
-					<div className='flex w-[300px] justify-center'>
-						<a
-							onClick={() => setSelectedTabs('all')}
-							className={
-								selectedTab == 'all' ? 'mx-2 selected' : 'mx-2'
-							}
-						>
-							Danh sách công ty
-						</a>
-						<a
-							onClick={() => setSelectedTabs('top')}
-							className={
-								selectedTab == 'top' ? 'mx-2 selected' : 'mx-2'
-							}
-						>
-							Top công ty
-						</a>
-					</div>
+					<Tabs color='primary'>
+						<Tab key='list' title='Danh sách công ty'></Tab>
+						<Tab key='top' title='Top công ty'></Tab>
+					</Tabs>
 					<div className='mt-10'>
-						<h1 className='mt-5 font-bold bg-gradient-to-r text-4xl title'>
+						<h1 className='mt-5 font-bold text-4xl title'>
 							Khám phá vô vàn công ty thuộc lĩnh vực IT!
 						</h1>
-						<p className='my-2 italic font-size-2xl'>
+						<p className='my-2 font-size-2xl'>
 							Tìm hiểu các công ty phù hợp dành cho bạn.
 						</p>
 						<Input
@@ -125,10 +111,7 @@ function Companies() {
 							key={company.id}
 							className='col-span-12 sm:col-span-6 md:col-span-3'
 						>
-							<CompanyCard
-								onClick={handleClick}
-								company={company}
-							></CompanyCard>
+							<CompanyCard company={company}></CompanyCard>
 						</div>
 					))}
 				</div>

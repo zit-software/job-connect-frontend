@@ -13,6 +13,7 @@ import {
 	QueryClient,
 	QueryClientProvider,
 } from 'react-query';
+import AuthProvider from '@/providers/AuthProvider';
 
 export interface ProvidersProps {
 	children: React.ReactNode;
@@ -24,13 +25,15 @@ const queryClient = new QueryClient();
 export function Providers({ children, themeProps }: ProvidersProps) {
 	return (
 		<Provider store={store}>
-			<QueryClientProvider client={queryClient}>
-				<NextUIProvider>
-					<NextThemesProvider {...themeProps}>
-						{children}
-					</NextThemesProvider>
-				</NextUIProvider>
-			</QueryClientProvider>
+			<AuthProvider>
+				<QueryClientProvider client={queryClient}>
+					<NextUIProvider>
+						<NextThemesProvider {...themeProps}>
+							{children}
+						</NextThemesProvider>
+					</NextUIProvider>
+				</QueryClientProvider>
+			</AuthProvider>
 		</Provider>
 	);
 }
