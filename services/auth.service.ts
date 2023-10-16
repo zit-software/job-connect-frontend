@@ -1,27 +1,71 @@
-import HttpClient from '../utils/httpClient';
+import { UserState } from '@/store/user';
+import createHttpClient from '@/utils/createHttpClient';
+import { AxiosInstance } from 'axios';
 
-export interface LoginDTO {
-	email: string;
-	password: string;
-}
-export interface RegisterDTO {
-	email: string;
-	password: string;
-}
-export interface SocialLoginDTO {
+export interface LoginRequestDto {
 	accessToken: string;
 }
 
+export interface LoginResponseDto {
+	accessToken: string;
+	refreshToken: string;
+}
+export interface RegisterRequestDto {
+	userRole: 'APPLICANT' | 'RECRUITER';
+	fullName: string;
+	phoneNumber: string;
+	accessToken: string;
+	dob: string;
+	gender: string;
+}
+
+export interface RegisterResponseDto {
+	accessToken: string;
+	refreshToken: string;
+}
+
+export interface SocialLoginDto {
+	accessToken: string;
+}
+
+export interface CheckUserRequestDto {
+	accessToken: string;
+}
+
+export interface CheckUserResponseDto {
+	isUser: boolean;
+}
+
 class AuthService {
-	ROUTE = '/auth';
-	async login(body: LoginDTO) {
-		return HttpClient.post(`${this.ROUTE}/login`, body);
+	private client: AxiosInstance;
+
+	constructor() {
+		this.client = createHttpClient('auth');
 	}
-	async register(body: RegisterDTO) {
-		return HttpClient.post(`${this.ROUTE}/register`, body);
+
+	async socialLogin(body: LoginRequestDto) {
+		return (await this.client.post(
+			'/social-login',
+			body,
+		)) as LoginResponseDto;
 	}
-	async socialLogin(body: SocialLoginDTO) {
-		return HttpClient.post(`${this.ROUTE}/social-login`, body);
+
+	async register(body: RegisterRequestDto) {
+		return (await this.client.post(
+			'/register',
+			body,
+		)) as RegisterResponseDto;
+	}
+
+	async checkUser(body: CheckUserRequestDto) {
+		return (await this.client.post(
+			'/check-user',
+			body,
+		)) as CheckUserResponseDto;
+	}
+
+	async identify() {
+		return (await this.client.get('/identity')) as UserState;
 	}
 }
 

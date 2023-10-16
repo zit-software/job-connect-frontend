@@ -1,32 +1,73 @@
-import { GithubIcon } from '@/components/icons';
-import { title } from '@/components/primitives';
-import { siteConfig } from '@/config/site';
-import { Link } from '@nextui-org/link';
-import { button as buttonStyles } from '@nextui-org/theme';
-import NextLink from 'next/link';
+'use client';
+
+import JobCard, { JobCardProps } from '@/components/home/jobCard';
+import Carousel from 'react-multi-carousel';
+
+const responsive = {
+	superLargeDesktop: {
+		breakpoint: { max: 4000, min: 3000 },
+		items: 4,
+	},
+	desktop: {
+		breakpoint: { max: 3000, min: 1024 },
+		items: 3,
+	},
+	tablet: {
+		breakpoint: { max: 1024, min: 464 },
+		items: 2,
+	},
+	mobile: {
+		breakpoint: { max: 464, min: 0 },
+		items: 2,
+	},
+};
+
+const mockedJob: JobCardProps = {
+	jobId: 1,
+	companyImage: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
+	title: 'Lập trình viên Frontend',
+	companyName: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
+	address: 'TP. Cần Thơ',
+	skills: ['NextJS', 'ReactJS', 'TypeScript', 'Java Spring Boot'],
+	workType: 'Fulltime',
+	minSalary: 10000000,
+	maxSalary: 15000000,
+};
 
 export default function Home() {
 	return (
-		<section className='flex flex-col items-center justify-center gap-4 py-8 md:py-10'>
-			<div className='inline-block w-100 text-center justify-center'>
-				<h1 className={title({ color: 'violet' })}>Connecting </h1>
-				<h1 className={title()}>IT Recruiters and Applicants</h1>
-			</div>
-
-			<div className='flex gap-3'>
-				<Link
-					isExternal
-					as={NextLink}
-					className={buttonStyles({
-						variant: 'bordered',
-						radius: 'full',
-					})}
-					href={siteConfig.links.github}
+		<div className='container mx-auto max-w-[1280px]'>
+			<div className='mt-5'>
+				<h1 className='font-bold italic text-3xl'>
+					Top việc làm hiện tại
+				</h1>
+				<Carousel
+					responsive={responsive}
+					className='my-4 -mx-2'
+					autoPlaySpeed={2500}
+					autoPlay
+					infinite
 				>
-					<GithubIcon size={20} />
-					GitHub
-				</Link>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+					<div className='px-2'>
+						<JobCard {...mockedJob} />
+					</div>
+				</Carousel>
 			</div>
-		</section>
+		</div>
 	);
 }

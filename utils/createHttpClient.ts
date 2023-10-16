@@ -1,28 +1,26 @@
+import tokenService from '@/services/token.service';
 import axios from 'axios';
 
+const refreshClient = axios.create({
+	baseURL: `${process.env.NEXT_PUBLIC_API_URL}/auth`,
+});
+
+refreshClient.interceptors.response.use((res) => res.data);
+
 const createHttpClient = (baseUrl: string = '') => {
-	const baseURL = `${process.env.NEXT_PUBLIC_API_URL}/${baseUrl}`;
 	const client = axios.create({
-		baseURL,
+		baseURL: `${process.env.NEXT_PUBLIC_API_URL}/${baseUrl}`,
 	});
 
-	client.interceptors.request.use((request) => {
-		const expiration = localStorage.getItem('expiration');
-		console.log(new Date(expiration ? expiration : 0 - 1000000000));
-		if (expiration && new Date(+expiration - 1000000000) < new Date()) {
-			axios
-				.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`)
-				.then((res) => {
-					localStorage.setItem('expiration', res.data.expiration);
-				});
-		}
+	client.interceptors.request.use((config) => {
+		config.headers.Authorization = `Bearer ${tokenService.accessToken}`;
 
-		return request;
+		return config;
 	});
 
 	client.interceptors.response.use(
 		(res) => res.data,
-		(error) => {
+		async (error) => {
 			throw error.response?.data || error;
 		},
 	);
