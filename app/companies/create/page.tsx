@@ -1,5 +1,6 @@
 'use client';
 import LocationPicker from '@/components/company/LocationPicker';
+import UploadImageModal from '@/components/company/UploadImage';
 import { AddCompanyDTO } from '@/models/Company';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import {
@@ -13,10 +14,11 @@ import {
 	Radio,
 	RadioGroup,
 	Textarea,
+	useDisclosure,
 } from '@nextui-org/react';
 import { Formik } from 'formik';
 import { LatLngExpression } from 'leaflet';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 function CreateCompany() {
 	const [position, setPosition] = useState<LatLngExpression>({
@@ -24,6 +26,8 @@ function CreateCompany() {
 		lng: 0,
 	});
 	const [parent] = useAutoAnimate();
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const [type, setType] = useState<string>('');
 	const validationSchema = yup.object().shape({
 		name: yup.string().required('Tên công ty không được để trống'),
 		description: yup.string().required('Mô tả công ty không được để trống'),
@@ -46,10 +50,18 @@ function CreateCompany() {
 	const handleSubmit = (values: AddCompanyDTO) => {
 		console.log(values);
 	};
+	useEffect(() => {
+		if (type) {
+			onOpen();
+		}
+	}, [type]);
 	return (
 		<div className='container max-w-[1440px] mx-auto'>
 			<div className=' shadow-lg max-w-[1440px] w-[90vw] sm:w-[100vw] h-[600px] bg-white mx-auto p-8 rounded-xl'>
-				<div className='relative flex justify-center items-center cursor-pointer max-w-[1440px] w-full h-[400px] object-cover border-dashed border-5 border-grey text-white rounded-2xl bg-white mx-auto my-auto'>
+				<div
+					onClick={() => setType('banner')}
+					className='relative flex justify-center items-center cursor-pointer max-w-[1440px] w-full h-[400px] object-cover border-dashed border-5 border-grey text-white rounded-2xl bg-white mx-auto my-auto'
+				>
 					{true ? (
 						<div className='w-fit p-5 absolute'>
 							<i className='text-[#ccc] text-8xl bx bxs-camera-plus'></i>
@@ -57,7 +69,13 @@ function CreateCompany() {
 					) : (
 						<div></div>
 					)}
-					<div className='absolute flex items-center justify-center cursor-pointer rounded-full border-dashed border-5 border-grey bg-white w-60 h-60 bottom-0 left-5 translate-y-1/2'>
+					<div
+						onClick={(e) => {
+							e.stopPropagation();
+							setType('logo');
+						}}
+						className='absolute flex items-center justify-center cursor-pointer rounded-full border-dashed border-5 border-grey bg-white w-60 h-60 bottom-0 left-5 translate-y-1/2'
+					>
 						{true ? (
 							<div className=' w-fit p-5 absolute'>
 								<i className='text-[#ccc] text-8xl bx bxs-camera-plus'></i>
@@ -227,6 +245,12 @@ function CreateCompany() {
 								</form>
 							)}
 						</Formik>
+						<UploadImageModal
+							type={type}
+							setType={setType}
+							isOpen={isOpen}
+							onOpenChange={onOpenChange}
+						/>
 					</div>
 					<div className='col-span-4'>
 						<Card className='w-full p-5'>
