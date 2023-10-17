@@ -9,3 +9,11 @@ export interface Company extends BaseModel {
 	banner: string;
 	owner: Recruiter;
 }
+
+export interface AddCompanyDTO {
+	name: string;
+	description: string;
+	address: string;
+	url: string;
+	companySize: string;
+}
