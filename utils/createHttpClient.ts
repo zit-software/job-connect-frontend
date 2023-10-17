@@ -11,9 +11,11 @@ const createHttpClient = (baseUrl: string = '') => {
 		const now = new Date();
 		const tokenExpiratedAt = tokenService.expiratedAt;
 
+		const isRefreshToken = config.url?.endsWith('refresh-token');
+
 		if (
 			tokenExpiratedAt < now &&
-			!config.url?.endsWith('refresh-token') &&
+			!isRefreshToken &&
 			tokenService.refreshToken
 		) {
 			const { accessToken, expirationTime } =
@@ -25,7 +27,7 @@ const createHttpClient = (baseUrl: string = '') => {
 			tokenService.expiratedAt = expirationTime;
 		}
 
-		if (tokenService.accessToken)
+		if (tokenService.accessToken && !isRefreshToken)
 			config.headers.Authorization = `Bearer ${tokenService.accessToken}`;
 
 		return config;

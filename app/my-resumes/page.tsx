@@ -1,14 +1,23 @@
 'use client';
 
+import emptyLottie from '@/assets/lotties/empty.json';
 import resumeLottie from '@/assets/lotties/resume.json';
+import CreateResumeModal from '@/components/create-resume-modal';
 import { title } from '@/components/primitives';
+import { Button, useDisclosure } from '@nextui-org/react';
 import clsx from 'clsx';
 import Lottie from 'lottie-react';
-import emptyLottie from '@/assets/lotties/empty.json';
-import { Button } from '@nextui-org/react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function MyResumesPage() {
+	const {
+		isOpen: isOpenCreateModal,
+		onClose: onCloseCreateModal,
+		onOpen: onOpenCreateModal,
+	} = useDisclosure();
+
+	const router = useRouter();
+
 	return (
 		<>
 			<div className='w-full py-20 bg-gradient-to-tr from-blue-100 to-violet-200'>
@@ -33,6 +42,7 @@ export default function MyResumesPage() {
 							size='lg'
 							color='secondary'
 							startContent={<i className='bx bx-pen'></i>}
+							onClick={onOpenCreateModal}
 						>
 							Tạo CV ngay
 						</Button>
@@ -54,6 +64,14 @@ export default function MyResumesPage() {
 					/>
 				</div>
 			</div>
+
+			<CreateResumeModal
+				isOpen={isOpenCreateModal}
+				onClose={onCloseCreateModal}
+				onCreated={(resume) =>
+					router.push(`/my-resumes/${resume.id}/edit`)
+				}
+			/>
 		</>
 	);
 }
