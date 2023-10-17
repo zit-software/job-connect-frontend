@@ -47,7 +47,7 @@ function CreateCompany() {
 		if (type) {
 			onOpen();
 		}
-	}, [type]);
+	}, [onOpen, type]);
 	return (
 		<div className='container max-w-[1440px] mx-auto'>
 			<div className=' shadow-lg max-w-[1440px] w-[90vw] sm:w-[100vw] h-[600px] bg-white mx-auto p-8 rounded-xl'>

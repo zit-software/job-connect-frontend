@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { type } from 'os';
 import StyledDropzone from './DropZone';
@@ -30,7 +32,7 @@ function UploadImageModal({ isOpen, onOpenChange, type, setType }: UploadImageMo
 
 	useEffect(() => {
 		return () => files.forEach((file: any) => URL.revokeObjectURL(file.preview));
-	}, []);
+	}, [files]);
 	return (
 		<Modal
 			onClose={() => {
