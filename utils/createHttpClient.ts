@@ -16,8 +16,6 @@ const createHttpClient = (baseUrl: string = '') => {
 			!config.url?.endsWith('refresh-token') &&
 			tokenService.refreshToken
 		) {
-			console.log('refresh token');
-
 			const { accessToken, expirationTime } =
 				await authService.refreshToken({
 					refreshToken: tokenService.refreshToken,
