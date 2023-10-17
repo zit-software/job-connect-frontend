@@ -1,19 +1,13 @@
 'use client';
 
+import AuthProvider from '@/providers/AuthProvider';
 import store from '@/store';
 import { NextUIProvider } from '@nextui-org/system';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { ThemeProviderProps } from 'next-themes/dist/types';
 import * as React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
-import {
-	useQuery,
-	useMutation,
-	useQueryClient,
-	QueryClient,
-	QueryClientProvider,
-} from 'react-query';
-import AuthProvider from '@/providers/AuthProvider';
 
 export interface ProvidersProps {
 	children: React.ReactNode;

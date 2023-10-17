@@ -41,14 +41,14 @@ export default function AuthPage() {
 				return router.push(`/auth/register`);
 			}
 
-			const { accessToken, refreshToken } = await authService.socialLogin(
-				{
+			const { accessToken, refreshToken, expirationTime } =
+				await authService.socialLogin({
 					accessToken: idToken,
-				},
-			);
+				});
 
 			tokenService.accessToken = accessToken;
 			tokenService.refreshToken = refreshToken;
+			tokenService.expiratedAt = expirationTime;
 
 			const user = await authService.identify();
 

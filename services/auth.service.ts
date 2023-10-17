@@ -9,6 +9,7 @@ export interface LoginRequestDto {
 export interface LoginResponseDto {
 	accessToken: string;
 	refreshToken: string;
+	expirationTime: number;
 }
 export interface RegisterRequestDto {
 	userRole: 'APPLICANT' | 'RECRUITER';
@@ -16,12 +17,13 @@ export interface RegisterRequestDto {
 	phoneNumber: string;
 	accessToken: string;
 	dob: string;
-	gender: string;
+	gender: 'MALE' | 'FEMALE' | 'OTHER';
 }
 
 export interface RegisterResponseDto {
 	accessToken: string;
 	refreshToken: string;
+	expirationTime: number;
 }
 
 export interface SocialLoginDto {
@@ -34,6 +36,15 @@ export interface CheckUserRequestDto {
 
 export interface CheckUserResponseDto {
 	isUser: boolean;
+}
+
+export interface RefreshTokenRequestDto {
+	refreshToken: string;
+}
+
+export interface RefreshTokenResponseDto {
+	accessToken: string;
+	expirationTime: number;
 }
 
 class AuthService {
@@ -66,6 +77,13 @@ class AuthService {
 
 	async identify() {
 		return (await this.client.get('/identity')) as UserState;
+	}
+
+	async refreshToken(body: RefreshTokenRequestDto) {
+		return (await this.client.post(
+			'/refresh-token',
+			body,
+		)) as RefreshTokenResponseDto;
 	}
 }
 

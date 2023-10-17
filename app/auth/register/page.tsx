@@ -32,7 +32,7 @@ const initialValues: RegisterRequestDto = {
 	phoneNumber: '',
 	userRole: 'APPLICANT',
 	dob: '',
-	gender: '',
+	gender: 'MALE',
 };
 
 const validationSchema = Yup.object().shape({
@@ -68,8 +68,12 @@ export default function RegisterPage() {
 		try {
 			setIsRegisting(true);
 
-			const { accessToken } = await authService.register(values);
+			const { accessToken, refreshToken, expirationTime } =
+				await authService.register(values);
+
 			tokenService.accessToken = accessToken;
+			tokenService.refreshToken = refreshToken;
+			tokenService.expiratedAt = expirationTime;
 
 			const user = await authService.identify();
 
@@ -114,7 +118,6 @@ export default function RegisterPage() {
 					...initialValues,
 					accessToken: idToken as string,
 				}}
-				enableReinitialize
 				validationSchema={validationSchema}
 				onSubmit={handleSubmit}
 			>
@@ -167,6 +170,7 @@ export default function RegisterPage() {
 								<Select
 									name='gender'
 									value={values.gender}
+									selectedKeys={[values.gender]}
 									isInvalid={!!errors.gender}
 									errorMessage={errors.gender}
 									onChange={handleChange}

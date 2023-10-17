@@ -7,7 +7,7 @@ export default function JobItem() {
 	return (
 		<a
 			href='#'
-			className='flex px-4 py-8 gap-4 cursor-pointer bg-background rounded-lg border transition hover:shadow-lg'
+			className='flex px-4 py-4 gap-4 cursor-pointer bg-background rounded-lg border transition hover:shadow-lg'
 		>
 			<img
 				src='https://github.com/zit-software.png'
