@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<head />
-			<body className={clsx('font-sans antialiased bg-blue-50', fontSans.className)}>
+			<body className={clsx('antialiased bg-blue-50', fontSans.className)}>
 				<Providers
 					themeProps={{
 						attribute: 'class',

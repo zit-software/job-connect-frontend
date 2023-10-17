@@ -32,6 +32,10 @@ class ResumeService {
 	async updateResumeById(id: number, body: Resume) {
 		return (await this.userClient.put(`/${id}`, { ...body, skillIds: body.skills.map((e) => e.id) })) as Resume;
 	}
+
+	async deleteResumeById(id: number) {
+		return await this.userClient.delete(`/${id}`);
+	}
 }
 
 export default new ResumeService() as ResumeService;
