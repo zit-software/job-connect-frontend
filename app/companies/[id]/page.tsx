@@ -6,8 +6,16 @@ import CompanySection from '@/components/company/CompanySection';
 import { Button, Chip } from '@nextui-org/react';
 import './company-detail.css';
 import Head from 'next/head';
+import LocationMap from '@/components/company/LocationMap';
+import { LatLngExpression } from 'leaflet';
+
+import 'leaflet/dist/leaflet.css';
 
 function Contact({ address }: { address: string }) {
+	const position: LatLngExpression = {
+		lat: 51.505,
+		lng: -0.09,
+	};
 	return (
 		<div className='p-5'>
 			<div className=' border-b-1 pb-4'>
@@ -22,6 +30,7 @@ function Contact({ address }: { address: string }) {
 				<div>
 					<i className='bx bxs-map-alt'></i>
 					<span className='mx-3'>Xem bản đồ</span>
+					<LocationMap position={position} height='h-[400px]' />
 				</div>
 			</div>
 		</div>

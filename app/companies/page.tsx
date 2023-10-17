@@ -25,7 +25,7 @@ function Companies() {
 			name: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
 			address: 'TP. Cần Thơ',
 			image: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
-			banner: 'https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/358423867_147146435061607_5362565494737813228_n.png?_nc_cat=107&ccb=1-7&_nc_sid=52f669&_nc_ohc=uAgpMF5sEU0AX91MuJ3&_nc_ht=scontent.fsgn2-3.fna&_nc_e2o=s&oh=00_AfC2bMW-4i9VkVT294k0A_0b6hBt3JxNMJ_Tqcw5Fd5Fbg&oe=652D1DD8',
+			banner: 'https://github.com/zit-software.png',
 			description: 'Công ty ZIT Software',
 			owner: {
 				id: 1,
@@ -40,7 +40,7 @@ function Companies() {
 			name: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
 			address: 'TP. Cần Thơ',
 			image: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
-			banner: 'https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/358423867_147146435061607_5362565494737813228_n.png?_nc_cat=107&ccb=1-7&_nc_sid=52f669&_nc_ohc=uAgpMF5sEU0AX91MuJ3&_nc_ht=scontent.fsgn2-3.fna&_nc_e2o=s&oh=00_AfC2bMW-4i9VkVT294k0A_0b6hBt3JxNMJ_Tqcw5Fd5Fbg&oe=652D1DD8',
+			banner: 'https://github.com/zit-software.png',
 			description: 'Công ty ZIT Software',
 			owner: {
 				id: 1,
@@ -55,7 +55,7 @@ function Companies() {
 			name: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
 			address: 'TP. Cần Thơ',
 			image: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
-			banner: 'https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/358423867_147146435061607_5362565494737813228_n.png?_nc_cat=107&ccb=1-7&_nc_sid=52f669&_nc_ohc=uAgpMF5sEU0AX91MuJ3&_nc_ht=scontent.fsgn2-3.fna&_nc_e2o=s&oh=00_AfC2bMW-4i9VkVT294k0A_0b6hBt3JxNMJ_Tqcw5Fd5Fbg&oe=652D1DD8',
+			banner: 'https://github.com/zit-software.png',
 			description: 'Công ty ZIT Software',
 			owner: {
 				id: 1,
