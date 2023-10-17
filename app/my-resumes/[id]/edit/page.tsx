@@ -5,16 +5,17 @@ import { Resume } from '@/models/Resume';
 import fileService from '@/services/file.service';
 import resumeService from '@/services/resume.service';
 import { RootState } from '@/store';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { Avatar, Button, Card, CardBody, Chip, Spinner, Tab, Tabs } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import { Formik } from 'formik';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
+
+const CKEditor = dynamic(() => import('@ckeditor/ckeditor5-react').then((e) => e.CKEditor), { ssr: false });
 
 export default function EditResumePage() {
 	const router = useRouter();
@@ -131,9 +132,9 @@ export default function EditResumePage() {
 											}
 										>
 											<CKEditor
-												editor={ClassicEditor}
+												editor={require('@ckeditor/ckeditor5-build-classic')}
 												data={values.content}
-												onChange={(_event, editor) => {
+												onChange={(_event, editor: any) => {
 													const data = editor.getData();
 													setFieldValue('content', data);
 												}}

@@ -1,6 +1,5 @@
 'use client';
 
-import { JobCardProps } from '@/components/home/jobCard';
 import JobItem from '@/components/job-item';
 import { mockBanners } from '@/mocks/banners';
 import { Button } from '@nextui-org/react';
@@ -25,18 +24,6 @@ const responsive = {
 		breakpoint: { max: 464, min: 0 },
 		items: 1,
 	},
-};
-
-const mockedJob: JobCardProps = {
-	jobId: 1,
-	companyImage: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
-	title: 'Lập trình viên Frontend',
-	companyName: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
-	address: 'TP. Cần Thơ',
-	skills: ['NextJS', 'ReactJS', 'TypeScript', 'Java Spring Boot'],
-	workType: 'Fulltime',
-	minSalary: 10000000,
-	maxSalary: 15000000,
 };
 
 export default function Home() {

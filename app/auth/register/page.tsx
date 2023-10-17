@@ -51,7 +51,7 @@ export default function RegisterPage() {
 
 	const idToken = useAppSelector(selectIdToken);
 
-	if (!idToken) {
+	if (typeof window !== 'undefined' && !idToken) {
 		router.push('/auth');
 	}
 
