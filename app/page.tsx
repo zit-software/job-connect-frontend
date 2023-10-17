@@ -2,7 +2,6 @@
 
 import { JobCardProps } from '@/components/home/jobCard';
 import JobItem from '@/components/job-item';
-import { title } from '@/components/primitives';
 import { mockBanners } from '@/mocks/banners';
 import { Button } from '@nextui-org/react';
 import clsx from 'clsx';

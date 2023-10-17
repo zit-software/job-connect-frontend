@@ -1,9 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: 'Next.js + NextUI',
-	description:
-		'Make beautiful websites regardless of your design experience.',
+	name: 'Job Connect | Một sản phẩm của Zit Software',
+	description: 'Tìm kiếm công việc thích hợp cho bạn',
 	navItems: [
 		{
 			label: 'Việc làm',

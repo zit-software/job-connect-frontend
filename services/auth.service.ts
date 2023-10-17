@@ -85,6 +85,10 @@ class AuthService {
 			body,
 		)) as RefreshTokenResponseDto;
 	}
+
+	async logout(body: RefreshTokenRequestDto) {
+		return await this.client.post('/logout', body);
+	}
 }
 
 export default new AuthService() as AuthService;
