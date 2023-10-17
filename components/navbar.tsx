@@ -19,6 +19,7 @@ import CustomNavbarItem from './custom-navbar-item';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { useRouter } from 'next/navigation';
+import fileService from '@/services/file.service';
 
 export const Navbar = () => {
 	const user = useSelector((state: RootState) => state.user);
@@ -61,7 +62,9 @@ export const Navbar = () => {
 						<>
 							<Dropdown size='lg' placement='bottom-end'>
 								<DropdownTrigger>
-									<Avatar src={user.avatar} />
+									<Avatar
+										src={fileService.getFileUrl(user.image)}
+									/>
 								</DropdownTrigger>
 
 								<DropdownMenu aria-label='Account menu'>
@@ -78,7 +81,9 @@ export const Navbar = () => {
 										startContent={
 											<i className='bx bx-cog'></i>
 										}
-										onClick={() => router.push('/settings')}
+										onClick={() =>
+											router.push('/settings/profile')
+										}
 									>
 										Cài đặt
 									</DropdownItem>

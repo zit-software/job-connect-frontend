@@ -34,6 +34,7 @@
 		"axios": "^1.5.1",
 		"boxicons": "^2.1.4",
 		"clsx": "^2.0.0",
+		"dayjs": "^1.11.10",
 		"eslint": "8.41.0",
 		"eslint-config-next": "13.4.4",
 		"firebase": "^10.4.0",
