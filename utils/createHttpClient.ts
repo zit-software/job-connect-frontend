@@ -1,4 +1,4 @@
-import authService, { RefreshTokenResponseDto } from '@/services/auth.service';
+import { RefreshTokenResponseDto } from '@/services/auth.service';
 import tokenService from '@/services/token.service';
 import axios from 'axios';
 

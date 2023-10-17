@@ -4,8 +4,8 @@
 import springWorkshop from '@/assets/images/spring-workshop.png';
 import CompanySection from '@/components/company/CompanySection';
 import { Button, Chip } from '@nextui-org/react';
-import './company-detail.css';
 import Head from 'next/head';
+import './company-detail.css';
 
 function Contact({ address }: { address: string }) {
 	return (

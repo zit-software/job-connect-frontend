@@ -1,5 +1,5 @@
-import { Banner } from '@/models/Banner';
 import springWorkshop from '@/assets/images/spring-workshop.png';
+import { Banner } from '@/models/Banner';
 
 export const mockBanners: Banner[] = [
 	{
