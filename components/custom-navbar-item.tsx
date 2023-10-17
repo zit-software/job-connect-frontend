@@ -1,6 +1,7 @@
 import { SiteConfig } from '@/config/site';
 import { NavbarItem } from '@nextui-org/navbar';
 import {
+	Button,
 	Divider,
 	Dropdown,
 	DropdownItem,

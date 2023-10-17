@@ -55,16 +55,23 @@ export const Navbar = () => {
 				</NavbarContent>
 
 				<NavbarContent
-					className='hidden lg:flex basis-1 pl-4'
+					className='hidden lg:flex basis-1 pl-4 items-center'
 					justify='end'
 				>
 					{user ? (
 						<>
 							<Dropdown size='lg' placement='bottom-end'>
 								<DropdownTrigger>
-									<Avatar
-										src={fileService.getFileUrl(user.image)}
-									/>
+									<div className='p-2 bg-primary-50 rounded-full flex gap-2 items-center pl-4 cursor-pointer'>
+										<span className='text-primary-600 text-sm font-bold'>
+											{user.fullName}
+										</span>
+										<Avatar
+											src={fileService.getFileUrl(
+												user.image,
+											)}
+										/>
+									</div>
 								</DropdownTrigger>
 
 								<DropdownMenu aria-label='Account menu'>
@@ -76,6 +83,30 @@ export const Navbar = () => {
 									>
 										Thông tin cá nhân
 									</DropdownItem>
+
+									{user.userRole === 'APPLICANT' ? (
+										<DropdownItem
+											startContent={
+												<i className='bx bx-file'></i>
+											}
+											onClick={() =>
+												router.push('/my-resumes')
+											}
+										>
+											CV của tôi
+										</DropdownItem>
+									) : (
+										<DropdownItem
+											startContent={
+												<i className='bx bx-building'></i>
+											}
+											onClick={() =>
+												router.push('/my-companies')
+											}
+										>
+											Công ty của tôi
+										</DropdownItem>
+									)}
 
 									<DropdownItem
 										startContent={
