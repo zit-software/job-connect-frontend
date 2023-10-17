@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
-import { type } from 'os';
-import StyledDropzone from './DropZone';
 import { useEffect, useState } from 'react';
+import StyledDropzone from './DropZone';
 interface UploadImageModalProps {
 	isOpen: boolean;
 	onOpenChange: (open: boolean) => void;

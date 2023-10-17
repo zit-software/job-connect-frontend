@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { IconSvgProps } from '@/types';
 import logo from '@/assets/images/logo.png';
+import { IconSvgProps } from '@/types';
+import * as React from 'react';
 
 export const Logo: React.FC<IconSvgProps> = ({ size = 36, width, height, ...props }) => (
 	// eslint-disable-next-line @next/next/no-img-element

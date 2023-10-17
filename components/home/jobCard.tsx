@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardFooter, Image, Divider, Chip, Button } from '@nextui-org/react';
+import { Button, Card, CardBody, CardFooter, CardHeader, Chip, Divider, Image } from '@nextui-org/react';
 export interface JobCardProps {
 	jobId: number;
 	companyImage: string;

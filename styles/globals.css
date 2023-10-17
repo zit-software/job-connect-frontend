@@ -5,3 +5,4 @@
 @import 'boxicons/css/boxicons.min.css';
 @import 'react-multi-carousel/lib/styles.css';
 @import 'ckeditor-tailwind-reset/ckeditor-tailwind-reset';
+@import 'leaflet/dist/leaflet.css';

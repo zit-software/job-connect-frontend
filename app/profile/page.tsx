@@ -3,8 +3,8 @@
 import fileService from '@/services/file.service';
 import { RootState } from '@/store';
 import { Avatar, Chip, Spinner } from '@nextui-org/react';
-import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 
 export default function ProfilePage() {
 	const user = useSelector((state: RootState) => state.user);

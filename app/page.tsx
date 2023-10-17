@@ -1,7 +1,6 @@
 'use client';
 
-import JobCard from '@/components/home/jobCard';
-import { JobCardProps } from '@/components/home/jobCard';
+import JobCard, { JobCardProps } from '@/components/home/jobCard';
 import JobItem from '@/components/job-item';
 import { mockBanners } from '@/mocks/banners';
 import { Button } from '@nextui-org/react';

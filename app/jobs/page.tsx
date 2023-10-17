@@ -1,12 +1,12 @@
 'use client';
 
+import logoLottie from '@/assets/lotties/logo.json';
 import JobItem from '@/components/job-item';
 import JobsFilter from '@/components/jobs-filter';
 import { title } from '@/components/primitives';
-import clsx from 'clsx';
-import logoLottie from '@/assets/lotties/logo.json';
-import Lottie from 'lottie-react';
 import { Pagination } from '@nextui-org/react';
+import clsx from 'clsx';
+import Lottie from 'lottie-react';
 
 export default function JobsPage() {
 	return (

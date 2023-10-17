@@ -3,7 +3,7 @@
 import Collapse from '@/components/collapse';
 import useDebounce from '@/hooks/useDebounce';
 import { Skill } from '@/services/skill.service';
-import { Button, Checkbox, CheckboxGroup, Input, Spinner } from '@nextui-org/react';
+import { Button, Input, Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import SkillFilter from './SkillFilter';
 import WorkTypeFiltter from './WorkTypeFiltter';

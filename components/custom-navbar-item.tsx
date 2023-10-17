@@ -1,6 +1,6 @@
 import { SiteConfig } from '@/config/site';
 import { NavbarItem } from '@nextui-org/navbar';
-import { Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
+import { Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useState } from 'react';

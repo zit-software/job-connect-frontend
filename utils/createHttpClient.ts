@@ -1,4 +1,4 @@
-import authService from '@/services/auth.service';
+import { RefreshTokenResponseDto } from '@/services/auth.service';
 import tokenService from '@/services/token.service';
 import axios from 'axios';
 
@@ -14,12 +14,19 @@ const createHttpClient = (baseUrl: string = '') => {
 		const isRefreshToken = config.url?.endsWith('refresh-token');
 
 		if (tokenExpiratedAt < now && !isRefreshToken && tokenService.refreshToken) {
-			const { accessToken, expirationTime } = await authService.refreshToken({
-				refreshToken: tokenService.refreshToken,
-			});
+			try {
+				const { accessToken, expirationTime } = (await axios.post(
+					`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+					{
+						refreshToken: tokenService.refreshToken,
+					},
+				)) as RefreshTokenResponseDto;
 
-			tokenService.accessToken = accessToken;
-			tokenService.expiratedAt = expirationTime;
+				tokenService.accessToken = accessToken;
+				tokenService.expiratedAt = expirationTime;
+			} catch (error) {
+				tokenService.clear();
+			}
 		}
 
 		if (tokenService.accessToken && !isRefreshToken)

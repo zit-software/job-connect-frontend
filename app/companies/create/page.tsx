@@ -1,5 +1,5 @@
 'use client';
-import LocationPicker from '@/components/company/LocationPicker';
+
 import UploadImageModal from '@/components/company/UploadImage';
 import { AddCompanyDTO } from '@/models/Company';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
@@ -18,8 +18,12 @@ import {
 } from '@nextui-org/react';
 import { Formik } from 'formik';
 import { LatLngExpression } from 'leaflet';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
+
+const LocationPicker = dynamic(() => import('@/components/company/LocationPicker'), { ssr: false });
+
 function CreateCompany() {
 	const [position, setPosition] = useState<LatLngExpression>({
 		lat: 0,
@@ -48,6 +52,7 @@ function CreateCompany() {
 			onOpen();
 		}
 	}, [onOpen, type]);
+
 	return (
 		<div className='container max-w-[1440px] mx-auto'>
 			<div className=' shadow-lg max-w-[1440px] w-[90vw] sm:w-[100vw] h-[600px] bg-white mx-auto p-8 rounded-xl'>

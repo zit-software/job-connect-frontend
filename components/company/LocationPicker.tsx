@@ -1,8 +1,8 @@
 import icon from '@/assets/images/marker-icon-2x.png';
 import L, { LatLngExpression } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { useEffect, useMemo, useRef } from 'react';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
+
 const center: LatLngExpression = {
 	lat: 51.505,
 	lng: -0.09,

@@ -1,4 +1,4 @@
-import workTypeService, { WorkType } from '@/services/workType.service';
+import workTypeService from '@/services/workType.service';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Checkbox, CheckboxGroup, Chip, Spinner } from '@nextui-org/react';
 import { useState } from 'react';

@@ -2,7 +2,6 @@ import { Navbar } from '@/components/navbar';
 import { fontSans } from '@/config/fonts';
 import { siteConfig } from '@/config/site';
 import '@/styles/globals.css';
-import { Link } from '@nextui-org/link';
 import clsx from 'clsx';
 import { Metadata } from 'next';
 import { Toaster } from 'react-hot-toast';
@@ -29,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<head />
-			<body className={clsx('font-sans antialiased bg-blue-50', fontSans.className)}>
+			<body className={clsx('antialiased bg-blue-50', fontSans.className)}>
 				<Providers
 					themeProps={{
 						attribute: 'class',
