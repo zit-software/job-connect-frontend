@@ -5,25 +5,18 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 
 export default function WorkTypeFiltter() {
-	const { data: workTypes, isLoading: isLoadingWorkTypes } = useQuery(
-		'workTypes',
-		() => workTypeService.getWorkTypes(),
+	const { data: workTypes, isLoading: isLoadingWorkTypes } = useQuery('workTypes', () =>
+		workTypeService.getWorkTypes(),
 	);
 
-	const [selectedWorkTypesIds, setSelectedWorkTypesIds] = useState<string[]>(
-		[],
-	);
+	const [selectedWorkTypesIds, setSelectedWorkTypesIds] = useState<string[]>([]);
 	const [selectedWorkTypesParent] = useAutoAnimate();
 
 	const selectedWorkTypes =
-		workTypes?.filter((workType) =>
-			selectedWorkTypesIds.includes(workType.id.toString()),
-		) || [];
+		workTypes?.filter((workType) => selectedWorkTypesIds.includes(workType.id.toString())) || [];
 
 	const removeWorkType = (id: number) => {
-		setSelectedWorkTypesIds(
-			selectedWorkTypesIds.filter((_id) => id.toString() !== _id),
-		);
+		setSelectedWorkTypesIds(selectedWorkTypesIds.filter((_id) => id.toString() !== _id));
 	};
 
 	if (isLoadingWorkTypes || !workTypes) return <Spinner />;
@@ -32,12 +25,7 @@ export default function WorkTypeFiltter() {
 		<>
 			<div className='flex flex-wrap gap-1' ref={selectedWorkTypesParent}>
 				{selectedWorkTypes.map((workType) => (
-					<Chip
-						key={workType.id}
-						variant='dot'
-						color='primary'
-						onClose={() => removeWorkType(workType.id)}
-					>
+					<Chip key={workType.id} variant='dot' color='primary' onClose={() => removeWorkType(workType.id)}>
 						{workType.name}
 					</Chip>
 				))}

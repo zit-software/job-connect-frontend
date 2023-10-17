@@ -8,20 +8,15 @@ const createHttpClient = (baseUrl: string = '') => {
 	});
 
 	client.interceptors.request.use(async (config) => {
-		const now = new Date();
+		const now = new Date().getTime();
 		const tokenExpiratedAt = tokenService.expiratedAt;
 
 		const isRefreshToken = config.url?.endsWith('refresh-token');
 
-		if (
-			tokenExpiratedAt < now &&
-			!isRefreshToken &&
-			tokenService.refreshToken
-		) {
-			const { accessToken, expirationTime } =
-				await authService.refreshToken({
-					refreshToken: tokenService.refreshToken,
-				});
+		if (tokenExpiratedAt < now && !isRefreshToken && tokenService.refreshToken) {
+			const { accessToken, expirationTime } = await authService.refreshToken({
+				refreshToken: tokenService.refreshToken,
+			});
 
 			tokenService.accessToken = accessToken;
 			tokenService.expiratedAt = expirationTime;

@@ -36,14 +36,7 @@ function CreateCompany() {
 		companySize: yup
 			.string()
 			.oneOf(
-				[
-					'TWENTY',
-					'FIFTY',
-					'ONE_HUNDRED',
-					'TWO_HUNDRED',
-					'FIVE_HUNDRED',
-					'ONE_THOUSAND',
-				],
+				['TWENTY', 'FIFTY', 'ONE_HUNDRED', 'TWO_HUNDRED', 'FIVE_HUNDRED', 'ONE_THOUSAND'],
 				'Quy mô công ty không hợp lệ',
 			),
 	});
@@ -100,36 +93,21 @@ function CreateCompany() {
 							onSubmit={handleSubmit}
 							validationSchema={validationSchema}
 						>
-							{({
-								values,
-								handleChange,
-								errors,
-								setFieldValue,
-								handleSubmit,
-							}) => (
+							{({ values, handleChange, errors, setFieldValue, handleSubmit }) => (
 								<form onSubmit={handleSubmit}>
 									<Card className='w-full p-5'>
 										<CardHeader>
-											<h1 className='font-bold text-2xl'>
-												Thông Tin Cơ Bản
-											</h1>
+											<h1 className='font-bold text-2xl'>Thông Tin Cơ Bản</h1>
 										</CardHeader>
 										<Divider />
 										<CardBody>
-											<div
-												className='grid grid-cols-12 gap-5'
-												ref={parent}
-											>
+											<div className='grid grid-cols-12 gap-5' ref={parent}>
 												<div className='col-span-12 md:col-span-6'>
 													<Input
 														labelPlacement='outside'
 														value={values.name}
-														isInvalid={
-															!!errors.name
-														}
-														errorMessage={
-															errors.name
-														}
+														isInvalid={!!errors.name}
+														errorMessage={errors.name}
 														name='name'
 														label='Tên Công Ty'
 														placeholder='VD: ZIT Software'
@@ -142,9 +120,7 @@ function CreateCompany() {
 														onChange={handleChange}
 														value={values.url}
 														isInvalid={!!errors.url}
-														errorMessage={
-															errors.url
-														}
+														errorMessage={errors.url}
 														name='url'
 														label='URL'
 														placeholder='VD: http://zit-software.com'
@@ -154,42 +130,19 @@ function CreateCompany() {
 													<RadioGroup
 														orientation='horizontal'
 														label='Quy mô công ty (Nhân Viên)'
-														value={
-															values.companySize
-														}
-														onValueChange={(
-															value,
-														) => {
-															setFieldValue(
-																'companySize',
-																value,
-															);
+														value={values.companySize}
+														onValueChange={(value) => {
+															setFieldValue('companySize', value);
 														}}
-														isInvalid={
-															!!errors.companySize
-														}
-														errorMessage={
-															errors.companySize
-														}
+														isInvalid={!!errors.companySize}
+														errorMessage={errors.companySize}
 													>
-														<Radio value='TWENTY'>
-															10-20
-														</Radio>
-														<Radio value='FIFTY'>
-															20-50
-														</Radio>
-														<Radio value='ONE_HUNDRED'>
-															50-100
-														</Radio>
-														<Radio value='TWO_HUNDRED'>
-															100-200
-														</Radio>
-														<Radio value='FIVE_HUNDRED'>
-															200-500
-														</Radio>
-														<Radio value='ONE_THOUSAND'>
-															500-1000
-														</Radio>
+														<Radio value='TWENTY'>10-20</Radio>
+														<Radio value='FIFTY'>20-50</Radio>
+														<Radio value='ONE_HUNDRED'>50-100</Radio>
+														<Radio value='TWO_HUNDRED'>100-200</Radio>
+														<Radio value='FIVE_HUNDRED'>200-500</Radio>
+														<Radio value='ONE_THOUSAND'>500-1000</Radio>
 													</RadioGroup>
 												</div>
 												<div className='col-span-12'>
@@ -197,12 +150,8 @@ function CreateCompany() {
 														label='Mô tả công ty'
 														labelPlacement='outside'
 														placeholder='VD: ZIT Software là công ty phần mềm...'
-														isInvalid={
-															!!errors.description
-														}
-														errorMessage={
-															errors.description
-														}
+														isInvalid={!!errors.description}
+														errorMessage={errors.description}
 													/>
 												</div>
 												<div className='col-span-12'>
@@ -210,12 +159,8 @@ function CreateCompany() {
 														labelPlacement='outside'
 														onChange={handleChange}
 														value={values.address}
-														isInvalid={
-															!!errors.address
-														}
-														errorMessage={
-															errors.address
-														}
+														isInvalid={!!errors.address}
+														errorMessage={errors.address}
 														name='address'
 														label='Địa chỉ công ty'
 														placeholder='VD: B3-10, Đường số 3...'
@@ -224,9 +169,7 @@ function CreateCompany() {
 												<div className='col-span-12'>
 													<LocationPicker
 														position={position}
-														setPosition={
-															setPosition
-														}
+														setPosition={setPosition}
 														draggable
 													/>
 												</div>
@@ -234,10 +177,7 @@ function CreateCompany() {
 										</CardBody>
 										<Divider />
 										<CardFooter className='flex justify-end'>
-											<Button
-												type='submit'
-												color='primary'
-											>
+											<Button type='submit' color='primary'>
 												Lưu
 											</Button>
 										</CardFooter>
@@ -245,19 +185,12 @@ function CreateCompany() {
 								</form>
 							)}
 						</Formik>
-						<UploadImageModal
-							type={type}
-							setType={setType}
-							isOpen={isOpen}
-							onOpenChange={onOpenChange}
-						/>
+						<UploadImageModal type={type} setType={setType} isOpen={isOpen} onOpenChange={onOpenChange} />
 					</div>
 					<div className='col-span-4'>
 						<Card className='w-full p-5'>
 							<CardHeader>
-								<h1 className='font-bold text-2xl'>
-									Các Nhân Viên
-								</h1>
+								<h1 className='font-bold text-2xl'>Các Nhân Viên</h1>
 							</CardHeader>
 							<Divider />
 							<CardBody></CardBody>

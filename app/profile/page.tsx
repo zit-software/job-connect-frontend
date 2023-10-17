@@ -33,39 +33,23 @@ export default function ProfilePage() {
 					</div>
 
 					<div className='flex flex-col gap-2 py-2 px-4'>
-						<Chip
-							variant='light'
-							startContent={<i className='bx bx-user'></i>}
-						>
+						<Chip variant='light' startContent={<i className='bx bx-user'></i>}>
 							<strong>Họ và tên:</strong> {user.fullName}
 						</Chip>
 
-						<Chip
-							variant='light'
-							startContent={<i className='bx bx-male-female'></i>}
-						>
+						<Chip variant='light' startContent={<i className='bx bx-male-female'></i>}>
 							<strong>Giới tính:</strong> {user.gender}
 						</Chip>
 
-						<Chip
-							variant='light'
-							startContent={<i className='bx bx-cake'></i>}
-						>
-							<strong>Ngày sinh:</strong>{' '}
-							{dayjs(user.dob).format('DD/MM/YYYY')}
+						<Chip variant='light' startContent={<i className='bx bx-cake'></i>}>
+							<strong>Ngày sinh:</strong> {dayjs(user.dob).format('DD/MM/YYYY')}
 						</Chip>
 
-						<Chip
-							variant='light'
-							startContent={<i className='bx bx-envelope'></i>}
-						>
+						<Chip variant='light' startContent={<i className='bx bx-envelope'></i>}>
 							<strong>Email:</strong> {user.email}
 						</Chip>
 
-						<Chip
-							variant='light'
-							startContent={<i className='bx bx-phone'></i>}
-						>
+						<Chip variant='light' startContent={<i className='bx bx-phone'></i>}>
 							<strong>Số điện thoại:</strong> {user.phoneNumber}
 						</Chip>
 					</div>

@@ -13,18 +13,9 @@ export default function ProfileSettingPage() {
 			<h2 className='font-bold text-lg mb-2'>Thông tin cá nhân</h2>
 
 			<form className='flex flex-col gap-3 w-full'>
-				<Input
-					label='Họ tên'
-					placeholder='Nguyễn Văn Zịt'
-					value={user.fullName}
-				/>
+				<Input label='Họ tên' placeholder='Nguyễn Văn Zịt' value={user.fullName} />
 
-				<Input
-					label='Email'
-					placeholder='root@zit.com'
-					disabled
-					value={user.email}
-				/>
+				<Input label='Email' placeholder='root@zit.com' disabled value={user.email} />
 
 				<RadioGroup label='Giới tính' value={user.gender}>
 					<Radio key='MALE' value='MALE'>
@@ -36,12 +27,7 @@ export default function ProfileSettingPage() {
 					</Radio>
 				</RadioGroup>
 
-				<Button
-					type='submit'
-					color='primary'
-					className='w-fit'
-					startContent={<i className='bx bx-save'></i>}
-				>
+				<Button type='submit' color='primary' className='w-fit' startContent={<i className='bx bx-save'></i>}>
 					Cập nhật
 				</Button>
 			</form>

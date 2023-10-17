@@ -4,5 +4,6 @@ import { BaseModel } from './BaseModel';
 export interface Resume extends BaseModel {
 	id: number;
 	jobTitle: string;
+	content: string;
 	skills: Skill[];
 }

@@ -41,10 +41,9 @@ export default function AuthPage() {
 				return router.push(`/auth/register`);
 			}
 
-			const { accessToken, refreshToken, expirationTime } =
-				await authService.socialLogin({
-					accessToken: idToken,
-				});
+			const { accessToken, refreshToken, expirationTime } = await authService.socialLogin({
+				accessToken: idToken,
+			});
 
 			tokenService.accessToken = accessToken;
 			tokenService.refreshToken = refreshToken;
@@ -82,9 +81,7 @@ export default function AuthPage() {
 					Job Connect
 				</h2>
 
-				<p className='text-center text-default-600'>
-					Đăng nhập để tìm kiếm công việc phù hợp với bạn
-				</p>
+				<p className='text-center text-default-600'>Đăng nhập để tìm kiếm công việc phù hợp với bạn</p>
 
 				<Button
 					color='primary'
@@ -94,15 +91,11 @@ export default function AuthPage() {
 					isLoading={isSigningIn}
 					onClick={handleSignIn}
 				>
-					<i className='bx bxl-google'></i> Tiếp tục với tài khoản
-					Google
+					<i className='bx bxl-google'></i> Tiếp tục với tài khoản Google
 				</Button>
 			</div>
 			<div className='col-span-2 md:col-span-1'>
-				<Lottie
-					animationData={jobProposalLottie}
-					className='aspect-square'
-				/>
+				<Lottie animationData={jobProposalLottie} className='aspect-square' />
 			</div>
 		</div>
 	);

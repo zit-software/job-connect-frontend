@@ -22,9 +22,7 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 			<AuthProvider>
 				<QueryClientProvider client={queryClient}>
 					<NextUIProvider>
-						<NextThemesProvider {...themeProps}>
-							{children}
-						</NextThemesProvider>
+						<NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
 					</NextUIProvider>
 				</QueryClientProvider>
 			</AuthProvider>

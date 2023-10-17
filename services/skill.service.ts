@@ -28,9 +28,7 @@ class SkillService {
 		this.client = createHttpClient('skill');
 	}
 
-	async getAllSkills(
-		options: GetAllSkillOptions = defaultGetAllSkillOptions,
-	) {
+	async getAllSkills(options: GetAllSkillOptions = defaultGetAllSkillOptions) {
 		return (await this.client.get('', {
 			params: options,
 		})) as Paginationable<Skill>;

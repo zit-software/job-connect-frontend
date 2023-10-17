@@ -44,12 +44,7 @@ export default function Home() {
 		<>
 			<div className='w-full py-24 bg-gradient-to-tr from-violet-200 to-blue-200'>
 				<div className='container mx-auto max-w-[1280px] min-h-64'>
-					<Carousel
-						responsive={responsive}
-						autoPlaySpeed={2500}
-						autoPlay
-						infinite
-					>
+					<Carousel responsive={responsive} autoPlaySpeed={2500} autoPlay infinite>
 						{mockBanners.map((banner) => (
 							<a
 								href={banner.href}
@@ -73,9 +68,7 @@ export default function Home() {
 
 					<NextLink href='/hot-jobs' className='text-sm'>
 						<Button
-							endContent={
-								<i className='bx bx-chevrons-right'></i>
-							}
+							endContent={<i className='bx bx-chevrons-right'></i>}
 							size='sm'
 							color='primary'
 							variant='light'

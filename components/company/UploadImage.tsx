@@ -1,11 +1,4 @@
-import {
-	Button,
-	Modal,
-	ModalBody,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-} from '@nextui-org/react';
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { type } from 'os';
 import StyledDropzone from './DropZone';
 import { useEffect, useState } from 'react';
@@ -15,12 +8,7 @@ interface UploadImageModalProps {
 	type: string;
 	setType: (type: string) => void;
 }
-function UploadImageModal({
-	isOpen,
-	onOpenChange,
-	type,
-	setType,
-}: UploadImageModalProps) {
+function UploadImageModal({ isOpen, onOpenChange, type, setType }: UploadImageModalProps) {
 	const [files, setFiles] = useState<File[]>([]);
 	const closeModal = (onClose: () => void) => {
 		onClose();
@@ -41,8 +29,7 @@ function UploadImageModal({
 	));
 
 	useEffect(() => {
-		return () =>
-			files.forEach((file: any) => URL.revokeObjectURL(file.preview));
+		return () => files.forEach((file: any) => URL.revokeObjectURL(file.preview));
 	}, []);
 	return (
 		<Modal
@@ -57,26 +44,17 @@ function UploadImageModal({
 				{(onClose) => (
 					<>
 						<ModalHeader className='flex flex-col gap-1'>
-							{type === 'logo'
-								? 'Logo công ty'
-								: 'Banner công ty'}
+							{type === 'logo' ? 'Logo công ty' : 'Banner công ty'}
 						</ModalHeader>
 						<ModalBody>
 							<div>{thumbs}</div>
 							<StyledDropzone setFiles={setFiles} />
 						</ModalBody>
 						<ModalFooter>
-							<Button
-								color='danger'
-								variant='light'
-								onPress={() => closeModal(onClose)}
-							>
+							<Button color='danger' variant='light' onPress={() => closeModal(onClose)}>
 								Hủy
 							</Button>
-							<Button
-								color='primary'
-								onPress={() => closeModal(onClose)}
-							>
+							<Button color='primary' onPress={() => closeModal(onClose)}>
 								Lưu
 							</Button>
 						</ModalFooter>

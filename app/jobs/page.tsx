@@ -21,10 +21,7 @@ export default function JobsPage() {
 					'my-8 text-2xl text-default-600 font-bold flex flex-col text-center justify-center items-center gap-2',
 				)}
 			>
-				Tìm kiếm việc làm tại{' '}
-				<span className={clsx(title({ color: 'blue' }), 'font-black')}>
-					Job Connect
-				</span>
+				Tìm kiếm việc làm tại <span className={clsx(title({ color: 'blue' }), 'font-black')}>Job Connect</span>
 			</h2>
 
 			<JobsFilter />

@@ -1,17 +1,5 @@
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import {
-	MapContainer,
-	TileLayer,
-	Marker,
-	Popup,
-	useMapEvents,
-} from 'react-leaflet';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import icon from '@/assets/images/marker-icon-2x.png';
 import L, { LatLngExpression } from 'leaflet';
@@ -25,11 +13,7 @@ export interface DraggableMarkerProps {
 	setPosition?: any;
 }
 
-function DraggableMarker({
-	draggable,
-	position,
-	setPosition,
-}: DraggableMarkerProps) {
+function DraggableMarker({ draggable, position, setPosition }: DraggableMarkerProps) {
 	const markerRef = useRef(null);
 	const map = useMapEvents({
 		locationfound(e) {
@@ -70,28 +54,15 @@ function DraggableMarker({
 		></Marker>
 	);
 }
-const LocationPicker = ({
-	position,
-	setPosition,
-	draggable,
-}: DraggableMarkerProps) => {
+const LocationPicker = ({ position, setPosition, draggable }: DraggableMarkerProps) => {
 	return (
 		<div className='h-[400px]'>
-			<MapContainer
-				style={{ height: '100%' }}
-				zoom={13}
-				scrollWheelZoom={false}
-				center={position}
-			>
+			<MapContainer style={{ height: '100%' }} zoom={13} scrollWheelZoom={false} center={position}>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
 				/>
-				<DraggableMarker
-					draggable={draggable}
-					position={position}
-					setPosition={setPosition}
-				/>
+				<DraggableMarker draggable={draggable} position={position} setPosition={setPosition} />
 			</MapContainer>
 		</div>
 	);

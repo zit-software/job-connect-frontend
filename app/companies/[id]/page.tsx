@@ -54,10 +54,7 @@ async function CompanyDetail() {
 				<header className='grid grid-cols-12'>
 					<div className='col col-span-12 shadow-lg rounded-2xl overflow-hidden'>
 						<div className='w-full h-[200px] relative'>
-							<img
-								className='w-full h-full object-cover'
-								src={company.banner}
-							/>
+							<img className='w-full h-full object-cover' src={company.banner} />
 							<img
 								src={company.image}
 								className='rounded-full absolute left-5 bottom-0 translate-y-1/2 transform w-40 h-40 border-4 border-white'
@@ -65,17 +62,13 @@ async function CompanyDetail() {
 						</div>
 
 						<div className='bg-gradient-to-l from-violet-500 to-blue-500 w-full p-5 pl-[200px]'>
-							<h1 className='text-2xl font-bold text-white'>
-								{company.name}
-							</h1>
+							<h1 className='text-2xl font-bold text-white'>{company.name}</h1>
 							<div className='flex justify-between items-center'>
 								<div className='flex gap-2'>
 									<Chip
 										variant='light'
 										className='text-white'
-										startContent={
-											<i className='bx bx-globe'></i>
-										}
+										startContent={<i className='bx bx-globe'></i>}
 									>
 										http://zit-software.com
 									</Chip>
@@ -83,9 +76,7 @@ async function CompanyDetail() {
 									<Chip
 										variant='light'
 										className='text-white'
-										startContent={
-											<i className='bx bx-globe'></i>
-										}
+										startContent={<i className='bx bx-globe'></i>}
 									>
 										1000+ nhân viên
 									</Chip>
@@ -93,9 +84,7 @@ async function CompanyDetail() {
 								<Button
 									size='md'
 									className='bg-white text-blue-600 font-bold'
-									startContent={
-										<i className='bx bx-briefcase'></i>
-									}
+									startContent={<i className='bx bx-briefcase'></i>}
 								>
 									Xem Việc Làm
 								</Button>
@@ -109,23 +98,16 @@ async function CompanyDetail() {
 						<CompanySection header='Giới thiệu công ty'>
 							<div className='p-5'>
 								{/* {company.description} */}
-								Lorem ipsum dolor sit amet consectetur
-								adipisicing elit. Molestiae accusamus ullam
-								laudantium sapiente perferendis esse laborum
-								error quidem ipsum. Nulla, ipsa quibusdam
-								officia amet necessitatibus sit, harum maxime in
-								animi earum exercitationem architecto minus
-								doloremque vel excepturi minima. Delectus ipsa
-								earum, harum, libero rem illo voluptatum quas
-								debitis, omnis perspiciatis ex! Ratione sint
-								cupiditate vel, quasi dolorum placeat aperiam
-								sequi corporis beatae temporibus sapiente ea
-								voluptatem mollitia! Similique tempora nostrum
-								autem perspiciatis reprehenderit non sint unde
-								neque dolorem aliquam placeat modi quibusdam
-								perferendis debitis est assumenda earum, maiores
-								nisi quis. Aliquid accusantium labore veritatis
-								ipsa eligendi eaque iusto esse voluptatem!
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae accusamus ullam
+								laudantium sapiente perferendis esse laborum error quidem ipsum. Nulla, ipsa quibusdam
+								officia amet necessitatibus sit, harum maxime in animi earum exercitationem architecto
+								minus doloremque vel excepturi minima. Delectus ipsa earum, harum, libero rem illo
+								voluptatum quas debitis, omnis perspiciatis ex! Ratione sint cupiditate vel, quasi
+								dolorum placeat aperiam sequi corporis beatae temporibus sapiente ea voluptatem
+								mollitia! Similique tempora nostrum autem perspiciatis reprehenderit non sint unde neque
+								dolorem aliquam placeat modi quibusdam perferendis debitis est assumenda earum, maiores
+								nisi quis. Aliquid accusantium labore veritatis ipsa eligendi eaque iusto esse
+								voluptatem!
 							</div>
 						</CompanySection>
 						<CompanySection header='Tuyển dụng'>

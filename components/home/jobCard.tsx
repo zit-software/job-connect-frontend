@@ -1,19 +1,6 @@
-import {
-	Card,
-	CardHeader,
-	CardBody,
-	CardFooter,
-	Image,
-	Divider,
-	Chip,
-	Button,
-} from '@nextui-org/react';
+import { Card, CardHeader, CardBody, CardFooter, Image, Divider, Chip, Button } from '@nextui-org/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faFloppyDisk,
-	faFile,
-	faCircleInfo,
-} from '@fortawesome/free-solid-svg-icons';
+import { faFloppyDisk, faFile, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 import { formatVndMoney } from '@/utils/common';
 export interface JobCardProps {
 	jobId: number;
@@ -30,18 +17,10 @@ function JobCard(props: JobCardProps) {
 	return (
 		<Card>
 			<CardHeader className='flex gap-3'>
-				<Image
-					alt='nextui logo'
-					height={40}
-					radius='sm'
-					src={props.companyImage}
-					width={40}
-				/>
+				<Image alt='nextui logo' height={40} radius='sm' src={props.companyImage} width={40} />
 				<div className='flex flex-col'>
 					<p className='text-md'>{props.title}</p>
-					<p className='text-small text-default-500'>
-						{props.companyName}
-					</p>
+					<p className='text-small text-default-500'>{props.companyName}</p>
 				</div>
 			</CardHeader>
 			<Divider />
@@ -71,12 +50,7 @@ function JobCard(props: JobCardProps) {
 						Chi tiết
 						<FontAwesomeIcon icon={faCircleInfo} />
 					</Button>
-					<Button
-						variant='light'
-						color='primary'
-						className='ms-2'
-						size='sm'
-					>
+					<Button variant='light' color='primary' className='ms-2' size='sm'>
 						Ứng tuyển
 						<FontAwesomeIcon icon={faFile} />
 					</Button>

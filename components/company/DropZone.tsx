@@ -34,13 +34,7 @@ interface StyledDropzoneProps {
 }
 
 function StyledDropzone({ setFiles }: StyledDropzoneProps) {
-	const {
-		getRootProps,
-		getInputProps,
-		isFocused,
-		isDragAccept,
-		isDragReject,
-	} = useDropzone({
+	const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
 		accept: { 'image/*': [] },
 		onDrop: (acceptedFiles) => {
 			setFiles(

@@ -13,12 +13,7 @@ function CompanyCard(props: CompanyCardProps) {
 		router.push(`/companies/${id}`);
 	};
 	return (
-		<Card
-			isHoverable
-			isPressable
-			onPress={() => handleClick(props.company.id)}
-			className='cursor-pointer'
-		>
+		<Card isHoverable isPressable onPress={() => handleClick(props.company.id)} className='cursor-pointer'>
 			<CardHeader className='h-[100px] md:h-[220px]'>
 				<div className='relative w-full'>
 					<img
@@ -35,41 +30,27 @@ function CompanyCard(props: CompanyCardProps) {
 			</CardHeader>
 			<CardBody className='mt-5'>
 				<div>
-					<h1 className='text-size-2xl font-bold'>
-						{props.company.name}
-					</h1>
+					<h1 className='text-size-2xl font-bold'>{props.company.name}</h1>
 					<p className='address'>{props.company.address}</p>
 					<p className='company-description'>
 						{/* {props.company.description} */}
-						Lorem, ipsum dolor sit amet consectetur adipisicing
-						elit. Quae provident nemo harum aperiam est veniam
-						mollitia ut reprehenderit eveniet consequuntur sed
-						blanditiis tempore necessitatibus saepe voluptatem,
-						suscipit, omnis neque dolore quam doloremque rem earum
-						doloribus? Fuga consectetur maxime possimus. Atque rem
-						magnam qui corporis quia minima placeat blanditiis
-						doloremque aliquam ipsam nostrum eos odit, praesentium
-						enim excepturi ipsum dolor ut distinctio maxime! Ullam
-						quod corrupti adipisci deleniti dolores, optio
-						reiciendis sint, voluptas, harum nemo beatae repudiandae
-						perspiciatis! Repudiandae nam iusto ipsam ut. Vero id
-						provident fuga ut delectus laborum incidunt maiores
-						nesciunt. Eius corporis animi quo placeat, aut totam
-						voluptatum neque assumenda vitae nemo eveniet saepe
-						delectus tenetur at veniam exercitationem obcaecati
-						commodi sunt molestiae repellendus illum. Voluptates
-						iure nesciunt, hic doloribus porro, perspiciatis laborum
-						sequi eum temporibus nisi suscipit ratione nulla
-						explicabo alias tempora numquam pariatur voluptatum?
-						Esse minus earum error ut omnis praesentium aspernatur,
-						provident iste dolorum necessitatibus libero nesciunt,
-						labore unde eius a ipsam repellat. Molestiae ipsum nam
-						at ea ex ratione aliquid quae quasi distinctio quod,
-						unde repellendus alias blanditiis commodi ut delectus
-						cum molestias enim aspernatur consequatur quas facere
-						dolore eveniet? Obcaecati sit voluptates illum labore
-						tenetur autem suscipit accusamus. Facere officia soluta
-						voluptatibus illum.
+						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae provident nemo harum aperiam est
+						veniam mollitia ut reprehenderit eveniet consequuntur sed blanditiis tempore necessitatibus
+						saepe voluptatem, suscipit, omnis neque dolore quam doloremque rem earum doloribus? Fuga
+						consectetur maxime possimus. Atque rem magnam qui corporis quia minima placeat blanditiis
+						doloremque aliquam ipsam nostrum eos odit, praesentium enim excepturi ipsum dolor ut distinctio
+						maxime! Ullam quod corrupti adipisci deleniti dolores, optio reiciendis sint, voluptas, harum
+						nemo beatae repudiandae perspiciatis! Repudiandae nam iusto ipsam ut. Vero id provident fuga ut
+						delectus laborum incidunt maiores nesciunt. Eius corporis animi quo placeat, aut totam
+						voluptatum neque assumenda vitae nemo eveniet saepe delectus tenetur at veniam exercitationem
+						obcaecati commodi sunt molestiae repellendus illum. Voluptates iure nesciunt, hic doloribus
+						porro, perspiciatis laborum sequi eum temporibus nisi suscipit ratione nulla explicabo alias
+						tempora numquam pariatur voluptatum? Esse minus earum error ut omnis praesentium aspernatur,
+						provident iste dolorum necessitatibus libero nesciunt, labore unde eius a ipsam repellat.
+						Molestiae ipsum nam at ea ex ratione aliquid quae quasi distinctio quod, unde repellendus alias
+						blanditiis commodi ut delectus cum molestias enim aspernatur consequatur quas facere dolore
+						eveniet? Obcaecati sit voluptates illum labore tenetur autem suscipit accusamus. Facere officia
+						soluta voluptatibus illum.
 					</p>
 				</div>
 			</CardBody>

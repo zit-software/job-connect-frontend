@@ -3,13 +3,7 @@
 import Collapse from '@/components/collapse';
 import useDebounce from '@/hooks/useDebounce';
 import { Skill } from '@/services/skill.service';
-import {
-	Button,
-	Checkbox,
-	CheckboxGroup,
-	Input,
-	Spinner,
-} from '@nextui-org/react';
+import { Button, Checkbox, CheckboxGroup, Input, Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import SkillFilter from './SkillFilter';
 import WorkTypeFiltter from './WorkTypeFiltter';
@@ -43,9 +37,7 @@ export default function JobsFilter() {
 					size='lg'
 					label='Tìm kiếm'
 					className='flex-1'
-					startContent={
-						<i className='bx bx-search-alt-2 text-2xl text-gray-500'></i>
-					}
+					startContent={<i className='bx bx-search-alt-2 text-2xl text-gray-500'></i>}
 					value={searchText}
 					endContent={isSearching && <Spinner />}
 					onChange={(event) => setSearchText(event.target.value)}

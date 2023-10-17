@@ -33,10 +33,7 @@ interface SkillListProps {
 	onSubmit?: (skills: Skill[]) => void;
 }
 
-function SkillList({
-	selectedSkills: _selectedSkills = [],
-	onSubmit,
-}: SkillListProps) {
+function SkillList({ selectedSkills: _selectedSkills = [], onSubmit }: SkillListProps) {
 	const [skillList, setSkillList] = useState<Paginationable<Skill>>();
 	const [searchText, setSearchText] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
@@ -76,18 +73,13 @@ function SkillList({
 	const renderedSkillList = useMemo<Skill[]>(() => {
 		return (
 			skillList?.content.sort((a, b) => {
-				return (
-					selectedSkillIds.indexOf(b.id.toString()) -
-					selectedSkillIds.indexOf(a.id.toString())
-				);
+				return selectedSkillIds.indexOf(b.id.toString()) - selectedSkillIds.indexOf(a.id.toString());
 			}) || []
 		);
 	}, [selectedSkillIds, skillList]);
 
 	useEffect(() => {
-		setSelectedSkillIds(
-			_selectedSkills.map((skill) => skill.id.toString()),
-		);
+		setSelectedSkillIds(_selectedSkills.map((skill) => skill.id.toString()));
 	}, [_selectedSkills]);
 
 	const removeSkill = (id: number) => {
@@ -102,9 +94,7 @@ function SkillList({
 				<div className='sticky top-0 z-10 bg-background'>
 					<Input
 						placeholder='Nhập tên kỹ năng để tìm kiếm'
-						startContent={
-							<i className='bx bx-search-alt-2 text-2xl text-gray-500'></i>
-						}
+						startContent={<i className='bx bx-search-alt-2 text-2xl text-gray-500'></i>}
 						className='mb-2'
 						variant='underlined'
 						value={searchText}
@@ -114,17 +104,9 @@ function SkillList({
 
 					<h3 className='text-default-600'>Kỹ năng đã chọn</h3>
 
-					<div
-						ref={selectedSkillParent}
-						className='flex gap-1 flex-wrap'
-					>
+					<div ref={selectedSkillParent} className='flex gap-1 flex-wrap'>
 						{selectedSkills.map((skill) => (
-							<Chip
-								key={skill.id}
-								color='primary'
-								variant='dot'
-								onClose={() => removeSkill(skill.id)}
-							>
+							<Chip key={skill.id} color='primary' variant='dot' onClose={() => removeSkill(skill.id)}>
 								{skill.name}
 							</Chip>
 						))}
@@ -144,28 +126,18 @@ function SkillList({
 				>
 					<div ref={skillListParent} className='gap-2 min-h-[370px]'>
 						{renderedSkillList.map((skill) => (
-							<Checkbox
-								className='block w-full'
-								key={skill.id}
-								value={skill.id.toString()}
-							>
+							<Checkbox className='block w-full' key={skill.id} value={skill.id.toString()}>
 								{skill.name}
 							</Checkbox>
 						))}
 
-						{renderedSkillList.length === 0 && (
-							<Lottie animationData={emptyLottie} />
-						)}
+						{renderedSkillList.length === 0 && <Lottie animationData={emptyLottie} />}
 					</div>
 				</CheckboxGroup>
 			</ModalBody>
 
 			<ModalFooter>
-				<Button
-					color='primary'
-					variant='shadow'
-					onClick={() => onSubmit?.(selectedSkills)}
-				>
+				<Button color='primary' variant='shadow' onClick={() => onSubmit?.(selectedSkills)}>
 					Xác nhận
 				</Button>
 			</ModalFooter>
@@ -173,21 +145,11 @@ function SkillList({
 	);
 }
 
-export default function SearchSkillModal({
-	selectedSkills = [],
-	onFinish,
-	...props
-}: SearchSkillModalProps) {
+export default function SearchSkillModal({ selectedSkills = [], onFinish, ...props }: SearchSkillModalProps) {
 	return (
 		<Modal scrollBehavior='inside' placement='top' {...props}>
 			<ModalContent>
-				{() => (
-					<SkillList
-						key='content'
-						selectedSkills={selectedSkills}
-						onSubmit={onFinish}
-					/>
-				)}
+				{() => <SkillList key='content' selectedSkills={selectedSkills} onSubmit={onFinish} />}
 			</ModalContent>
 		</Modal>
 	);

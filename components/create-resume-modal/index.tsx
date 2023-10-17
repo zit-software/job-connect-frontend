@@ -1,14 +1,6 @@
 import { Resume } from '@/models/Resume';
-import resumeService, {
-	CreateResumeRequestDto,
-} from '@/services/resume.service';
-import {
-	Modal,
-	ModalBody,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-} from '@nextui-org/modal';
+import resumeService, { CreateResumeRequestDto } from '@/services/resume.service';
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/modal';
 import { Button, Input } from '@nextui-org/react';
 import { Formik } from 'formik';
 import { useState } from 'react';
@@ -31,10 +23,7 @@ const validationSchema = Yup.object().shape({
 	jobTitle: Yup.string().required('Vui lòng nhập tiêu đề'),
 });
 
-export default function CreateResumeModal({
-	onCreated,
-	...props
-}: CreateResumeModalProps) {
+export default function CreateResumeModal({ onCreated, ...props }: CreateResumeModalProps) {
 	const [isCreating, setIsCreating] = useState(false);
 
 	const handleSubmit = async (value: CreateResumeRequestDto) => {
@@ -81,19 +70,11 @@ export default function CreateResumeModal({
 								</ModalBody>
 
 								<ModalFooter>
-									<Button
-										type='button'
-										variant='light'
-										onClick={onClose}
-									>
+									<Button type='button' variant='light' onClick={onClose}>
 										Hủy
 									</Button>
 
-									<Button
-										type='submit'
-										color='primary'
-										isLoading={isCreating}
-									>
+									<Button type='submit' color='primary' isLoading={isCreating}>
 										Tạo
 									</Button>
 								</ModalFooter>

@@ -55,24 +55,15 @@ class AuthService {
 	}
 
 	async socialLogin(body: LoginRequestDto) {
-		return (await this.client.post(
-			'/social-login',
-			body,
-		)) as LoginResponseDto;
+		return (await this.client.post('/social-login', body)) as LoginResponseDto;
 	}
 
 	async register(body: RegisterRequestDto) {
-		return (await this.client.post(
-			'/register',
-			body,
-		)) as RegisterResponseDto;
+		return (await this.client.post('/register', body)) as RegisterResponseDto;
 	}
 
 	async checkUser(body: CheckUserRequestDto) {
-		return (await this.client.post(
-			'/check-user',
-			body,
-		)) as CheckUserResponseDto;
+		return (await this.client.post('/check-user', body)) as CheckUserResponseDto;
 	}
 
 	async identify() {
@@ -80,10 +71,7 @@ class AuthService {
 	}
 
 	async refreshToken(body: RefreshTokenRequestDto) {
-		return (await this.client.post(
-			'/refresh-token',
-			body,
-		)) as RefreshTokenResponseDto;
+		return (await this.client.post('/refresh-token', body)) as RefreshTokenResponseDto;
 	}
 
 	async logout(body: RefreshTokenRequestDto) {

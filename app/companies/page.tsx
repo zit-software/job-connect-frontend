@@ -75,42 +75,27 @@ function Companies() {
 						<Tab key='top' title='Top công ty'></Tab>
 					</Tabs>
 					<div className='mt-10'>
-						<h1 className='mt-5 font-bold text-4xl title'>
-							Khám phá vô vàn công ty thuộc lĩnh vực IT!
-						</h1>
-						<p className='my-2 font-size-2xl'>
-							Tìm hiểu các công ty phù hợp dành cho bạn.
-						</p>
+						<h1 className='mt-5 font-bold text-4xl title'>Khám phá vô vàn công ty thuộc lĩnh vực IT!</h1>
+						<p className='my-2 font-size-2xl'>Tìm hiểu các công ty phù hợp dành cho bạn.</p>
 						<Input
 							placeholder='Công Ty TNHH...'
 							variant='flat'
 							size='lg'
 							className='flex-1'
-							startContent={
-								<i className='bx bx-search-alt-2 text-2xl text-gray-500'></i>
-							}
+							startContent={<i className='bx bx-search-alt-2 text-2xl text-gray-500'></i>}
 							endContent={isSearching && <Spinner />}
 							onChange={(event) => setSearch(event.target.value)}
 						/>
 					</div>
 				</div>
 				<div className=' hidden md:col-span-3 md:block'>
-					<Lottie
-						animationData={jobProposalLottie}
-						className='aspect-square'
-					/>
+					<Lottie animationData={jobProposalLottie} className='aspect-square' />
 				</div>
 			</div>
 			<div className='container max-w[1280px]'>
-				<div
-					ref={autoAnimateParent}
-					className='grid grid-cols-12 gap-4 mt-5'
-				>
+				<div ref={autoAnimateParent} className='grid grid-cols-12 gap-4 mt-5'>
 					{mockedCompanies.map((company) => (
-						<div
-							key={company.id}
-							className='col-span-12 sm:col-span-6 md:col-span-3'
-						>
+						<div key={company.id} className='col-span-12 sm:col-span-6 md:col-span-3'>
 							<CompanyCard company={company}></CompanyCard>
 						</div>
 					))}

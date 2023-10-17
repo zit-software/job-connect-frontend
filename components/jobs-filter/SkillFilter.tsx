@@ -1,13 +1,7 @@
 import skillService, { Skill } from '@/services/skill.service';
 import { Paginationable } from '@/types/paginationable';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import {
-	Button,
-	Checkbox,
-	CheckboxGroup,
-	Chip,
-	Spinner,
-} from '@nextui-org/react';
+import { Button, Checkbox, CheckboxGroup, Chip, Spinner } from '@nextui-org/react';
 import { useEffect, useMemo, useState } from 'react';
 import SearchSkillModal from './SearchSkillModal';
 import { cachedSkills } from './cached-skills';
@@ -45,9 +39,7 @@ export default function SkillFilter({ onChange }: SkillFilterProps) {
 	};
 
 	const removeSkill = (skillId: string) => {
-		setSelectedSkillIds((prev) =>
-			prev.filter((id) => id !== skillId.toString()),
-		);
+		setSelectedSkillIds((prev) => prev.filter((id) => id !== skillId.toString()));
 	};
 
 	const handleSelectedSkillIdsChange = (skills: Skill[]) => {
@@ -69,10 +61,7 @@ export default function SkillFilter({ onChange }: SkillFilterProps) {
 	const sortedSkillList = useMemo(() => {
 		return (
 			skillList?.content.sort((a, b) => {
-				return (
-					selectedSkillIds.indexOf(b.id.toString()) -
-					selectedSkillIds.indexOf(a.id.toString())
-				);
+				return selectedSkillIds.indexOf(b.id.toString()) - selectedSkillIds.indexOf(a.id.toString());
 			}) || []
 		);
 	}, [skillList, selectedSkillIds]);
@@ -104,11 +93,7 @@ export default function SkillFilter({ onChange }: SkillFilterProps) {
 				<div className='columns-2 gap-1' ref={sortedSkillListParent}>
 					{sortedSkillList.length ? (
 						sortedSkillList.map(({ id, name }) => (
-							<Checkbox
-								key={id}
-								value={id.toString()}
-								className='block'
-							>
+							<Checkbox key={id} value={id.toString()} className='block'>
 								{name}
 							</Checkbox>
 						))

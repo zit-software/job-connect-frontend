@@ -10,14 +10,7 @@ import tokenService from '@/services/token.service';
 import { selectIdToken } from '@/store/idToken';
 import { setUser } from '@/store/user';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import {
-	Button,
-	Input,
-	Radio,
-	RadioGroup,
-	Select,
-	SelectItem,
-} from '@nextui-org/react';
+import { Button, Input, Radio, RadioGroup, Select, SelectItem } from '@nextui-org/react';
 import clsx from 'clsx';
 import { Formik } from 'formik';
 import Lottie from 'lottie-react';
@@ -39,9 +32,7 @@ const validationSchema = Yup.object().shape({
 	accessToken: Yup.string().required('Vui lòng nhập mã truy cập'),
 	fullName: Yup.string().required('Vui lòng nhập họ và tên'),
 	phoneNumber: Yup.string().required('Vui lòng nhập số điện thoại'),
-	userRole: Yup.string()
-		.required('Vui lòng chọn vai trò của bạn')
-		.oneOf(['APPLICANT', 'RECRUITER']),
+	userRole: Yup.string().required('Vui lòng chọn vai trò của bạn').oneOf(['APPLICANT', 'RECRUITER']),
 	dob: Yup.date().required('Vui lòng nhập ngày sinh'),
 	gender: Yup.string().required('Vui lòng chọn giới tính'),
 });
@@ -68,8 +59,7 @@ export default function RegisterPage() {
 		try {
 			setIsRegisting(true);
 
-			const { accessToken, refreshToken, expirationTime } =
-				await authService.register(values);
+			const { accessToken, refreshToken, expirationTime } = await authService.register(values);
 
 			tokenService.accessToken = accessToken;
 			tokenService.refreshToken = refreshToken;
@@ -122,14 +112,10 @@ export default function RegisterPage() {
 				onSubmit={handleSubmit}
 			>
 				{({ values, errors, handleSubmit, handleChange }) => (
-					<form
-						className='flex flex-col gap-4 mt-6 mx-auto'
-						ref={formParent}
-						onSubmit={handleSubmit}
-					>
+					<form className='flex flex-col gap-4 mt-6 mx-auto' ref={formParent} onSubmit={handleSubmit}>
 						<p className='text-default-600'>
-							Các thông tin dưới đây bao gồm ảnh đại diện và email
-							của bạn sẽ được lưu trữ trên hệ thống của chúng tôi.
+							Các thông tin dưới đây bao gồm ảnh đại diện và email của bạn sẽ được lưu trữ trên hệ thống
+							của chúng tôi.
 						</p>
 						{[1, 3].includes(step) && (
 							<>
@@ -205,43 +191,25 @@ export default function RegisterPage() {
 										<Radio
 											key='RECRUITER'
 											value='RECRUITER'
-											className={clsx(
-												'col-span-1 border-transparent border-2 rounded-xl',
-												{
-													'opacity-50':
-														values.userRole !==
-														'RECRUITER',
-													'border-blue-500':
-														values.userRole ===
-														'RECRUITER',
-												},
-											)}
+											className={clsx('col-span-1 border-transparent border-2 rounded-xl', {
+												'opacity-50': values.userRole !== 'RECRUITER',
+												'border-blue-500': values.userRole === 'RECRUITER',
+											})}
 										>
 											Nhà tuyển dụng
-											<Lottie
-												animationData={recruiterLottie}
-											/>
+											<Lottie animationData={recruiterLottie} />
 										</Radio>
 
 										<Radio
 											key='APPLICANT'
 											value='APPLICANT'
-											className={clsx(
-												'col-span-1 border-transparent border-2 rounded-xl',
-												{
-													'opacity-50':
-														values.userRole !==
-														'APPLICANT',
-													'border-blue-500':
-														values.userRole ===
-														'APPLICANT',
-												},
-											)}
+											className={clsx('col-span-1 border-transparent border-2 rounded-xl', {
+												'opacity-50': values.userRole !== 'APPLICANT',
+												'border-blue-500': values.userRole === 'APPLICANT',
+											})}
 										>
 											Người tìm việc
-											<Lottie
-												animationData={applicantLottie}
-											/>
+											<Lottie animationData={applicantLottie} />
 										</Radio>
 									</div>
 								</RadioGroup>
@@ -253,9 +221,7 @@ export default function RegisterPage() {
 								<Button
 									type='button'
 									className='flex-1'
-									startContent={
-										<i className='bx bx-left-arrow-alt'></i>
-									}
+									startContent={<i className='bx bx-left-arrow-alt'></i>}
 									onClick={prevStep}
 								>
 									Quay lại
@@ -266,21 +232,14 @@ export default function RegisterPage() {
 									color='primary'
 									type='button'
 									className='flex-1'
-									endContent={
-										<i className='bx bx-right-arrow-alt'></i>
-									}
+									endContent={<i className='bx bx-right-arrow-alt'></i>}
 									onClick={nextStep}
 								>
 									Tiếp tục
 								</Button>
 							)}
 							{step === maxStep && (
-								<Button
-									color='primary'
-									className='flex-1'
-									type='submit'
-									isLoading={isRegisting}
-								>
+								<Button color='primary' className='flex-1' type='submit' isLoading={isRegisting}>
 									Đăng ký
 								</Button>
 							)}

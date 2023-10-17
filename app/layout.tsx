@@ -25,20 +25,11 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<head />
-			<body
-				className={clsx(
-					'font-sans antialiased bg-blue-50',
-					fontSans.className,
-				)}
-			>
+			<body className={clsx('font-sans antialiased bg-blue-50', fontSans.className)}>
 				<Providers
 					themeProps={{
 						attribute: 'class',
@@ -49,7 +40,6 @@ export default function RootLayout({
 					<div className='relative flex flex-col min-h-screen'>
 						<Navbar />
 						{children}
-						<footer className='w-full flex items-center justify-center py-3'></footer>
 					</div>
 				</Providers>
 
