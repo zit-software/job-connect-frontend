@@ -7,35 +7,31 @@ import { title } from '@/components/primitives';
 import { Resume } from '@/models/Resume';
 import { queryClient } from '@/providers/QueryClientProvider';
 import resumeService from '@/services/resume.service';
-import { Button, Spinner, useDisclosure } from '@nextui-org/react';
+import { Button, Dropdown, DropdownMenu, DropdownTrigger, MenuItem, Spinner, useDisclosure } from '@nextui-org/react';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Lottie from 'lottie-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 
 export default function MyResumesPage() {
-	const [isDeleting, setIsDeleting] = useState(false);
-
 	const { data: resumeList, isLoading } = useQuery(['my-resumes'], () => resumeService.getAllMyResumes());
 
 	const { isOpen: isOpenCreateModal, onClose: onCloseCreateModal, onOpen: onOpenCreateModal } = useDisclosure();
 
 	const handlDeleteResume = async (resumeId: number) => {
 		try {
-			setIsDeleting(true);
 			await resumeService.deleteResumeById(resumeId);
 
 			queryClient.setQueryData(['my-resumes'], (oldData: any) => {
 				return oldData.filter((resume: Resume) => resume.id !== resumeId);
 			});
+
+			toast.success('Xóa CV thành công');
 		} catch (error: any) {
 			toast.error(error.message);
-		} finally {
-			setIsDeleting(false);
 		}
 	};
 
@@ -69,7 +65,7 @@ export default function MyResumesPage() {
 				</div>
 			</div>
 
-			<div className='w-[1280px] max-w-[95%] mx-auto bg-background border rounded-xl overflow-hidden -mt-10'>
+			<div className='w-[1280px] max-w-[95%] mx-auto bg-background border rounded-xl overflow-hidden -mt-10 mb-10'>
 				<div className='py-2 px-4 bg-violet-400'>
 					<h2 className='text-white font-bold text-lg'>Danh sách CV của bạn</h2>
 				</div>
@@ -104,14 +100,25 @@ export default function MyResumesPage() {
 										</Button>
 									</Link>
 
-									<Button
-										isIconOnly
-										color='danger'
-										isLoading={isDeleting}
-										onClick={() => handlDeleteResume(resume.id)}
-									>
-										<i className='bx bx-trash text-2xl'></i>
-									</Button>
+									<Dropdown>
+										<DropdownTrigger>
+											<Button
+												isIconOnly
+												color='danger'
+												startContent={<i className='bx bx-trash text-2xl'></i>}
+											></Button>
+										</DropdownTrigger>
+
+										<DropdownMenu aria-label='Xóa CV'>
+											<MenuItem
+												color='danger'
+												startContent={<i className='bx bx-trash'></i>}
+												onClick={() => handlDeleteResume(resume.id)}
+											>
+												Xóa
+											</MenuItem>
+										</DropdownMenu>
+									</Dropdown>
 								</div>
 							))}
 						</div>
