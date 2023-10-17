@@ -21,6 +21,10 @@ class ResumeService {
 		return (await this.userClient.post('', body)) as Resume;
 	}
 
+	async getAllMyResumes() {
+		return (await this.userClient.get('')) as Resume[];
+	}
+
 	async getResumeById(id: number) {
 		return (await this.client.get(`/${id}`)) as Resume;
 	}

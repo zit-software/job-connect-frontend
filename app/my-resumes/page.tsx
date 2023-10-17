@@ -4,12 +4,16 @@ import emptyLottie from '@/assets/lotties/empty.json';
 import resumeLottie from '@/assets/lotties/resume.json';
 import CreateResumeModal from '@/components/create-resume-modal';
 import { title } from '@/components/primitives';
-import { Button, useDisclosure } from '@nextui-org/react';
+import resumeService from '@/services/resume.service';
+import { Button, Spinner, useDisclosure } from '@nextui-org/react';
 import clsx from 'clsx';
 import Lottie from 'lottie-react';
 import { useRouter } from 'next/navigation';
+import { useQuery } from 'react-query';
 
 export default function MyResumesPage() {
+	const { data: resumeList, isLoading } = useQuery(['my-resumes'], () => resumeService.getAllMyResumes());
+
 	const { isOpen: isOpenCreateModal, onClose: onCloseCreateModal, onOpen: onOpenCreateModal } = useDisclosure();
 
 	const router = useRouter();
@@ -48,7 +52,15 @@ export default function MyResumesPage() {
 				</div>
 
 				<div className='p-2'>
-					<Lottie animationData={emptyLottie} className='w-64 mx-auto' />
+					{isLoading ? (
+						<div className='mx-auto my-10 w-fit'>
+							<Spinner />
+						</div>
+					) : resumeList?.length ? (
+						<></>
+					) : (
+						<Lottie animationData={emptyLottie} className='w-64 mx-auto' />
+					)}
 				</div>
 			</div>
 
