@@ -67,7 +67,7 @@ function Companies() {
 		},
 	];
 	return (
-		<div className='container max-w-[1440px] mx-auto my-5'>
+		<div className='container max-w-[95%] w-[1280px] mx-auto my-5'>
 			<div className='grid grid-cols-12 bg-gradient-to-b rounded-2xl from-blue-200 to-blue-100 w-full p-10'>
 				<div className='col-span-12 md:col-span-9'>
 					<Tabs color='primary'>

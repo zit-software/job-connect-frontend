@@ -62,7 +62,7 @@ export default function Home() {
 	return (
 		<>
 			<div className='w-full py-24 bg-gradient-to-tr from-violet-200 to-blue-200'>
-				<div className='container mx-auto max-w-[1280px] min-h-64'>
+				<div className='container mx-auto w-[1280px] max-w[95%] min-h-64'>
 					<Carousel responsive={responsive} autoPlaySpeed={2500} autoPlay infinite>
 						{mockBanners.map((banner) => (
 							<a
@@ -79,7 +79,7 @@ export default function Home() {
 				</div>
 			</div>
 
-			<div className='container mx-auto max-w-[1280px]'>
+			<div className='container mx-auto w-[1280px] max-w[95%]'>
 				<div className='my-5'>
 					<h1>
 						<span className='text-primary text-3xl font-bold flex-1'>

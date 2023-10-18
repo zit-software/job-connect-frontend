@@ -6,7 +6,6 @@ import CompanySection from '@/components/company/CompanySection';
 import LocationMap from '@/components/company/LocationMap';
 import { Button, Chip } from '@nextui-org/react';
 import { LatLngExpression } from 'leaflet';
-import Head from 'next/head';
 import './company-detail.css';
 
 import 'leaflet/dist/leaflet.css';
@@ -37,7 +36,7 @@ function Contact({ address }: { address: string }) {
 	);
 }
 
-async function CompanyDetail() {
+function CompanyDetail() {
 	const company = {
 		id: 1,
 		name: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
@@ -56,10 +55,7 @@ async function CompanyDetail() {
 
 	return (
 		<>
-			<Head>
-				<title>{company.name}</title>
-			</Head>
-			<div className='container max-w-[1280px] mx-auto my-5'>
+			<div className='w-[1280px] max-w-[95%] mx-auto my-5'>
 				<header className='grid grid-cols-12'>
 					<div className='col col-span-12 shadow-lg rounded-2xl overflow-hidden'>
 						<div className='w-full h-[200px] relative'>

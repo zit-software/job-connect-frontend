@@ -12,7 +12,7 @@ export default function ProfilePage() {
 	if (!user) return <Spinner />;
 
 	return (
-		<div className='w-[1280px] max-w-full mx-auto'>
+		<div className='w-[1280px] max-w-[95%] mx-auto'>
 			<div className='w-full h-96 bg-gradient-to-tr from-blue-200 to-violet-200 rounded-xl my-4'></div>
 			<div className='-mt-20 flex items-end gap-2'>
 				<Avatar
