@@ -13,7 +13,7 @@ const initialValues: UploadFileRequestDto & {
 	isSelected: boolean;
 } = {
 	name: 'File chưa được đặt tên',
-	file: new File([], ''),
+	file: null as unknown as File,
 	isSelected: false,
 };
 
