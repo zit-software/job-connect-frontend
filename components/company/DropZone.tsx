@@ -1,17 +1,9 @@
-import { useMemo } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useMemo, useState } from 'react';
+import { Accept, useDropzone } from 'react-dropzone';
 
-const baseStyle = {
-	flex: 1,
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	padding: '20px',
+const baseStyle: React.CSSProperties = {
 	borderWidth: 2,
-	borderRadius: 2,
-	borderColor: '#eeeeee',
 	borderStyle: 'dashed',
-	backgroundColor: '#fafafa',
 	color: '#bdbdbd',
 	outline: 'none',
 	transition: 'border .24s ease-in-out',
@@ -31,19 +23,26 @@ const rejectStyle = {
 
 interface StyledDropzoneProps {
 	setFiles: (acceptedFiles: File[]) => void;
+	accept?: Accept;
 }
 
-function StyledDropzone({ setFiles }: StyledDropzoneProps) {
+function StyledDropzone({ setFiles, accept = { 'image/*': [] } }: StyledDropzoneProps) {
+	const [prevBlob, setPrevBlob] = useState<string[]>([]);
+
 	const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
-		accept: { 'image/*': [] },
+		accept,
 		onDrop: (acceptedFiles) => {
-			setFiles(
-				acceptedFiles.map((file) =>
-					Object.assign(file, {
-						preview: URL.createObjectURL(file),
-					}),
-				),
+			prevBlob.forEach(URL.revokeObjectURL);
+
+			const files = acceptedFiles.map((file) =>
+				Object.assign(file, {
+					preview: URL.createObjectURL(file),
+				}),
 			);
+
+			setPrevBlob(files.map((e) => e.preview));
+
+			setFiles(files);
 		},
 	});
 
@@ -59,9 +58,15 @@ function StyledDropzone({ setFiles }: StyledDropzoneProps) {
 
 	return (
 		<div className='container'>
-			<div {...getRootProps({ style })}>
+			<div
+				{...getRootProps({
+					style,
+					className: 'w-full h-full flex flex-col items-center justify-center aspect-square',
+				})}
+			>
+				<i className='bx bx-cloud-upload text-6xl text-gray-300'></i>
+				<span className='text-gray-300'>Kéo thả hoặc chọn file từ máy tính</span>
 				<input {...getInputProps()} />
-				<p>Kéo ảnh vào đây để preview</p>
 			</div>
 		</div>
 	);

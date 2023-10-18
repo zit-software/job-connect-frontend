@@ -42,6 +42,10 @@ export default function UserNav({ user, size = 'md' }: UserNavProps) {
 					</DropdownItem>
 				)}
 
+				<DropdownItem startContent={<i className='bx bx-folder'></i>} onClick={() => router.push('/my-files')}>
+					Quản lý file
+				</DropdownItem>
+
 				<DropdownItem
 					startContent={<i className='bx bx-cog'></i>}
 					onClick={() => router.push('/settings/profile')}
