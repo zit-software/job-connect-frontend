@@ -47,10 +47,6 @@ export default function EditResumePage() {
 		}
 	};
 
-	if (!user) {
-		return <Spinner />;
-	}
-
 	return (
 		<div className='w-full h-screen bg-gray-700 fixed z-[100] overflow-auto'>
 			<div className='w-full bg-gray-600 flex h-14 sticky top-0 z-50'>
@@ -63,10 +59,10 @@ export default function EditResumePage() {
 
 				<div className='flex-1'></div>
 
-				<UserNav size='sm' user={user} />
+				{user && <UserNav size='sm' user={user} />}
 			</div>
 
-			{data ? (
+			{user && data ? (
 				<Formik initialValues={data} enableReinitialize onSubmit={handleSubmit}>
 					{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
 						<form className='max-w-[95%] mx-auto' onSubmit={handleSubmit}>
@@ -145,6 +141,11 @@ export default function EditResumePage() {
 													</Link>
 												</Chip>
 											</div>
+
+											<h2 className='my-8 px-4 py-2 bg-primary-900 text-white font-bold flex items-center gap-2 rounded-xl'>
+												<i className='bx bx-like'></i>
+												<span>Kỹ năng</span>
+											</h2>
 										</div>
 									</div>
 									<div className='col-span-3 h-full bg-background'>
@@ -152,7 +153,7 @@ export default function EditResumePage() {
 											<h3 className='font-bold text-[2.5em] text-primary-600'>{user.fullName}</h3>
 											<div className='flex items-center gap-1'>
 												<input
-													className='flex-1 rounded-lg bg-transparent text-xl px-2 -mx-2 focus:outline-none border-2 border-transparent focus:border-primary-400'
+													className='flex-1 font-semibold rounded-lg bg-transparent text-xl px-2 -mx-2 focus:outline-none border-2 border-transparent focus:border-primary-400'
 													name='jobTitle'
 													value={values.jobTitle}
 													onChange={handleChange}
