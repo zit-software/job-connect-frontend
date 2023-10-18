@@ -20,6 +20,7 @@ export default function LogoutPage() {
 					refreshToken: tokenService.refreshToken,
 				});
 				dispatch(setUser(null as unknown as UserState));
+				tokenService.clear();
 				router.push('/auth');
 			} catch (error: any) {
 				toast.error(error.message);

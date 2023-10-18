@@ -15,12 +15,11 @@ const createHttpClient = (baseUrl: string = '') => {
 
 		if (tokenExpiratedAt < now && !isRefreshToken && tokenService.refreshToken) {
 			try {
-				const { accessToken, expirationTime } = (await axios.post(
-					`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
-					{
+				const { accessToken, expirationTime } = (
+					await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
 						refreshToken: tokenService.refreshToken,
-					},
-				)) as RefreshTokenResponseDto;
+					})
+				).data as RefreshTokenResponseDto;
 
 				tokenService.accessToken = accessToken;
 				tokenService.expiratedAt = expirationTime;
