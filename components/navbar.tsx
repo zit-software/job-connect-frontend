@@ -31,7 +31,7 @@ export const Navbar = () => {
 					</ul>
 				</NavbarContent>
 
-				<NavbarContent className='hidden lg:flex basis-1 pl-4 items-center' justify='end'>
+				<NavbarContent className='flex basis-1 pl-4 items-center' justify='end'>
 					{user ? (
 						<UserNav user={user} />
 					) : (

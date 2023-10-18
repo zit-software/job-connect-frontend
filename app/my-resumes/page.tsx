@@ -86,7 +86,7 @@ export default function MyResumesPage() {
 
 									<div className='flex-1'>
 										<h3 className='text-lg font-bold'>{resume.jobTitle}</h3>
-										<p>
+										<p className='text-sm'>
 											<strong>Cập nhật lần cuối: </strong>{' '}
 											<i className='text-gray-500'>
 												{dayjs(resume.updatedAt).format('HH:mm, DD/MM/YYYY')}
