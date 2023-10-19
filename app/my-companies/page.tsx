@@ -24,8 +24,11 @@ function MyCompanies() {
 		}
 		getCompanies();
 	}, [user]);
-	const viewCompany = (company: Company) => {
+	const updateCompany = (company: Company) => {
 		router.push(`/companies/update/${company.id}`);
+	};
+	const viewCompany = (company: Company) => {
+		router.push(`/companies/${company.id}`);
 	};
 	return (
 		<div className='container max-w-[1280px] mx-auto my-5 relative'>
@@ -37,7 +40,7 @@ function MyCompanies() {
 			</div>
 			<div>
 				{companies?.length > 0 ? (
-					<Table aria-label='Example static collection table'>
+					<Table aria-label='My companies'>
 						<TableHeader>
 							<TableColumn>Công Ty</TableColumn>
 							<TableColumn>Tên</TableColumn>
@@ -50,6 +53,7 @@ function MyCompanies() {
 						<TableBody>
 							{companies.map((company) => (
 								<TableRow
+									className='hover:bg-[#e9e8e8] relative cursor-pointer transition-all '
 									onDoubleClick={() => {
 										viewCompany(company);
 									}}
@@ -68,7 +72,7 @@ function MyCompanies() {
 										{CompanySize[company.companySize as keyof typeof CompanySize]} nhân viên
 									</TableCell>
 									<TableCell>
-										<a className='underline text-[blue]' href={company.url}>
+										<a className='underline text-blue-200' href={company.url}>
 											{company.url}
 										</a>
 									</TableCell>
@@ -76,8 +80,12 @@ function MyCompanies() {
 									<TableCell>
 										<div className='flex justify-center'>
 											<i
-												onClick={() => viewCompany(company)}
+												onClick={() => updateCompany(company)}
 												className='bx bxs-edit text-2xl cursor-pointer'
+											></i>
+											<i
+												onClick={() => viewCompany(company)}
+												className='bx bx-navigation text-2xl cursor-pointer'
 											></i>
 										</div>
 									</TableCell>

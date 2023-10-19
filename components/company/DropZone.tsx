@@ -24,9 +24,10 @@ const rejectStyle = {
 interface StyledDropzoneProps {
 	setFiles: (acceptedFiles: File[]) => void;
 	accept?: Accept;
+	heightClass?: string;
 }
 
-function StyledDropzone({ setFiles, accept = { 'image/*': [] } }: StyledDropzoneProps) {
+function StyledDropzone({ setFiles, accept = { 'image/*': [] }, heightClass }: StyledDropzoneProps) {
 	const [prevBlob, setPrevBlob] = useState<string[]>([]);
 
 	const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } = useDropzone({
@@ -57,7 +58,7 @@ function StyledDropzone({ setFiles, accept = { 'image/*': [] } }: StyledDropzone
 	);
 
 	return (
-		<div className='container'>
+		<div className={'container max-w-[100%] ' + heightClass}>
 			<div
 				{...getRootProps({
 					style,

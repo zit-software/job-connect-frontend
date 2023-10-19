@@ -1,8 +1,9 @@
 'use client';
 
 import UploadImageModal from '@/components/company/UploadImage';
-import { AddCompanyDTO, Company, updateCompanyDTO } from '@/models/Company';
+import { Company, updateCompanyDTO } from '@/models/Company';
 import companyService from '@/services/company.service';
+import fileService from '@/services/file.service';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import {
 	Button,
@@ -23,8 +24,8 @@ import { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import * as yup from 'yup';
-
 const LocationPicker = dynamic(() => import('@/components/company/LocationPicker'), { ssr: false });
 
 interface CreateCompanyProps {}
@@ -33,10 +34,6 @@ function CreateCompany({}: CreateCompanyProps) {
 	const [loading, setLoading] = useState(false);
 
 	const [company, setCompany] = useState<Company>();
-	const [position, setPosition] = useState<LatLngExpression>({
-		lat: 0,
-		lng: 0,
-	});
 	const params = useParams() as unknown as { id: number };
 	const [parent] = useAutoAnimate();
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -53,8 +50,9 @@ function CreateCompany({}: CreateCompanyProps) {
 				'Quy mô công ty không hợp lệ',
 			),
 	});
-	const handleSubmit = (values: AddCompanyDTO) => {
-		console.log(values);
+	const handleSubmit = async (values: updateCompanyDTO) => {
+		await companyService.updateCompany(params.id, values);
+		toast.success('Cập nhật công ty thành công');
 	};
 
 	useEffect(() => {
@@ -78,28 +76,40 @@ function CreateCompany({}: CreateCompanyProps) {
 			<div className=' shadow-lg max-w-[1440px] w-[90vw] sm:w-[100vw] h-[600px] bg-white mx-auto p-8 rounded-xl'>
 				<div
 					onClick={() => setType('banner')}
-					className='relative flex justify-center items-center cursor-pointer max-w-[1440px] w-full h-[400px] object-cover border-dashed border-5 border-grey text-white rounded-2xl bg-white mx-auto my-auto'
+					className='relative f cursor-pointer max-w-[1440px] h-[400px] bg-white mx-auto my-auto'
 				>
-					{true ? (
-						<div className='w-fit p-5 absolute'>
-							<i className='text-[#ccc] text-8xl bx bxs-camera-plus'></i>
+					{!company?.banner ? (
+						<div className='w-full h-full object-cover border-dashed border-5 border-grey text-white rounded-2xl flex justify-center items-center'>
+							<div className='w-fit p-5 absolute'>
+								<i className='text-[#ccc] text-8xl bx bxs-camera-plus'></i>
+							</div>
 						</div>
 					) : (
-						<div></div>
+						<div className='w-full h-full object-cover border-dashed border-5 border-grey text-white rounded-2xl'>
+							<img
+								className='w-full h-full rounded-2xl'
+								src={fileService.getFileUrl(company?.banner as string)}
+							/>
+						</div>
 					)}
 					<div
 						onClick={(e) => {
 							e.stopPropagation();
 							setType('logo');
 						}}
-						className='absolute flex items-center justify-center cursor-pointer rounded-full border-dashed border-5 border-grey bg-white w-60 h-60 bottom-0 left-5 translate-y-1/2'
+						className='absolute flex items-center justify-center cursor-pointer bottom-0 translate-y-1/2'
 					>
-						{true ? (
-							<div className=' w-fit p-5 absolute'>
+						{!company?.image ? (
+							<div className='flex justify-center items-center p-5 left-[150px] rounded-full border-dashed border-5 border-grey bg-white w-60 h-60'>
 								<i className='text-[#ccc] text-8xl bx bxs-camera-plus'></i>
 							</div>
 						) : (
-							<div></div>
+							<div className='left-5'>
+								<img
+									className='rounded-full border-dashed border-5 border-grey bg-white w-60 h-60 object-cover'
+									src={fileService.getFileUrl(company?.image as string)}
+								/>
+							</div>
 						)}
 					</div>
 				</div>
@@ -115,10 +125,12 @@ function CreateCompany({}: CreateCompanyProps) {
 									address: company?.address,
 									url: company?.url,
 									companySize: company?.companySize,
-									mapPosition: company?.mapPosition || {
-										lat: 0,
-										lng: 0,
-									},
+									mapPosition:
+										company?.mapPosition ||
+										JSON.stringify({
+											lat: 0,
+											lng: 0,
+										}),
 								} as updateCompanyDTO
 							}
 							onSubmit={handleSubmit}
@@ -183,6 +195,9 @@ function CreateCompany({}: CreateCompanyProps) {
 														placeholder='VD: ZIT Software là công ty phần mềm...'
 														isInvalid={!!errors.description}
 														errorMessage={errors.description}
+														name='description'
+														value={values.description}
+														onChange={handleChange}
 													/>
 												</div>
 												<div className='col-span-12'>
@@ -199,8 +214,10 @@ function CreateCompany({}: CreateCompanyProps) {
 												</div>
 												<div className='col-span-12'>
 													<LocationPicker
-														position={position}
-														setPosition={setPosition}
+														position={JSON.parse(values.mapPosition) as LatLngExpression}
+														setPosition={(position: LatLngExpression) => {
+															setFieldValue('mapPosition', JSON.stringify(position));
+														}}
 														draggable
 													/>
 												</div>
@@ -216,7 +233,13 @@ function CreateCompany({}: CreateCompanyProps) {
 								</form>
 							)}
 						</Formik>
-						<UploadImageModal type={type} setType={setType} isOpen={isOpen} onOpenChange={onOpenChange} />
+						<UploadImageModal
+							companyId={params.id}
+							type={type}
+							setType={setType}
+							isOpen={isOpen}
+							onOpenChange={onOpenChange}
+						/>
 					</div>
 					<div className='col-span-4'>
 						<Card className='w-full p-5'>

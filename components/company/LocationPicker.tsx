@@ -17,8 +17,7 @@ function DraggableMarker({ draggable, position, setPosition }: DraggableMarkerPr
 	const markerRef = useRef(null);
 	const map = useMapEvents({
 		locationfound(e) {
-			setPosition(e.latlng);
-			map.flyTo(e.latlng, map.getZoom());
+			map.flyTo(position, map.getZoom());
 		},
 	});
 	useEffect(() => {
@@ -55,6 +54,7 @@ function DraggableMarker({ draggable, position, setPosition }: DraggableMarkerPr
 	);
 }
 const LocationPicker = ({ position, setPosition, draggable }: DraggableMarkerProps) => {
+	console.log(position);
 	return (
 		<div className='h-[400px]'>
 			<MapContainer style={{ height: '100%' }} zoom={13} scrollWheelZoom={false} center={position}>
