@@ -5,6 +5,9 @@ export interface Company extends BaseModel {
 	name: string;
 	description: string;
 	address: string;
+	companySize: string;
+	mapPosition: string;
+	url: string;
 	image: string;
 	banner: string;
 	owner: Recruiter;
@@ -12,8 +15,16 @@ export interface Company extends BaseModel {
 
 export interface AddCompanyDTO {
 	name: string;
-	description: string;
 	address: string;
 	url: string;
 	companySize: string;
+}
+
+export interface updateCompanyDTO {
+	name: string;
+	address: string;
+	url: string;
+	companySize: string;
+	mapPosition: string;
+	description: string;
 }

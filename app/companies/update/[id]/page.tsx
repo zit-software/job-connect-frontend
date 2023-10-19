@@ -1,7 +1,8 @@
 'use client';
 
 import UploadImageModal from '@/components/company/UploadImage';
-import { AddCompanyDTO } from '@/models/Company';
+import { AddCompanyDTO, Company, updateCompanyDTO } from '@/models/Company';
+import companyService from '@/services/company.service';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import {
 	Button,
@@ -11,6 +12,7 @@ import {
 	CardHeader,
 	Divider,
 	Input,
+	Progress,
 	Radio,
 	RadioGroup,
 	Textarea,
@@ -19,16 +21,23 @@ import {
 import { Formik } from 'formik';
 import { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 
 const LocationPicker = dynamic(() => import('@/components/company/LocationPicker'), { ssr: false });
 
-function CreateCompany() {
+interface CreateCompanyProps {}
+
+function CreateCompany({}: CreateCompanyProps) {
+	const [loading, setLoading] = useState(false);
+
+	const [company, setCompany] = useState<Company>();
 	const [position, setPosition] = useState<LatLngExpression>({
 		lat: 0,
 		lng: 0,
 	});
+	const params = useParams() as unknown as { id: number };
 	const [parent] = useAutoAnimate();
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 	const [type, setType] = useState<string>('');
@@ -47,11 +56,22 @@ function CreateCompany() {
 	const handleSubmit = (values: AddCompanyDTO) => {
 		console.log(values);
 	};
+
+	useEffect(() => {
+		async function getCompany() {
+			setLoading(true);
+			const companyData = (await companyService.getCompanyById(params.id)) as Company;
+			setCompany(companyData);
+			setLoading(false);
+		}
+		getCompany();
+	}, []);
 	useEffect(() => {
 		if (type) {
 			onOpen();
 		}
 	}, [onOpen, type]);
+	if (loading) return <Progress size='sm' isIndeterminate aria-label='Loading...' className='w-full' />;
 
 	return (
 		<div className='container max-w-[1440px] mx-auto'>
@@ -88,13 +108,19 @@ function CreateCompany() {
 				<div className='grid grid-cols-12 gap-5'>
 					<div className='col-span-8'>
 						<Formik
-							initialValues={{
-								name: '',
-								description: '',
-								address: '',
-								url: '',
-								companySize: 'TWENTY',
-							}}
+							initialValues={
+								{
+									name: company?.name,
+									description: company?.description || '',
+									address: company?.address,
+									url: company?.url,
+									companySize: company?.companySize,
+									mapPosition: company?.mapPosition || {
+										lat: 0,
+										lng: 0,
+									},
+								} as updateCompanyDTO
+							}
 							onSubmit={handleSubmit}
 							validationSchema={validationSchema}
 						>

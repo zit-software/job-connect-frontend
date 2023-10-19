@@ -1,0 +1,8 @@
+export enum CompanySize {
+	TWENTY = '10-20',
+	FIFTY = '20-50',
+	ONE_HUNDRED = '50-100',
+	TWO_HUNDRED = '100-200',
+	FIVE_HUNDRED = '200-500',
+	ONE_THOUSAND = '500-1000',
+}
