@@ -1,3 +1,4 @@
+import { AddCompanyDTO, Company } from '@/models/Company';
 import createHttpClient from '@/utils/createHttpClient';
 import { AxiosInstance } from 'axios';
 
@@ -8,14 +9,17 @@ class CompanyService {
 		this.client = createHttpClient('');
 	}
 
-	async getCompanyById(id: string) {
-		return await this.client.get(`/company/${id}`);
+	async getCompanyById(id: number) {
+		return (await this.client.get(`/company/${id}`)) as Company;
 	}
-	async createCompany() {
-		return await this.client.post(`/user/company`);
+	async createCompany(addCompanyDTO: AddCompanyDTO) {
+		return (await this.client.post(`/user/company`, addCompanyDTO)) as Company;
 	}
 	async updateCompany(id: string) {
 		return await this.client.put(`/company/${id}`);
+	}
+	async getSelfCompany() {
+		return (await this.client.get(`/company/self`)) as Company[];
 	}
 }
 

@@ -25,3 +25,15 @@ export async function downloadURI(uri: string, name: string) {
 
 	URL.revokeObjectURL(a.href);
 }
+
+export function formatLongText(text: string) {
+	if (!text) return 'Chưa có';
+	if (text.length > 200) {
+		return text.slice(0, 200) + '...';
+	}
+	return text;
+}
+
+export function isValidURL(str: string) {
+	return /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g.test(str);
+}
