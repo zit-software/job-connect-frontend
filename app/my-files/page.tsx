@@ -2,12 +2,15 @@
 
 import emptyLottie from '@/assets/lotties/empty.json';
 import StyledDropzone from '@/components/company/DropZone';
-import { UploadFileRequestDto } from '@/services/file.service';
+import fileService, { UploadFileRequestDto } from '@/services/file.service';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
 import { Formik } from 'formik';
 import Lottie from 'lottie-react';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useQuery } from 'react-query';
+import * as Yup from 'yup';
 
 const initialValues: UploadFileRequestDto & {
 	isSelected: boolean;
@@ -17,7 +20,13 @@ const initialValues: UploadFileRequestDto & {
 	isSelected: false,
 };
 
+const valodationSchema = Yup.object().shape({
+	name: Yup.string().required('Tên file không được để trống'),
+});
+
 export default function MyFilesPage() {
+	const { data: fileList } = useQuery(['my-files'], () => fileService.getAllFiles());
+
 	const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
 
 	const [uploadModalParent] = useAutoAnimate();
@@ -27,7 +36,15 @@ export default function MyFilesPage() {
 
 	const handleUpload = async (values: UploadFileRequestDto) => {
 		try {
-		} catch (error) {}
+			const res = await fileService.uploadFile(values);
+
+			console.log(res);
+
+			handleCloseUploadModal();
+		} catch (error: any) {
+			toast.error(error.message);
+		} finally {
+		}
 	};
 
 	return (
@@ -42,14 +59,23 @@ export default function MyFilesPage() {
 				</h2>
 
 				<div className='w-full aspect-[16/9] bg-background rounded-xl border'>
-					<Lottie animationData={emptyLottie} className='w-96 aspect-square m-auto' />
+					{fileList?.length ? (
+						<></>
+					) : (
+						<Lottie animationData={emptyLottie} className='w-96 aspect-square m-auto' />
+					)}
 				</div>
 			</div>
 
 			<Modal isOpen={isOpenUploadModal} onClose={handleCloseUploadModal}>
 				<ModalContent>
 					{() => (
-						<Formik enableReinitialize initialValues={initialValues} onSubmit={handleUpload}>
+						<Formik
+							enableReinitialize
+							initialValues={initialValues}
+							validationSchema={valodationSchema}
+							onSubmit={handleUpload}
+						>
 							{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
 								<form onSubmit={handleSubmit}>
 									<ModalHeader>Tải file lên</ModalHeader>
@@ -62,6 +88,8 @@ export default function MyFilesPage() {
 														placeholder='Tên file'
 														value={values.name}
 														name='name'
+														errorMessage={errors.name}
+														isInvalid={!!errors.name}
 														onChange={handleChange}
 													/>
 

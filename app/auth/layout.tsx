@@ -8,7 +8,7 @@ export default function AuthPage({ children }: { children: React.ReactNode }) {
 	return (
 		<div
 			ref={authParent}
-			className='border rounded-2xl shadow-xl my-4 mx-auto bg-white w-[1280px] max-w-full flex flex-col items-center'
+			className='border rounded-2xl shadow-xl my-4 mx-auto bg-white w-[1280px] max-w-[95%] flex flex-col items-center'
 		>
 			{children}
 

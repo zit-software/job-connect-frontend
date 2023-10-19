@@ -1,3 +1,4 @@
+import { FileModel } from '@/models/File';
 import createHttpClient from '@/utils/createHttpClient';
 import { AxiosInstance } from 'axios';
 
@@ -28,6 +29,10 @@ class FileService {
 				'Content-Type': 'multipart/form-data',
 			},
 		});
+	}
+
+	async getAllFiles() {
+		return (await this.userClient.get('')) as FileModel[];
 	}
 }
 
