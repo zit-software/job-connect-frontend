@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import UploadImageModal from '@/components/company/UploadImage';
@@ -89,6 +90,7 @@ function CreateCompany({}: CreateCompanyProps) {
 							<img
 								className='w-full h-full rounded-2xl'
 								src={fileService.getFileUrl(company?.banner as string)}
+								alt={company?.name}
 							/>
 						</div>
 					)}
@@ -108,6 +110,7 @@ function CreateCompany({}: CreateCompanyProps) {
 								<img
 									className='rounded-full border-dashed border-5 border-grey bg-white w-60 h-60 object-cover'
 									src={fileService.getFileUrl(company?.image as string)}
+									alt={company?.name}
 								/>
 							</div>
 						)}
