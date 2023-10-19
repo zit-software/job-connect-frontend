@@ -1,9 +1,9 @@
-import { User } from '@firebase/auth';
+import { UserState } from '@/store/user';
 import { BaseModel } from './BaseModel';
 
 export type FileModel = BaseModel & {
 	id: string;
 	name: string;
-	type: string;
-	user: User;
+	type: 'IMAGE' | 'PDF';
+	user: UserState;
 };

@@ -1,51 +1,24 @@
 'use client';
 
 import emptyLottie from '@/assets/lotties/empty.json';
-import StyledDropzone from '@/components/company/DropZone';
-import fileService, { UploadFileRequestDto } from '@/services/file.service';
+import FileItem from '@/components/file-item';
+import UploadFileModal from '@/components/upload-file-modal';
+import fileService from '@/services/file.service';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react';
-import { Formik } from 'formik';
+import { Button } from '@nextui-org/react';
 import Lottie from 'lottie-react';
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
-import * as Yup from 'yup';
-
-const initialValues: UploadFileRequestDto & {
-	isSelected: boolean;
-} = {
-	name: 'File chưa được đặt tên',
-	file: null as unknown as File,
-	isSelected: false,
-};
-
-const valodationSchema = Yup.object().shape({
-	name: Yup.string().required('Tên file không được để trống'),
-});
 
 export default function MyFilesPage() {
 	const { data: fileList } = useQuery(['my-files'], () => fileService.getAllFiles());
 
 	const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
 
-	const [uploadModalParent] = useAutoAnimate();
+	const [fileListParent] = useAutoAnimate();
 
 	const handleOpenUploadModal = () => setIsOpenUploadModal(true);
 	const handleCloseUploadModal = () => setIsOpenUploadModal(false);
-
-	const handleUpload = async (values: UploadFileRequestDto) => {
-		try {
-			const res = await fileService.uploadFile(values);
-
-			console.log(res);
-
-			handleCloseUploadModal();
-		} catch (error: any) {
-			toast.error(error.message);
-		} finally {
-		}
-	};
 
 	return (
 		<>
@@ -58,82 +31,20 @@ export default function MyFilesPage() {
 					</Button>
 				</h2>
 
-				<div className='w-full aspect-[16/9] bg-background rounded-xl border'>
+				<div className='w-full aspect-[16/9] bg-background rounded-xl border p-4'>
 					{fileList?.length ? (
-						<></>
+						<div className='grid gap-2 grid-cols-2 md:grid-cols-4 lg:grid-cols-6' ref={fileListParent}>
+							{fileList.map((file) => (
+								<FileItem key={file.id} file={file} />
+							))}
+						</div>
 					) : (
 						<Lottie animationData={emptyLottie} className='w-96 aspect-square m-auto' />
 					)}
 				</div>
 			</div>
 
-			<Modal isOpen={isOpenUploadModal} onClose={handleCloseUploadModal}>
-				<ModalContent>
-					{() => (
-						<Formik
-							enableReinitialize
-							initialValues={initialValues}
-							validationSchema={valodationSchema}
-							onSubmit={handleUpload}
-						>
-							{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
-								<form onSubmit={handleSubmit}>
-									<ModalHeader>Tải file lên</ModalHeader>
-									<ModalBody>
-										<div ref={uploadModalParent}>
-											{values.isSelected ? (
-												<>
-													<Input
-														label='Tên file'
-														placeholder='Tên file'
-														value={values.name}
-														name='name'
-														errorMessage={errors.name}
-														isInvalid={!!errors.name}
-														onChange={handleChange}
-													/>
-
-													<div className='w-full p-2 flex items-center gap-2 border my-2 rounded-md'>
-														<i className='bx bx-file'></i>
-														<span className='text-sm font-semibold'>
-															{values.file.name}
-														</span>
-													</div>
-												</>
-											) : (
-												<StyledDropzone
-													setFiles={(files) => {
-														if (!files[0]) return;
-
-														setFieldValue('file', files[0]);
-														setFieldValue('isSelected', true);
-													}}
-													accept={{
-														'image/*': [],
-														'application/pdf': [],
-													}}
-												/>
-											)}
-										</div>
-									</ModalBody>
-									<ModalFooter>
-										{values.isSelected && (
-											<>
-												<Button onClick={() => setFieldValue('isSelected', false)}>
-													Chọn lại
-												</Button>
-												<Button color='primary' type='submit'>
-													Tải lên
-												</Button>
-											</>
-										)}
-									</ModalFooter>
-								</form>
-							)}
-						</Formik>
-					)}
-				</ModalContent>
-			</Modal>
+			<UploadFileModal isOpen={isOpenUploadModal} onClose={handleCloseUploadModal} />
 		</>
 	);
 }
