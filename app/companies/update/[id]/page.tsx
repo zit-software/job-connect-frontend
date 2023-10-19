@@ -65,7 +65,7 @@ function CreateCompany({}: CreateCompanyProps) {
 			setLoading(false);
 		}
 		getCompany();
-	}, []);
+	}, [params.id]);
 	useEffect(() => {
 		if (type) {
 			onOpen();
