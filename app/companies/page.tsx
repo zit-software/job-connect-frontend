@@ -1,6 +1,7 @@
 'use client';
 import jobProposalLottie from '@/assets/lotties/job-proposal.json';
 import CompanyCard from '@/components/company/CompanyCard';
+import { CompanySize } from '@/constant';
 import { Company } from '@/models/Company';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Input, Spinner, Tab, Tabs } from '@nextui-org/react';
@@ -34,6 +35,9 @@ function Companies() {
 			},
 			createdAt: new Date(),
 			updatedAt: new Date(),
+			companySize: CompanySize.FIVE_HUNDRED,
+			mapPosition: '',
+			url: '',
 		},
 		{
 			id: 2,
@@ -49,6 +53,9 @@ function Companies() {
 			},
 			createdAt: new Date(),
 			updatedAt: new Date(),
+			companySize: CompanySize.FIVE_HUNDRED,
+			mapPosition: '',
+			url: '',
 		},
 		{
 			id: 3,
@@ -64,6 +71,9 @@ function Companies() {
 			},
 			createdAt: new Date(),
 			updatedAt: new Date(),
+			companySize: CompanySize.FIVE_HUNDRED,
+			mapPosition: '',
+			url: '',
 		},
 	];
 	return (
