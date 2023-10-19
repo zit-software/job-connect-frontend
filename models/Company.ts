@@ -28,3 +28,8 @@ export interface updateCompanyDTO {
 	mapPosition: string;
 	description: string;
 }
+
+export interface updateCompanyImageDTO {
+	companyId: number;
+	image: File;
+}
