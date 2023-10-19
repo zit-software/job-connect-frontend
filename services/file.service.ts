@@ -34,6 +34,10 @@ class FileService {
 	async getAllFiles() {
 		return (await this.userClient.get('')) as FileModel[];
 	}
+
+	async deleteFileById(id: string) {
+		return await this.userClient.delete(`/${id}`);
+	}
 }
 
 export default new FileService() as FileService;

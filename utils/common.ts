@@ -11,6 +11,21 @@ export function formatVndMoney(amount: number) {
 	}
 }
 
+export async function downloadURI(uri: string, name: string) {
+	const res = await (await fetch(uri)).blob();
+
+	const a = document.createElement('a');
+	a.href = URL.createObjectURL(res);
+	a.download = name;
+
+	document.body.appendChild(a);
+
+	a.click();
+	a.remove();
+
+	URL.revokeObjectURL(a.href);
+}
+
 export function formatLongText(text: string) {
 	if (!text) return 'Chưa có';
 	if (text.length > 200) {
@@ -18,6 +33,7 @@ export function formatLongText(text: string) {
 	}
 	return text;
 }
+
 export function isValidURL(str: string) {
 	return /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g.test(str);
 }
