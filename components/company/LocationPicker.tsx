@@ -17,18 +17,19 @@ function DraggableMarker({ draggable, position, setPosition }: DraggableMarkerPr
 	const markerRef = useRef(null);
 	const map = useMapEvents({
 		locationfound(e) {
-			map.flyTo(position, map.getZoom());
+			map.flyTo(position);
 		},
 	});
+
 	useEffect(() => {
 		map.locate();
 	}, [map]);
+
 	const eventHandlers = useMemo(
 		() => ({
 			dragend() {
 				const marker = markerRef.current as any;
 				if (marker != null) {
-					console.log(marker.getLatLng());
 					setPosition(marker.getLatLng());
 				}
 			},
@@ -41,6 +42,7 @@ function DraggableMarker({ draggable, position, setPosition }: DraggableMarkerPr
 			draggable={draggable}
 			eventHandlers={eventHandlers}
 			position={position}
+			autoPan
 			ref={markerRef}
 			icon={
 				new L.Icon({
@@ -53,11 +55,13 @@ function DraggableMarker({ draggable, position, setPosition }: DraggableMarkerPr
 		></Marker>
 	);
 }
+
 const LocationPicker = ({ position, setPosition, draggable }: DraggableMarkerProps) => {
-	console.log(position);
+	position = position || center;
+
 	return (
 		<div className='h-[400px]'>
-			<MapContainer style={{ height: '100%' }} zoom={13} scrollWheelZoom={false} center={position}>
+			<MapContainer style={{ height: '100%' }} zoom={13} scrollWheelZoom center={position}>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'

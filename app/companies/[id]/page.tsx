@@ -3,12 +3,12 @@
 /* eslint-disable @next/next/no-img-element */
 import springWorkshop from '@/assets/images/spring-workshop.png';
 import CompanySection from '@/components/company/CompanySection';
-import LocationMap from '@/components/company/LocationMap';
 import { Button, Chip } from '@nextui-org/react';
 import { LatLngExpression } from 'leaflet';
+import dynamic from 'next/dynamic';
 import './company-detail.css';
 
-import 'leaflet/dist/leaflet.css';
+const LocationMap = dynamic(() => import('@/components/company/LocationMap'));
 
 function Contact({ address }: { address: string }) {
 	const position: LatLngExpression = {

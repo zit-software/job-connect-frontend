@@ -1,4 +1,5 @@
 'use client';
+
 import jobProposalLottie from '@/assets/lotties/job-proposal.json';
 import CompanyCard from '@/components/company/CompanyCard';
 import { CompanySize } from '@/constant';
@@ -9,8 +10,8 @@ import Lottie from 'lottie-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import './companies.css';
+
 function Companies() {
-	const [selectedTab, setSelectedTabs] = useState('all');
 	const [search, setSearch] = useState('');
 	const [isSearching, setIsSearching] = useState(false);
 	const [autoAnimateParent] = useAutoAnimate();

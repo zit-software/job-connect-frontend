@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import UploadImageModal from '@/components/company/UploadImage';
-import { Company, updateCompanyDTO } from '@/models/Company';
+import SelectFileModal from '@/components/select-file-modal';
+import { updateCompanyDTO } from '@/models/Company';
 import companyService from '@/services/company.service';
 import fileService from '@/services/file.service';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
@@ -10,7 +10,6 @@ import {
 	Button,
 	Card,
 	CardBody,
-	CardFooter,
 	CardHeader,
 	Divider,
 	Input,
@@ -24,126 +23,114 @@ import { Formik } from 'formik';
 import { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useQuery } from 'react-query';
 import * as yup from 'yup';
+
 const LocationPicker = dynamic(() => import('@/components/company/LocationPicker'), { ssr: false });
 
-interface CreateCompanyProps {}
+const validationSchema = yup.object().shape({
+	name: yup.string().required('Tên công ty không được để trống'),
+	description: yup.string().required('Mô tả công ty không được để trống'),
+	address: yup.string().required('Địa chỉ công ty không được để trống'),
+	url: yup.string().required('Website công ty không được để trống'),
+	companySize: yup
+		.string()
+		.oneOf(
+			['TWENTY', 'FIFTY', 'ONE_HUNDRED', 'TWO_HUNDRED', 'FIVE_HUNDRED', 'ONE_THOUSAND'],
+			'Quy mô công ty không hợp lệ',
+		),
+});
 
-function CreateCompany({}: CreateCompanyProps) {
-	const [loading, setLoading] = useState(false);
-
-	const [company, setCompany] = useState<Company>();
-	const params = useParams() as unknown as { id: number };
+export default function CreateCompanyPage() {
 	const [parent] = useAutoAnimate();
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const [type, setType] = useState<string>('');
-	const validationSchema = yup.object().shape({
-		name: yup.string().required('Tên công ty không được để trống'),
-		description: yup.string().required('Mô tả công ty không được để trống'),
-		address: yup.string().required('Địa chỉ công ty không được để trống'),
-		url: yup.string().required('Website công ty không được để trống'),
-		companySize: yup
-			.string()
-			.oneOf(
-				['TWENTY', 'FIFTY', 'ONE_HUNDRED', 'TWO_HUNDRED', 'FIVE_HUNDRED', 'ONE_THOUSAND'],
-				'Quy mô công ty không hợp lệ',
-			),
-	});
+	const [isSaving, setIsSaving] = useState(false);
+
+	const params = useParams() as unknown as { id: number };
+
+	const { data: company, isLoading } = useQuery(['company', { id: params.id }], () =>
+		companyService.getCompanyById(params.id),
+	);
+
+	const { isOpen: isOpenSelectBannerModal, onOpenChange: onOpenSelectBannerModalChange } = useDisclosure();
+	const { isOpen: isOpenSelectImageModal, onOpenChange: onOpenSelectImageModalChange } = useDisclosure();
+
 	const handleSubmit = async (values: updateCompanyDTO) => {
-		await companyService.updateCompany(params.id, values);
-		toast.success('Cập nhật công ty thành công');
+		try {
+			setIsSaving(true);
+			await companyService.updateCompany(params.id, values);
+			toast.success('Cập nhật công ty thành công');
+		} catch (error: any) {
+			toast.error(error);
+		} finally {
+			setIsSaving(false);
+		}
 	};
 
-	useEffect(() => {
-		async function getCompany() {
-			setLoading(true);
-			const companyData = (await companyService.getCompanyById(params.id)) as Company;
-			setCompany(companyData);
-			setLoading(false);
-		}
-		getCompany();
-	}, [params.id]);
-	useEffect(() => {
-		if (type) {
-			onOpen();
-		}
-	}, [onOpen, type]);
-	if (loading) return <Progress size='sm' isIndeterminate aria-label='Loading...' className='w-full' />;
+	if (isLoading) return <Progress size='sm' isIndeterminate aria-label='Loading...' className='w-full' />;
+
+	if (!company) return <div>Không tìm thấy công ty</div>;
 
 	return (
-		<div className='container max-w-[1440px] mx-auto'>
-			<div className=' shadow-lg max-w-[1440px] w-[90vw] sm:w-[100vw] h-[600px] bg-white mx-auto p-8 rounded-xl'>
-				<div
-					onClick={() => setType('banner')}
-					className='relative f cursor-pointer max-w-[1440px] h-[400px] bg-white mx-auto my-auto'
-				>
-					{!company?.banner ? (
-						<div className='w-full h-full object-cover border-dashed border-5 border-grey text-white rounded-2xl flex justify-center items-center'>
-							<div className='w-fit p-5 absolute'>
-								<i className='text-[#ccc] text-8xl bx bxs-camera-plus'></i>
+		<div className='w-[1280px] max-w-[95%] mx-auto'>
+			<Formik
+				initialValues={company as updateCompanyDTO}
+				onSubmit={handleSubmit}
+				validationSchema={validationSchema}
+				enableReinitialize
+			>
+				{({ values, handleChange, errors, setFieldValue, handleSubmit }) => (
+					<form onSubmit={handleSubmit}>
+						<div className='sticky top-16 z-[100] py-5'>
+							<div className='w-full bg-background border p-2 rounded-2xl flex gap-2 justify-end items-center font-bold'>
+								<h2 className='flex-1 px-2 text-2xl'>{values.name}</h2>
+
+								<Button
+									color='primary'
+									startContent={<i className='bx bx-save'></i>}
+									size='lg'
+									type='submit'
+									isLoading={isSaving}
+								>
+									Lưu
+								</Button>
 							</div>
 						</div>
-					) : (
-						<div className='w-full h-full object-cover border-dashed border-5 border-grey text-white rounded-2xl'>
-							<img
-								className='w-full h-full rounded-2xl'
-								src={fileService.getFileUrl(company?.banner as string)}
-								alt={company?.name}
-							/>
+
+						<div>
+							<div
+								className='w-full bg-cover bg-center bg-no-repeat bg-gray-200 rounded-2xl border relative'
+								style={{
+									aspectRatio: 2.2,
+									backgroundImage: `url(${fileService.getFileUrl(values.banner)})`,
+								}}
+							>
+								<div
+									className='absolute w-64 aspect-square bottom-4 left-4 bg-gray-200 rounded-full border-4 border-white cursor-pointer bg-no-repeat bg-cover bg-center'
+									style={{
+										backgroundImage: `url(${fileService.getFileUrl(values.image)})`,
+									}}
+									onClick={onOpenSelectImageModalChange}
+								></div>
+
+								<Button
+									isIconOnly
+									className='absolute right-2 bottom-2'
+									size='lg'
+									onClick={onOpenSelectBannerModalChange}
+								>
+									<i className='bx bx-camera'></i>
+								</Button>
+							</div>
 						</div>
-					)}
-					<div
-						onClick={(e) => {
-							e.stopPropagation();
-							setType('logo');
-						}}
-						className='absolute flex items-center justify-center cursor-pointer bottom-0 translate-y-1/2'
-					>
-						{!company?.image ? (
-							<div className='flex justify-center items-center p-5 left-[150px] rounded-full border-dashed border-5 border-grey bg-white w-60 h-60'>
-								<i className='text-[#ccc] text-8xl bx bxs-camera-plus'></i>
-							</div>
-						) : (
-							<div className='left-5'>
-								<img
-									className='rounded-full border-dashed border-5 border-grey bg-white w-60 h-60 object-cover'
-									src={fileService.getFileUrl(company?.image as string)}
-									alt={company?.name}
-								/>
-							</div>
-						)}
-					</div>
-				</div>
-			</div>
-			<div className='mt-10 my-10'>
-				<div className='grid grid-cols-12 gap-5'>
-					<div className='col-span-8'>
-						<Formik
-							initialValues={
-								{
-									name: company?.name,
-									description: company?.description || '',
-									address: company?.address,
-									url: company?.url,
-									companySize: company?.companySize,
-									mapPosition:
-										company?.mapPosition ||
-										JSON.stringify({
-											lat: 0,
-											lng: 0,
-										}),
-								} as updateCompanyDTO
-							}
-							onSubmit={handleSubmit}
-							validationSchema={validationSchema}
-						>
-							{({ values, handleChange, errors, setFieldValue, handleSubmit }) => (
-								<form onSubmit={handleSubmit}>
-									<Card className='w-full p-5'>
+
+						<div className='mt-10 my-10'>
+							<div className='grid grid-cols-12 gap-5'>
+								<div className='col-span-8'>
+									<Card className='w-full p-5 shadow-none'>
 										<CardHeader>
-											<h1 className='font-bold text-2xl'>Thông Tin Cơ Bản</h1>
+											<h3 className='font-bold text-2xl'>Thông Tin Cơ Bản</h3>
 										</CardHeader>
 										<Divider />
 										<CardBody>
@@ -217,7 +204,7 @@ function CreateCompany({}: CreateCompanyProps) {
 												</div>
 												<div className='col-span-12'>
 													<LocationPicker
-														position={JSON.parse(values.mapPosition) as LatLngExpression}
+														position={JSON.parse(values.mapPosition)}
 														setPosition={(position: LatLngExpression) => {
 															setFieldValue('mapPosition', JSON.stringify(position));
 														}}
@@ -226,36 +213,41 @@ function CreateCompany({}: CreateCompanyProps) {
 												</div>
 											</div>
 										</CardBody>
-										<Divider />
-										<CardFooter className='flex justify-end'>
-											<Button type='submit' color='primary'>
-												Lưu
-											</Button>
-										</CardFooter>
 									</Card>
-								</form>
-							)}
-						</Formik>
-						<UploadImageModal
-							companyId={params.id}
-							type={type}
-							setType={setType}
-							isOpen={isOpen}
-							onOpenChange={onOpenChange}
-						/>
-					</div>
-					<div className='col-span-4'>
-						<Card className='w-full p-5'>
-							<CardHeader>
-								<h1 className='font-bold text-2xl'>Các Nhân Viên</h1>
-							</CardHeader>
-							<Divider />
-							<CardBody></CardBody>
-						</Card>
-					</div>
-				</div>
-			</div>
+
+									<SelectFileModal
+										isOpen={isOpenSelectBannerModal}
+										onClose={onOpenSelectBannerModalChange}
+										onSelected={(file) => {
+											setFieldValue('banner', file.id);
+											onOpenSelectBannerModalChange();
+										}}
+									/>
+
+									<SelectFileModal
+										isOpen={isOpenSelectImageModal}
+										onClose={onOpenSelectImageModalChange}
+										onSelected={(file) => {
+											setFieldValue('image', file.id);
+											onOpenSelectImageModalChange();
+										}}
+									/>
+								</div>
+
+								<div className='col-span-4'>
+									<Card className='w-full p-5 shadow-none'>
+										<CardHeader>
+											<h3 className='font-bold text-2xl'>Các Nhân Viên</h3>
+										</CardHeader>
+										<Divider />
+										<CardBody></CardBody>
+									</Card>
+								</div>
+							</div>
+						</div>
+					</form>
+				)}
+			</Formik>
 		</div>
 	);
 }
-export default CreateCompany;

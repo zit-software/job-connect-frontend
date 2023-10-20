@@ -18,10 +18,14 @@ export interface AddCompanyDTO {
 	address: string;
 	url: string;
 	companySize: string;
+	image: string;
+	banner: string;
 }
 
 export interface updateCompanyDTO {
 	name: string;
+	banner: string;
+	image: string;
 	address: string;
 	url: string;
 	companySize: string;
