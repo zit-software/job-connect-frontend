@@ -32,7 +32,7 @@ function MyCompanies() {
 	};
 	return (
 		<div className='container max-w-[1280px] mx-auto my-5 relative'>
-			<div className='flex gap-5'>
+			<div className='flex gap-5 my-5'>
 				<h1 className='text-3xl italic'>Công Ty Của Bạn</h1>
 				<Button onClick={() => setIsOpen(true)} color='primary'>
 					Tạo công ty

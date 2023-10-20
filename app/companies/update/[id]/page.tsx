@@ -38,6 +38,7 @@ function CreateCompany({}: CreateCompanyProps) {
 	const params = useParams() as unknown as { id: number };
 	const [parent] = useAutoAnimate();
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const { isOpen: isOpenJob, onOpen: onOpenJob, onOpenChange: onOpenChangeJob } = useDisclosure();
 	const [type, setType] = useState<string>('');
 	const validationSchema = yup.object().shape({
 		name: yup.string().required('Tên công ty không được để trống'),
