@@ -1,6 +1,6 @@
 import CompanyTabs from '@/components/companies/CompanyTabs';
 
-export default function CompanyLayout({ children }: { children: React.ReactNode }) {
+export default async function CompanyLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<>
 			<CompanyTabs />

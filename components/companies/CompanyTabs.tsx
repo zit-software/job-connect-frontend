@@ -43,7 +43,7 @@ export default function CompanyTabs() {
 
 	return (
 		<div className='mx-auto w-[1280px] max-w-[95%]'>
-			{user?.id === company?.id && (
+			{user?.id === company?.owner.user.id && (
 				<Tabs
 					selectedKey={pathname}
 					className='mt-4'

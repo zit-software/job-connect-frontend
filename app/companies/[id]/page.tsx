@@ -1,4 +1,5 @@
 'use client';
+
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import CompanySection from '@/components/company/CompanySection';
@@ -40,7 +41,7 @@ export function Contact({ address }: { address: string }) {
 	);
 }
 
-async function CompanyDetail() {
+export default async function CompanyDetailPage() {
 	const { id } = useParams() as unknown as IdInParams;
 
 	const company = await companyService.getCompanyById(id);
@@ -117,4 +118,3 @@ async function CompanyDetail() {
 		</>
 	);
 }
-export default CompanyDetail;
