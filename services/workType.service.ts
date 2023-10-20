@@ -1,10 +1,6 @@
+import { WorkType } from '@/models/WorkType';
 import createHttpClient from '@/utils/createHttpClient';
 import { AxiosInstance } from 'axios';
-
-export interface WorkType {
-	id: number;
-	name: string;
-}
 
 class WorkTypeService {
 	private client: AxiosInstance;

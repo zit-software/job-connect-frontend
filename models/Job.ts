@@ -16,3 +16,25 @@ export interface Job extends BaseModel {
 	recruiter: Recruiter;
 	workType: WorkType;
 }
+
+export interface AddJobDTO {
+	title: string;
+	description: string;
+	minExp: number;
+	minSalary: number;
+	maxSalary: number;
+	address: string;
+	companyId: number;
+	workTypeId: number;
+}
+
+export interface AddJobForm {
+	title?: string;
+	description?: string;
+	minExp?: number;
+	minSalary?: number;
+	maxSalary?: number;
+	address?: string;
+	companyId?: number;
+	workTypeId?: number;
+}

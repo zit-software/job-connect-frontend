@@ -1,4 +1,4 @@
-import { Job } from '@/models/Job';
+import { AddJobDTO, Job } from '@/models/Job';
 import createHttpClient from '@/utils/createHttpClient';
 import { AxiosInstance } from 'axios';
 
@@ -9,6 +9,9 @@ class JobService {
 	}
 	async getJobById(id: number) {
 		return (await this.client.get(`/jobs/${id}`)) as Job;
+	}
+	async createJob(job: AddJobDTO) {
+		return (await this.client.post('/user/jobs', job)) as Job;
 	}
 }
 
