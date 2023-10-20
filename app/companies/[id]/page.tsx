@@ -1,16 +1,20 @@
 'use client';
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import springWorkshop from '@/assets/images/spring-workshop.png';
 import CompanySection from '@/components/company/CompanySection';
+import { CompanySize } from '@/constant';
+import companyService from '@/services/company.service';
+import fileService from '@/services/file.service';
+import IdInParams from '@/types/IdInParams';
 import { Button, Chip } from '@nextui-org/react';
 import { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
-import './company-detail.css';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 const LocationMap = dynamic(() => import('@/components/company/LocationMap'));
 
-function Contact({ address }: { address: string }) {
+export function Contact({ address }: { address: string }) {
 	const position: LatLngExpression = {
 		lat: 51.505,
 		lng: -0.09,
@@ -36,84 +40,68 @@ function Contact({ address }: { address: string }) {
 	);
 }
 
-function CompanyDetail() {
-	const company = {
-		id: 1,
-		name: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
-		address: 'localhost, Thành phố Cần Thơ',
-		image: 'https://github.com/zit-software.png',
-		banner: springWorkshop.src,
-		description: '',
-		owner: {
-			id: 0,
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		},
-		createdAt: new Date(),
-		updatedAt: new Date(),
-	};
+async function CompanyDetail() {
+	const { id } = useParams() as unknown as IdInParams;
+
+	const company = await companyService.getCompanyById(id);
 
 	return (
 		<>
 			<div className='w-[1280px] max-w-[95%] mx-auto my-5'>
 				<header className='grid grid-cols-12'>
-					<div className='col col-span-12 shadow-lg rounded-2xl overflow-hidden'>
-						<div className='w-full h-[200px] relative'>
-							<img className='w-full h-full object-cover' src={company.banner} />
+					<div className='col col-span-12 shadow-lg rounded-2xl relative overflow-hidden'>
+						<div
+							className='w-full relative bg-center bg-no-repeat bg-cover'
+							style={{
+								aspectRatio: 3,
+								backgroundImage: `url(${fileService.getFileUrl(company.banner)})`,
+							}}
+						></div>
+
+						<div className='bg-gradient-to-l from-violet-500 to-blue-500 w-full p-4 flex gap-2'>
 							<img
-								src={company.image}
-								className='rounded-full absolute left-5 bottom-0 translate-y-1/2 transform w-40 h-40 border-4 border-white'
+								src={fileService.getFileUrl(company.image)}
+								className='rounded-full relative bottom-0 -mt-20 w-40 aspect-square border-4 border-white'
 							/>
-						</div>
+							<div className='flex-1'>
+								<h1 className='text-2xl font-bold text-white'>{company.name}</h1>
+								<div className='flex justify-between items-center'>
+									<div className='flex gap-2'>
+										<Link href={company.url} target='_blank'>
+											<Chip
+												variant='light'
+												className='text-white'
+												startContent={<i className='bx bx-globe'></i>}
+											>
+												{company.url}
+											</Chip>
+										</Link>
 
-						<div className='bg-gradient-to-l from-violet-500 to-blue-500 w-full p-5 pl-[200px]'>
-							<h1 className='text-2xl font-bold text-white'>{company.name}</h1>
-							<div className='flex justify-between items-center'>
-								<div className='flex gap-2'>
-									<Chip
-										variant='light'
-										className='text-white'
-										startContent={<i className='bx bx-globe'></i>}
+										<Chip
+											variant='light'
+											className='text-white'
+											startContent={<i className='bx bx-group'></i>}
+										>
+											{CompanySize[company.companySize as keyof typeof CompanySize]} nhân viên
+										</Chip>
+									</div>
+									<Button
+										size='md'
+										className='bg-white text-blue-600 font-bold'
+										startContent={<i className='bx bx-briefcase'></i>}
 									>
-										http://zit-software.com
-									</Chip>
-
-									<Chip
-										variant='light'
-										className='text-white'
-										startContent={<i className='bx bx-globe'></i>}
-									>
-										1000+ nhân viên
-									</Chip>
+										Xem Việc Làm
+									</Button>
 								</div>
-								<Button
-									size='md'
-									className='bg-white text-blue-600 font-bold'
-									startContent={<i className='bx bx-briefcase'></i>}
-								>
-									Xem Việc Làm
-								</Button>
 							</div>
 						</div>
 					</div>
 				</header>
 
-				<div className='grid grid-cols-12 gap-10 my-5'>
+				<div className='grid grid-cols-12 gap-4 my-5'>
 					<div className='col-span-8'>
 						<CompanySection header='Giới thiệu công ty'>
-							<div className='p-5'>
-								{/* {company.description} */}
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae accusamus ullam
-								laudantium sapiente perferendis esse laborum error quidem ipsum. Nulla, ipsa quibusdam
-								officia amet necessitatibus sit, harum maxime in animi earum exercitationem architecto
-								minus doloremque vel excepturi minima. Delectus ipsa earum, harum, libero rem illo
-								voluptatum quas debitis, omnis perspiciatis ex! Ratione sint cupiditate vel, quasi
-								dolorum placeat aperiam sequi corporis beatae temporibus sapiente ea voluptatem
-								mollitia! Similique tempora nostrum autem perspiciatis reprehenderit non sint unde neque
-								dolorem aliquam placeat modi quibusdam perferendis debitis est assumenda earum, maiores
-								nisi quis. Aliquid accusantium labore veritatis ipsa eligendi eaque iusto esse
-								voluptatem!
-							</div>
+							<div className='p-5'>{company.description}</div>
 						</CompanySection>
 						<CompanySection header='Tuyển dụng'>
 							<div className='p-5'></div>
@@ -121,7 +109,7 @@ function CompanyDetail() {
 					</div>
 					<div className='col-span-4'>
 						<CompanySection header='Thông tin liên hệ'>
-							<Contact address={company.address} />
+							{/* <Contact address={company.address} /> */}
 						</CompanySection>
 					</div>
 				</div>

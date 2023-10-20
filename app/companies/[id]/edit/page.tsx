@@ -82,7 +82,7 @@ export default function CreateCompanyPage() {
 			>
 				{({ values, handleChange, errors, setFieldValue, handleSubmit }) => (
 					<form onSubmit={handleSubmit}>
-						<div className='sticky top-16 z-[100] py-5'>
+						<div className='py-5'>
 							<div className='w-full bg-background border p-2 rounded-2xl flex gap-2 justify-end items-center font-bold'>
 								<h2 className='flex-1 px-2 text-2xl'>{values.name}</h2>
 
@@ -126,123 +126,112 @@ export default function CreateCompanyPage() {
 						</div>
 
 						<div className='mt-10 my-10'>
-							<div className='grid grid-cols-12 gap-5'>
-								<div className='col-span-8'>
-									<Card className='w-full p-5 shadow-none'>
-										<CardHeader>
-											<h3 className='font-bold text-2xl'>Thông Tin Cơ Bản</h3>
-										</CardHeader>
-										<Divider />
-										<CardBody>
-											<div className='grid grid-cols-12 gap-5' ref={parent}>
-												<div className='col-span-12 md:col-span-6'>
-													<Input
-														labelPlacement='outside'
-														value={values.name}
-														isInvalid={!!errors.name}
-														errorMessage={errors.name}
-														name='name'
-														label='Tên Công Ty'
-														placeholder='VD: ZIT Software'
-														onChange={handleChange}
-													></Input>
-												</div>
-												<div className='col-span-12 md:col-span-6'>
-													<Input
-														labelPlacement='outside'
-														onChange={handleChange}
-														value={values.url}
-														isInvalid={!!errors.url}
-														errorMessage={errors.url}
-														name='url'
-														label='URL'
-														placeholder='VD: http://zit-software.com'
-													></Input>
-												</div>
-												<div className='col-span-12'>
-													<RadioGroup
-														orientation='horizontal'
-														label='Quy mô công ty (Nhân Viên)'
-														value={values.companySize}
-														onValueChange={(value) => {
-															setFieldValue('companySize', value);
-														}}
-														isInvalid={!!errors.companySize}
-														errorMessage={errors.companySize}
-													>
-														<Radio value='TWENTY'>10-20</Radio>
-														<Radio value='FIFTY'>20-50</Radio>
-														<Radio value='ONE_HUNDRED'>50-100</Radio>
-														<Radio value='TWO_HUNDRED'>100-200</Radio>
-														<Radio value='FIVE_HUNDRED'>200-500</Radio>
-														<Radio value='ONE_THOUSAND'>500-1000</Radio>
-													</RadioGroup>
-												</div>
-												<div className='col-span-12'>
-													<Textarea
-														label='Mô tả công ty'
-														labelPlacement='outside'
-														placeholder='VD: ZIT Software là công ty phần mềm...'
-														isInvalid={!!errors.description}
-														errorMessage={errors.description}
-														name='description'
-														value={values.description}
-														onChange={handleChange}
-													/>
-												</div>
-												<div className='col-span-12'>
-													<Input
-														labelPlacement='outside'
-														onChange={handleChange}
-														value={values.address}
-														isInvalid={!!errors.address}
-														errorMessage={errors.address}
-														name='address'
-														label='Địa chỉ công ty'
-														placeholder='VD: B3-10, Đường số 3...'
-													></Input>
-												</div>
-												<div className='col-span-12'>
-													<LocationPicker
-														position={JSON.parse(values.mapPosition)}
-														setPosition={(position: LatLngExpression) => {
-															setFieldValue('mapPosition', JSON.stringify(position));
-														}}
-														draggable
-													/>
-												</div>
+							<div className='grid grid-cols-1 gap-5'>
+								<Card className='w-full p-5 shadow-none'>
+									<CardHeader>
+										<h3 className='font-bold text-2xl'>Thông Tin Cơ Bản</h3>
+									</CardHeader>
+									<Divider />
+									<CardBody>
+										<div className='grid grid-cols-12 gap-5' ref={parent}>
+											<div className='col-span-12 md:col-span-6'>
+												<Input
+													labelPlacement='outside'
+													value={values.name}
+													isInvalid={!!errors.name}
+													errorMessage={errors.name}
+													name='name'
+													label='Tên Công Ty'
+													placeholder='VD: ZIT Software'
+													onChange={handleChange}
+												></Input>
 											</div>
-										</CardBody>
-									</Card>
+											<div className='col-span-12 md:col-span-6'>
+												<Input
+													labelPlacement='outside'
+													onChange={handleChange}
+													value={values.url}
+													isInvalid={!!errors.url}
+													errorMessage={errors.url}
+													name='url'
+													label='URL'
+													placeholder='VD: http://zit-software.com'
+												></Input>
+											</div>
+											<div className='col-span-12'>
+												<RadioGroup
+													orientation='horizontal'
+													label='Quy mô công ty (Nhân Viên)'
+													value={values.companySize}
+													onValueChange={(value) => {
+														setFieldValue('companySize', value);
+													}}
+													isInvalid={!!errors.companySize}
+													errorMessage={errors.companySize}
+												>
+													<Radio value='TWENTY'>10-20</Radio>
+													<Radio value='FIFTY'>20-50</Radio>
+													<Radio value='ONE_HUNDRED'>50-100</Radio>
+													<Radio value='TWO_HUNDRED'>100-200</Radio>
+													<Radio value='FIVE_HUNDRED'>200-500</Radio>
+													<Radio value='ONE_THOUSAND'>500-1000</Radio>
+												</RadioGroup>
+											</div>
+											<div className='col-span-12'>
+												<Textarea
+													label='Mô tả công ty'
+													labelPlacement='outside'
+													placeholder='VD: ZIT Software là công ty phần mềm...'
+													isInvalid={!!errors.description}
+													errorMessage={errors.description}
+													name='description'
+													minRows={5}
+													value={values.description}
+													onChange={handleChange}
+												/>
+											</div>
+											<div className='col-span-12'>
+												<Input
+													labelPlacement='outside'
+													onChange={handleChange}
+													value={values.address}
+													isInvalid={!!errors.address}
+													errorMessage={errors.address}
+													name='address'
+													label='Địa chỉ công ty'
+													placeholder='VD: B3-10, Đường số 3...'
+												></Input>
+											</div>
+											<div className='col-span-12'>
+												<LocationPicker
+													position={JSON.parse(values.mapPosition)}
+													setPosition={(position: LatLngExpression) => {
+														setFieldValue('mapPosition', JSON.stringify(position));
+													}}
+													draggable
+												/>
+											</div>
+										</div>
+									</CardBody>
+								</Card>
 
-									<SelectFileModal
-										isOpen={isOpenSelectBannerModal}
-										onClose={onOpenSelectBannerModalChange}
-										onSelected={(file) => {
-											setFieldValue('banner', file.id);
-											onOpenSelectBannerModalChange();
-										}}
-									/>
+								<SelectFileModal
+									isOpen={isOpenSelectBannerModal}
+									onClose={onOpenSelectBannerModalChange}
+									onSelected={(file) => {
+										setFieldValue('banner', file.id);
+										onOpenSelectBannerModalChange();
+									}}
+								/>
 
-									<SelectFileModal
-										isOpen={isOpenSelectImageModal}
-										onClose={onOpenSelectImageModalChange}
-										onSelected={(file) => {
-											setFieldValue('image', file.id);
-											onOpenSelectImageModalChange();
-										}}
-									/>
-								</div>
-
-								<div className='col-span-4'>
-									<Card className='w-full p-5 shadow-none'>
-										<CardHeader>
-											<h3 className='font-bold text-2xl'>Các Nhân Viên</h3>
-										</CardHeader>
-										<Divider />
-										<CardBody></CardBody>
-									</Card>
-								</div>
+								<SelectFileModal
+									isOpen={isOpenSelectImageModal}
+									onClose={onOpenSelectImageModalChange}
+									onSelected={(file) => {
+										setFieldValue('image', file.id);
+										onOpenSelectImageModalChange();
+									}}
+								/>
 							</div>
 						</div>
 					</form>
