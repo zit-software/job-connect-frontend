@@ -1,21 +1,17 @@
 'use client';
 
-import emptyLottie from '@/assets/lotties/empty.json';
-import FileItem from '@/components/file-item';
+import FileList from '@/components/file-list';
 import UploadFileModal from '@/components/upload-file-modal';
+import { FileModel } from '@/models/File';
 import fileService from '@/services/file.service';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Button } from '@nextui-org/react';
-import Lottie from 'lottie-react';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
 export default function MyFilesPage() {
-	const { data: fileList } = useQuery(['my-files'], () => fileService.getAllFiles());
+	const { data: fileList, isLoading } = useQuery(['my-files'], () => fileService.getAllFiles());
 
 	const [isOpenUploadModal, setIsOpenUploadModal] = useState(false);
-
-	const [fileListParent] = useAutoAnimate();
 
 	const handleOpenUploadModal = () => setIsOpenUploadModal(true);
 	const handleCloseUploadModal = () => setIsOpenUploadModal(false);
@@ -32,15 +28,7 @@ export default function MyFilesPage() {
 				</h2>
 
 				<div className='w-full aspect-[16/9] bg-background rounded-xl border p-4'>
-					{fileList?.length ? (
-						<div className='grid gap-2 grid-cols-2 md:grid-cols-4 lg:grid-cols-6' ref={fileListParent}>
-							{fileList.map((file) => (
-								<FileItem key={file.id} file={file} />
-							))}
-						</div>
-					) : (
-						<Lottie animationData={emptyLottie} className='w-96 aspect-square m-auto' />
-					)}
+					<FileList files={fileList as unknown as FileModel[]} isLoading={isLoading} />
 				</div>
 			</div>
 

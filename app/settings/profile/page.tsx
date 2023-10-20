@@ -1,10 +1,20 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
+import SelectFileModal from '@/components/select-file-modal';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { UpdateUserRequestDto } from '@/services/auth.service';
+import fileService from '@/services/file.service';
 import { RootState } from '@/store';
 import { Button, Input, Radio, RadioGroup, Spinner } from '@nextui-org/react';
+import { Formik } from 'formik';
+import { useState } from 'react';
 
 export default function ProfileSettingPage() {
 	const user = useAppSelector((state: RootState) => state.user);
+	const [isOpenSelectFileModal, setIsOpeSelectFileModal] = useState(false);
+
+	const handleOpenSelectFileModal = () => setIsOpeSelectFileModal(true);
+	const handleCloseSelectFileModal = () => setIsOpeSelectFileModal(false);
 
 	if (!user) return <Spinner />;
 
@@ -12,25 +22,62 @@ export default function ProfileSettingPage() {
 		<>
 			<h2 className='font-bold text-lg mb-2'>Thông tin cá nhân</h2>
 
-			<form className='flex flex-col gap-3 w-full'>
-				<Input label='Họ tên' placeholder='Nguyễn Văn Zịt' value={user.fullName} />
+			<Formik initialValues={user as UpdateUserRequestDto} enableReinitialize onSubmit={() => {}}>
+				{({ values, errors, handleChange, handleSubmit, setFieldValue }) => (
+					<>
+						<form className='flex flex-col gap-3 w-full' onSubmit={handleSubmit}>
+							<img
+								src={fileService.getFileUrl(values.image)}
+								alt={values.fullName}
+								className='w-28 aspect-square object-cover rounded-full cursor-pointer'
+								onClick={handleOpenSelectFileModal}
+							/>
 
-				<Input label='Email' placeholder='root@zit.com' disabled value={user.email} />
+							<Input
+								label='Họ tên'
+								placeholder='Nguyễn Văn Zịt'
+								name='fullName'
+								value={values.fullName}
+								onChange={handleChange}
+							/>
 
-				<RadioGroup label='Giới tính' value={user.gender}>
-					<Radio key='MALE' value='MALE'>
-						Nam
-					</Radio>
+							<RadioGroup label='Giới tính' name='gender' value={values.gender} onChange={handleChange}>
+								<Radio key='MALE' value='MALE'>
+									Nam
+								</Radio>
 
-					<Radio key='FEMALE' value='FEMALE'>
-						Nữ
-					</Radio>
-				</RadioGroup>
+								<Radio key='FEMALE' value='FEMALE'>
+									Nữ
+								</Radio>
 
-				<Button type='submit' color='primary' className='w-fit' startContent={<i className='bx bx-save'></i>}>
-					Cập nhật
-				</Button>
-			</form>
+								<Radio key='OTHER' value='OTHER'>
+									Khác
+								</Radio>
+							</RadioGroup>
+
+							<Input
+								label='Ngày sinh'
+								placeholder='Ngày sinh'
+								name='dob'
+								type='date'
+								value={values.dob}
+								onChange={handleChange}
+							/>
+
+							<Button
+								type='submit'
+								color='primary'
+								className='w-fit'
+								startContent={<i className='bx bx-save'></i>}
+							>
+								Cập nhật
+							</Button>
+						</form>
+
+						<SelectFileModal isOpen={isOpenSelectFileModal} onClose={handleCloseSelectFileModal} />
+					</>
+				)}
+			</Formik>
 		</>
 	);
 }

@@ -47,6 +47,14 @@ export interface RefreshTokenResponseDto {
 	expirationTime: number;
 }
 
+export interface UpdateUserRequestDto {
+	fullName: string;
+	phoneNumber: string;
+	gender: 'MALE' | 'FEMALE' | 'OTHER';
+	dob: string;
+	image: string;
+}
+
 class AuthService {
 	private client: AxiosInstance;
 

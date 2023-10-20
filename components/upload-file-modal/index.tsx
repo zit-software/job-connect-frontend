@@ -22,7 +22,7 @@ const initialValues: UploadFileRequestDto & {
 };
 
 const validationSchema = Yup.object().shape({
-	name: Yup.string().required('Tên file không được để trống'),
+	name: Yup.string().required('Tên file không được để trống').max(50, 'Tên file không được quá 50 ký tự'),
 });
 
 export default function UploadFileModal({ isOpen, onClose }: UploadFileModalProps) {

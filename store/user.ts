@@ -1,17 +1,8 @@
+import { User } from '@/models/User';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '.';
 
-export interface UserState {
-	id: number;
-	fullName: string;
-	email: string;
-	image: string;
-	phoneNumber: string;
-	userRole: 'APPLICANT' | 'RECRUITER';
-	gender: 'MALE' | 'FEMALE';
-	role: 'USER' | 'ADMIN';
-	dob: string | Date;
-}
+export type UserState = User;
 
 export const userSlice = createSlice({
 	name: 'user',
