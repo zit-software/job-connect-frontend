@@ -5,6 +5,7 @@ import SelectFileModal from '@/components/select-file-modal';
 import { updateCompanyDTO } from '@/models/Company';
 import companyService from '@/services/company.service';
 import fileService from '@/services/file.service';
+import IdInParams from '@/types/IdInParams';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import {
 	Button,
@@ -22,7 +23,6 @@ import {
 import { Formik } from 'formik';
 import { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
-import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useQuery } from 'react-query';
@@ -43,15 +43,11 @@ const validationSchema = yup.object().shape({
 		),
 });
 
-export default function CreateCompanyPage() {
+export default function CreateCompanyPage({ params: { id } }: { params: IdInParams }) {
 	const [parent] = useAutoAnimate();
 	const [isSaving, setIsSaving] = useState(false);
 
-	const params = useParams() as unknown as { id: number };
-
-	const { data: company, isLoading } = useQuery(['company', { id: params.id }], () =>
-		companyService.getCompanyById(params.id),
-	);
+	const { data: company, isLoading } = useQuery(['company', { id }], () => companyService.getCompanyById(id));
 
 	const { isOpen: isOpenSelectBannerModal, onOpenChange: onOpenSelectBannerModalChange } = useDisclosure();
 	const { isOpen: isOpenSelectImageModal, onOpenChange: onOpenSelectImageModalChange } = useDisclosure();
@@ -59,7 +55,7 @@ export default function CreateCompanyPage() {
 	const handleSubmit = async (values: updateCompanyDTO) => {
 		try {
 			setIsSaving(true);
-			await companyService.updateCompany(params.id, values);
+			await companyService.updateCompany(id, values);
 			toast.success('Cập nhật công ty thành công');
 		} catch (error: any) {
 			toast.error(error);

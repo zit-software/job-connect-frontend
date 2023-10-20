@@ -6,12 +6,13 @@ import { Resume } from '@/models/Resume';
 import fileService from '@/services/file.service';
 import resumeService from '@/services/resume.service';
 import { RootState } from '@/store';
+import IdInParams from '@/types/IdInParams';
 import { Button, ButtonGroup, Chip, Spinner, Tab, Tabs } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import { Formik } from 'formik';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
@@ -19,9 +20,8 @@ import { useSelector } from 'react-redux';
 
 const CKEditor = dynamic(() => import('@ckeditor/ckeditor5-react').then((e) => e.CKEditor), { ssr: false });
 
-export default function EditResumePage() {
+export default function EditResumePage({ params }: { params: IdInParams }) {
 	const router = useRouter();
-	const params = useParams() as unknown as { id: number };
 
 	const [zoom, setZoom] = useState<number>(1);
 

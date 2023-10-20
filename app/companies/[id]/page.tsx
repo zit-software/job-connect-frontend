@@ -1,21 +1,19 @@
-'use client';
-
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import CompanySection from '@/components/company/CompanySection';
 import { CompanySize } from '@/constant';
 import companyService from '@/services/company.service';
 import fileService from '@/services/file.service';
-import IdInParams from '@/types/IdInParams';
 import { Button, Chip } from '@nextui-org/react';
 import { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 
 const LocationMap = dynamic(() => import('@/components/company/LocationMap'));
 
 export function Contact({ address }: { address: string }) {
+	'use client';
+
 	const position: LatLngExpression = {
 		lat: 51.505,
 		lng: -0.09,
@@ -41,9 +39,7 @@ export function Contact({ address }: { address: string }) {
 	);
 }
 
-export default async function CompanyDetailPage() {
-	const { id } = useParams() as unknown as IdInParams;
-
+export default async function CompanyDetailPage({ params: { id } }: { params: { id: number } }) {
 	const company = await companyService.getCompanyById(id);
 
 	return (
@@ -52,7 +48,7 @@ export default async function CompanyDetailPage() {
 				<header className='grid grid-cols-12'>
 					<div className='col col-span-12 shadow-lg rounded-2xl relative overflow-hidden'>
 						<div
-							className='w-full relative bg-center bg-no-repeat bg-cover'
+							className='w-full relative bg-center bg-no-repeat bg-cover bg-gray-100'
 							style={{
 								aspectRatio: 3,
 								backgroundImage: `url(${fileService.getFileUrl(company.banner)})`,
