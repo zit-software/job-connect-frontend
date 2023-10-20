@@ -131,7 +131,7 @@ function MyCompanies() {
 
 										<TableCell>
 											<div className='flex gap-2'>
-												<Link href={`/companies/update/${company.id}`}>
+												<Link href={`/companies/${company.id}/edit`}>
 													<Button isIconOnly>
 														<i className='bx bx-edit'></i>
 													</Button>
