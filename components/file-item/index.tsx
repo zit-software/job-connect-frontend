@@ -22,14 +22,16 @@ import toast from 'react-hot-toast';
 
 export type FileItemProps = React.HTMLAttributes<HTMLDivElement> & {
 	file: FileModel;
+	onSelected?: (file: FileModel) => void;
 };
 
-export default function FileItem({ file: { id, name, type, createdAt, user }, ...props }: FileItemProps) {
+export default function FileItem({ file, onSelected, ...props }: FileItemProps) {
+	const { id, name, type, createdAt, user } = file;
+
 	const [isPreview, setIsPreview] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
 
 	const handleOpenPreview = () => setIsPreview(true);
-
 	const handleClosePreview = () => setIsPreview(false);
 
 	const handleDelete = async () => {
@@ -115,6 +117,20 @@ export default function FileItem({ file: { id, name, type, createdAt, user }, ..
 							</ModalBody>
 
 							<ModalFooter>
+								{onSelected && (
+									<Button
+										startContent={<i className='bx bx-check'></i>}
+										onClick={() => {
+											onSelected(file);
+											handleClosePreview();
+										}}
+									>
+										Chọn
+									</Button>
+								)}
+
+								<div className='flex-1'></div>
+
 								<Button
 									startContent={<i className='bx bx-download'></i>}
 									onClick={() => downloadURI(fileService.getFileUrl(id), name)}

@@ -6,6 +6,7 @@ import { UpdateUserRequestDto } from '@/services/auth.service';
 import fileService from '@/services/file.service';
 import { RootState } from '@/store';
 import { Button, Input, Radio, RadioGroup, Spinner } from '@nextui-org/react';
+import dayjs from 'dayjs';
 import { Formik } from 'formik';
 import { useState } from 'react';
 
@@ -29,7 +30,7 @@ export default function ProfileSettingPage() {
 							<img
 								src={fileService.getFileUrl(values.image)}
 								alt={values.fullName}
-								className='w-28 aspect-square object-cover rounded-full cursor-pointer'
+								className='w-32 aspect-square object-cover rounded-full cursor-pointer my-4'
 								onClick={handleOpenSelectFileModal}
 							/>
 
@@ -60,7 +61,7 @@ export default function ProfileSettingPage() {
 								placeholder='Ngày sinh'
 								name='dob'
 								type='date'
-								value={values.dob}
+								value={dayjs(values.dob).format('YYYY-MM-DD')}
 								onChange={handleChange}
 							/>
 
@@ -74,7 +75,14 @@ export default function ProfileSettingPage() {
 							</Button>
 						</form>
 
-						<SelectFileModal isOpen={isOpenSelectFileModal} onClose={handleCloseSelectFileModal} />
+						<SelectFileModal
+							isOpen={isOpenSelectFileModal}
+							onClose={handleCloseSelectFileModal}
+							onSelected={(file) => {
+								setFieldValue('image', file.id);
+								handleCloseSelectFileModal();
+							}}
+						/>
 					</>
 				)}
 			</Formik>

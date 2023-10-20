@@ -8,9 +8,10 @@ import FileItem from '../file-item';
 export interface FileListProps {
 	files: FileModel[];
 	isLoading?: boolean;
+	onSelected?: (file: FileModel) => void;
 }
 
-export default function FileList({ files, isLoading }: FileListProps) {
+export default function FileList({ files, isLoading, onSelected }: FileListProps) {
 	const [fileListParent] = useAutoAnimate();
 
 	return isLoading ? (
@@ -20,7 +21,7 @@ export default function FileList({ files, isLoading }: FileListProps) {
 	) : files?.length ? (
 		<div className='grid gap-2 grid-cols-2 md:grid-cols-4 lg:grid-cols-6' ref={fileListParent}>
 			{files.map((file) => (
-				<FileItem key={file.id} file={file} />
+				<FileItem key={file.id} file={file} onSelected={onSelected} />
 			))}
 		</div>
 	) : (
