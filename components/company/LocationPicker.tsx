@@ -61,7 +61,7 @@ const LocationPicker = ({ position, setPosition, draggable }: DraggableMarkerPro
 
 	return (
 		<div className='h-[400px]'>
-			<MapContainer style={{ height: '100%' }} zoom={13} scrollWheelZoom center={position}>
+			<MapContainer style={{ height: '100%', zIndex: 0 }} zoom={13} scrollWheelZoom={false} center={position}>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
