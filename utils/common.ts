@@ -37,3 +37,8 @@ export function formatLongText(text: string) {
 export function isValidURL(str: string) {
 	return /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g.test(str);
 }
+
+export function formatDateTime(date: string) {
+	const d = new Date(date);
+	return d.toLocaleString();
+}

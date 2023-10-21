@@ -30,7 +30,6 @@ export interface AddJobDTO {
 
 export interface AddJobForm {
 	title?: string;
-	description?: string;
 	minExp?: number;
 	minSalary?: number;
 	maxSalary?: number;

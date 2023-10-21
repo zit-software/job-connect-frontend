@@ -13,6 +13,9 @@ class JobService {
 	async createJob(job: AddJobDTO) {
 		return (await this.client.post('/user/jobs', job)) as Job;
 	}
+	async getJobsByCompanyId(id: number) {
+		return (await this.client.get(`/jobs/company/${id}`)) as Job[];
+	}
 }
 
 export default new JobService() as JobService;

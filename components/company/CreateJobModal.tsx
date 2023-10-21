@@ -2,17 +2,7 @@ import { AddJobDTO, AddJobForm } from '@/models/Job';
 import { WorkType } from '@/models/WorkType';
 import jobService from '@/services/job.service';
 import workTypeService from '@/services/workType.service';
-import {
-	Button,
-	Input,
-	Modal,
-	ModalBody,
-	ModalContent,
-	ModalHeader,
-	Select,
-	SelectItem,
-	Textarea,
-} from '@nextui-org/react';
+import { Button, Input, Modal, ModalBody, ModalContent, ModalHeader, Select, SelectItem } from '@nextui-org/react';
 import { Formik } from 'formik';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
@@ -22,11 +12,11 @@ interface CreateJobModalProps {
 	isOpen: boolean;
 	onOpenChange: (open: boolean) => void;
 	companyId: number;
+	onClose: () => void;
 }
-export default function CreateJobModal({ isOpen, onOpenChange, companyId }: CreateJobModalProps) {
+export default function CreateJobModal({ isOpen, onOpenChange, companyId, onClose }: CreateJobModalProps) {
 	const validationSchema = yup.object().shape({
 		title: yup.string().required('Tên công việc không được để trống'),
-		description: yup.string().required('Mô tả công việc không được để trống'),
 		minExp: yup.number().required('Kinh nghiệm tối thiểu không được để trống'),
 		minSalary: yup.number().required('Lương tối thiểu không được để trống'),
 		maxSalary: yup.number().required('Lương tối đa không được để trống'),
@@ -35,7 +25,6 @@ export default function CreateJobModal({ isOpen, onOpenChange, companyId }: Crea
 	const router = useRouter();
 	const { data: workTypes } = useQuery('workTypes', () => workTypeService.getWorkTypes(), { initialData: [] });
 	const handleSubmit = async (values: AddJobForm) => {
-		console.log(values);
 		try {
 			const job = await jobService.createJob({
 				...values,
@@ -43,11 +32,13 @@ export default function CreateJobModal({ isOpen, onOpenChange, companyId }: Crea
 				workTypeId: parseInt(values.workTypeId + ''),
 			} as AddJobDTO);
 			toast.success('Tạo công việc thành công');
-			router.push(`/jobs/${job.id}`);
+			onClose();
+			router.push(`companies/${companyId}/jobs/update/${job.id}`);
 		} catch (error: any) {
 			toast.error(error.message);
 		}
 	};
+
 	return (
 		<Modal className='z-10' isOpen={isOpen} onOpenChange={onOpenChange} size='xl'>
 			<ModalContent>
@@ -60,7 +51,6 @@ export default function CreateJobModal({ isOpen, onOpenChange, companyId }: Crea
 								initialValues={
 									{
 										title: undefined,
-										description: undefined,
 										minExp: undefined,
 										minSalary: undefined,
 										maxSalary: undefined,
@@ -165,16 +155,6 @@ export default function CreateJobModal({ isOpen, onOpenChange, companyId }: Crea
 												name='maxSalary'
 											/>
 										</div>
-										<Textarea
-											label='Mô tả công việc'
-											labelPlacement='outside'
-											placeholder='VD: ZIT Software là công ty phần mềm...'
-											isInvalid={!!errors.description}
-											errorMessage={errors.description}
-											name='description'
-											value={values.description}
-											onChange={handleChange}
-										/>
 										<div className='flex justify-end mt-5'>
 											<Button color='danger' variant='light' onPress={onClose}>
 												Hủy
