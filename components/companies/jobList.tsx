@@ -27,7 +27,7 @@ export default function JobList({ jobs }: JobListProps) {
 						<TableCell>{dayjs(job.createdAt).format('DD/MM/YYYY - hh:mm')}</TableCell>
 						<TableCell>
 							<div className='flex gap-2'>
-								<Link href={`/jobs/${job.id}/edit`}>
+								<Link href={`/jobs/${job.id}/update`}>
 									<Button isIconOnly>
 										<i className='bx bx-edit'></i>
 									</Button>

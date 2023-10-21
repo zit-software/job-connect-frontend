@@ -39,7 +39,7 @@ function CreateCompany({}: CreateCompanyProps) {
 	const params = useParams() as unknown as { id: number };
 	const [parent] = useAutoAnimate();
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-	const { isOpen: isOpenJob, onOpen: onOpenJob, onOpenChange: onOpenChangeJob } = useDisclosure();
+	const { isOpen: isOpenJob, onOpen: onOpenJob, onOpenChange: onOpenChangeJob, onClose } = useDisclosure();
 	const [type, setType] = useState<string>('');
 	const validationSchema = yup.object().shape({
 		name: yup.string().required('Tên công ty không được để trống'),
@@ -263,7 +263,12 @@ function CreateCompany({}: CreateCompanyProps) {
 						</div>
 					</div>
 				</div>
-				<CreateJobModal companyId={params.id} isOpen={isOpenJob} onOpenChange={onOpenChangeJob} />
+				<CreateJobModal
+					companyId={params.id}
+					isOpen={isOpenJob}
+					onOpenChange={onOpenChangeJob}
+					onClose={onClose}
+				/>
 			</div>
 		</>
 	);
