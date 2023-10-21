@@ -31,3 +31,14 @@ p.address {
 	color: grey;
 	font-style: italic;
 }
+
+.spacer {
+	aspect-ratio: 600/160;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+.layer {
+	overflow: hidden;
+}

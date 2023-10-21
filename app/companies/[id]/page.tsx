@@ -4,13 +4,11 @@ import CompanySection from '@/components/company/CompanySection';
 import { CompanySize } from '@/constant';
 import companyService from '@/services/company.service';
 import fileService from '@/services/file.service';
-import { Button, Chip } from '@nextui-org/react';
 import { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-
+import { Button, Chip } from '.';
 const LocationMap = dynamic(() => import('@/components/company/LocationMap'));
-
 export function Contact({ address }: { address: string }) {
 	'use client';
 
@@ -64,7 +62,7 @@ export default async function CompanyDetailPage({ params: { id } }: { params: { 
 								<h1 className='text-2xl font-bold text-white'>{company.name}</h1>
 								<div className='flex justify-between items-center'>
 									<div className='flex gap-2'>
-										<Link href={company.url} target='_blank'>
+										<Link href={company.url}>
 											<Chip
 												variant='light'
 												className='text-white'

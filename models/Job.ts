@@ -11,7 +11,7 @@ export interface Job extends BaseModel {
 	minSalary: number;
 	maxSalary: number;
 	address: string;
-	skils: Skill[];
+	skills: Skill[];
 	company: Company;
 	recruiter: Recruiter;
 	workType: WorkType;

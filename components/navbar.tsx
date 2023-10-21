@@ -21,9 +21,7 @@ export const Navbar = () => {
 					<NavbarBrand as='li' className='gap-3 max-w-fit'>
 						<NextLink className='flex justify-start items-center gap-2' href='/'>
 							<Logo />
-							<p className='font-black text-inherit text-large text-primary lowercase'>
-								{user ? user.userRole : 'Job Connect'}
-							</p>
+							<p className='font-black text-inherit text-large text-primary'>{'Job Connect'}</p>
 						</NextLink>
 					</NavbarBrand>
 					<ul className='hidden lg:flex gap-4 justify-start ml-2'>
