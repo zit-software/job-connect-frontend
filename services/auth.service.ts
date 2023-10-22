@@ -1,3 +1,4 @@
+import { User } from '@/models/User';
 import { UserState } from '@/store/user';
 import createHttpClient from '@/utils/createHttpClient';
 import { AxiosInstance } from 'axios';
@@ -80,6 +81,10 @@ class AuthService {
 
 	async refreshToken(body: RefreshTokenRequestDto) {
 		return (await this.client.post('/refresh-token', body)) as RefreshTokenResponseDto;
+	}
+
+	async updateUser(body: UpdateUserRequestDto) {
+		return (await this.client.put('', body)) as User;
 	}
 
 	async logout(body: RefreshTokenRequestDto) {
