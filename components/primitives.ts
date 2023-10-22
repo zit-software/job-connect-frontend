@@ -14,7 +14,7 @@ export const title = tv({
 			orange: 'from-[#FFA500] to-[#FF8C00]',
 		},
 		size: {
-			sm: 'text-3xl lg:text-4xl',
+			sm: 'text-3xl',
 			md: 'text-[2.3rem] lg:text-5xl leading-9',
 			lg: 'text-4xl lg:text-6xl',
 		},

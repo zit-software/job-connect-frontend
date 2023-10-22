@@ -1,7 +1,8 @@
 'use client';
 
-import JobCard, { JobCardProps } from '@/components/home/jobCard';
+import HotJob, { JobCardProps } from '@/components/home/HotJob';
 import JobItem from '@/components/job-item';
+import { title } from '@/components/primitives';
 import { mockBanners } from '@/mocks/banners';
 import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
@@ -61,7 +62,20 @@ const mockedJob: JobCardProps = {
 export default function Home() {
 	return (
 		<>
-			<div className='w-full py-24 bg-gradient-to-tr from-violet-200 to-blue-200'>
+			<div className='w-full py-24 bg-gradient-to-tr from-violet-200 to-blue-200 relative overflow-clip'>
+				<div className='w-64 h-64 absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-blue-500 to-green-400 rounded-full blur-md'></div>
+				<div className='w-32 h-32 absolute top-32 left-64 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-blue-500 to-green-400 rounded-full blur-sm'></div>
+				<div className='w-48 h-48 absolute bottom-32 right-64 translate-x-1/2 translate-y-1/2 bg-gradient-to-t from-blue-500 to-green-400 rounded-full blur-sm'></div>
+				<div className='w-96 h-96 absolute bottom-0 right-10 translate-x-1/2 translate-y-1/2 bg-gradient-to-t from-blue-500 to-green-400 rounded-full blur-sm'></div>
+
+				<div className='w-48 h-48 absolute bottom-0 left-64 -translate-x-1/2 translate-y-1/2 bg-gradient-to-t from-blue-500 to-green-400 rounded-full p-1 blur-sm'>
+					<div className='bg-violet-200 w-full h-full rounded-full'></div>
+				</div>
+
+				<div className='w-48 h-48 absolute top-0 right-0 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-t from-blue-500 to-green-400 rounded-full p-1 blur-sm'>
+					<div className='bg-blue-200 w-full h-full rounded-full'></div>
+				</div>
+
 				<div className='container mx-auto w-[1280px] max-w[95%] min-h-64'>
 					<Carousel responsive={responsive} autoPlaySpeed={2500} autoPlay infinite>
 						{mockBanners.map((banner) => (
@@ -81,49 +95,50 @@ export default function Home() {
 
 			<div className='container mx-auto w-[1280px] max-w[95%]'>
 				<div className='my-5'>
-					<h1>
-						<span className='text-primary text-3xl font-bold flex-1'>
-							Việc làm đã ứng tuyển <i className={clsx('bx bx-file')}></i>
+					<h2 className='my-6 flex items-center gap-2'>
+						<span className={clsx(title({ color: 'orange', size: 'sm' }), 'flex-1')}>
+							Việc làm hot <i className={clsx('bx bxs-hot')}></i>
 						</span>
-					</h1>
+
+						<NextLink href='/hot-jobs' className='text-sm'>
+							<Button
+								endContent={<i className='bx bx-chevrons-right'></i>}
+								size='sm'
+								color='warning'
+								variant='light'
+								className='font-bold'
+							>
+								Xem thêm
+							</Button>
+						</NextLink>
+					</h2>
+
 					<Carousel
 						responsive={responsiveJobCard}
-						className='my-4 -mx-2'
+						className='my-4 -mx-2 gap-2'
 						autoPlaySpeed={2500}
 						autoPlay
 						infinite
 					>
-						<div className='px-2'>
-							<JobCard {...mockedJob} />
-						</div>
-						<div className='px-2'>
-							<JobCard {...mockedJob} />
-						</div>
-						<div className='px-2'>
-							<JobCard {...mockedJob} />
-						</div>
-						<div className='px-2'>
-							<JobCard {...mockedJob} />
-						</div>
-						<div className='px-2'>
-							<JobCard {...mockedJob} />
-						</div>
-						<div className='px-2'>
-							<JobCard {...mockedJob} />
-						</div>
+						{[1, 2, 3, 4, 5].map((_, key) => (
+							<div key={key} className='px-2'>
+								<HotJob {...mockedJob} />
+							</div>
+						))}
 					</Carousel>
 				</div>
 				<h2 className='my-6 flex items-center gap-2'>
-					<span className='text-primary text-3xl font-bold flex-1'>
-						Việc làm hot <i className={clsx('bx bxs-hot')}></i>
+					<span className={clsx(title({ color: 'blue', size: 'sm' }), 'flex-1')}>
+						Việc làm mới <i className={clsx('bx bx-briefcase')}></i>
 					</span>
 
-					<NextLink href='/hot-jobs' className='text-sm'>
+					<NextLink href='/jobs' className='text-sm'>
 						<Button
 							endContent={<i className='bx bx-chevrons-right'></i>}
 							size='sm'
 							color='primary'
 							variant='light'
+							className='font-bold'
 						>
 							Xem thêm
 						</Button>
