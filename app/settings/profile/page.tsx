@@ -17,6 +17,10 @@ import * as Yup from 'yup';
 const validationSchema = Yup.object().shape({
 	fullName: Yup.string().required('Họ tên không được để trống'),
 	image: Yup.string().required('Ảnh đại diện không được để trống'),
+	phoneNumber: Yup.string()
+		.required('Số điện thoại không được để trống')
+		.matches(/^[0-9]+$/, 'Số điện thoại không hợp lệ')
+		.length(10, 'Số điện thoại không hợp lệ'),
 	gender: Yup.string().required('Giới tính không được để trống').oneOf(['MALE', 'FEMALE', 'OTHER']),
 	dob: Yup.date().required('Ngày sinh không được để trống').max(new Date(), 'Ngày sinh không hợp lệ'),
 });
@@ -73,6 +77,16 @@ export default function ProfileSettingPage() {
 								value={values.fullName}
 								isInvalid={!!errors.fullName}
 								errorMessage={errors.fullName}
+								onChange={handleChange}
+							/>
+
+							<Input
+								label='Số điện thoại'
+								placeholder='0123456789'
+								name='phoneNumber'
+								value={values.phoneNumber}
+								isInvalid={!!errors.phoneNumber}
+								errorMessage={errors.phoneNumber}
 								onChange={handleChange}
 							/>
 

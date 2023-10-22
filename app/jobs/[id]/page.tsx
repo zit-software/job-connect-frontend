@@ -8,7 +8,9 @@ import fileService from '@/services/file.service';
 import jobService from '@/services/job.service';
 import { formatVndMoney } from '@/utils/common';
 import { Lottie } from '.';
-interface JobDetailProps {}
+
+export interface JobDetailProps {}
+
 async function JobDetail({ params }: any) {
 	try {
 		const job: Job = await jobService.getJobById(params.id);
