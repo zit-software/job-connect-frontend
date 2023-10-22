@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import wave from '@/assets/images/wave.svg';
 import empty from '@/assets/lotties/empty.json';
 import jobDetail from '@/assets/lotties/job-detail.json';
