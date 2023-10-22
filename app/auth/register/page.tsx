@@ -31,7 +31,10 @@ const initialValues: RegisterRequestDto = {
 const validationSchema = Yup.object().shape({
 	accessToken: Yup.string().required('Vui lòng nhập mã truy cập'),
 	fullName: Yup.string().required('Vui lòng nhập họ và tên'),
-	phoneNumber: Yup.string().required('Vui lòng nhập số điện thoại'),
+	phoneNumber: Yup.string()
+		.required('Số điện thoại không được để trống')
+		.matches(/^[0-9]+$/, 'Số điện thoại không hợp lệ')
+		.length(10, 'Số điện thoại không hợp lệ'),
 	userRole: Yup.string().required('Vui lòng chọn vai trò của bạn').oneOf(['APPLICANT', 'RECRUITER']),
 	dob: Yup.date().required('Vui lòng nhập ngày sinh'),
 	gender: Yup.string().required('Vui lòng chọn giới tính'),
