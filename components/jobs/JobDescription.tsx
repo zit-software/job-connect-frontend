@@ -18,7 +18,7 @@ export default function JobDescription({ job }: JobDescriptionProps) {
 					<Tabs color='primary' variant='underlined'>
 						<Tab
 							title={
-								<div className='flex items-center gap-1'>
+								<div className='flex items-center gap-1 -mx-2'>
 									<i className='bx bx-briefcase'></i>
 									<span>Mô tả công việc</span>
 								</div>

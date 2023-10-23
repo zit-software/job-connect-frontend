@@ -1,14 +1,18 @@
 'use client';
 
 import { Job } from '@/models/Job';
+import { RootState } from '@/store';
 import { Button, Card, CardBody } from '@nextui-org/react';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 export interface ActionProps {
 	job: Job;
 }
 
 export default function Action({ job }: ActionProps) {
+	const user = useSelector((state: RootState) => state.user);
+
 	return (
 		<Card className='shadow-none border'>
 			<CardBody>
@@ -24,16 +28,18 @@ export default function Action({ job }: ActionProps) {
 					</Button>
 				</Link>
 
-				<Link href={`/my-resumes?create=true`} className='block my-1'>
-					<Button
-						fullWidth
-						color='warning'
-						variant='flat'
-						startContent={<i className='bx bxs-file-plus'></i>}
-					>
-						Tạo cv ngay
-					</Button>
-				</Link>
+				{user?.userRole === 'APPLICANT' && (
+					<Link href={`/my-resumes?create=true`} className='block my-1'>
+						<Button
+							fullWidth
+							color='warning'
+							variant='flat'
+							startContent={<i className='bx bxs-file-plus'></i>}
+						>
+							Tạo cv ngay
+						</Button>
+					</Link>
+				)}
 			</CardBody>
 		</Card>
 	);

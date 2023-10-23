@@ -12,7 +12,8 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import Lottie from 'lottie-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 
@@ -20,6 +21,14 @@ export default function MyResumesPage() {
 	const { data: resumeList, isLoading } = useQuery(['my-resumes'], () => resumeService.getAllMyResumes());
 
 	const { isOpen: isOpenCreateModal, onClose: onCloseCreateModal, onOpen: onOpenCreateModal } = useDisclosure();
+
+	const search = useSearchParams();
+
+	useEffect(() => {
+		if (JSON.parse(search.get('create')!)) {
+			onOpenCreateModal();
+		}
+	}, [onOpenCreateModal, search]);
 
 	const handlDeleteResume = async (resumeId: number) => {
 		try {

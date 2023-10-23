@@ -21,11 +21,11 @@ async function JobDetail({ params }: any) {
 			<>
 				<div className=' bg-gradient-to-b from-[#47a6f2] to-[#4766ef] w-full flex justify-center py-10'>
 					<div className='w-[1280px] max-w-[95%] mx-auto'>
-						<div className='gap-5 grid grid-cols-3'>
+						<div className='gap-5 grid lg:grid-cols-3 grid-cols-1'>
 							<div className='col-span-2'>
 								<h2 className='text-4xl text-white font-bold mb-5'>{job?.title}</h2>
 
-								<div className='grid grid-cols-3 gap-4 my-4'>
+								<div className='grid grid-cols-1 md:grid-cols-3 gap-4 my-4'>
 									<div className='flex items-center gap-4 text-lg text-white col-span-1'>
 										<div className='w-16 aspect-square bg-gradient-to-tr from-yellow-500 to-orange-400 rounded-full flex items-center justify-center'>
 											<i className='bx bx-navigation text-white text-3xl'></i>
@@ -118,12 +118,13 @@ async function JobDetail({ params }: any) {
 					</div>
 				</div>
 
-				<div className='container max-w-[1280px] mx-auto my-5'>
-					<div className='grid grid-cols-12 gap-5'>
-						<div className='col-span-9'>
+				<div className='container w-[1280px] max-w-[95%] mx-auto my-5'>
+					<div className='grid grid-cols-1 lg:grid-cols-3 gap-5'>
+						<div className='col-span-2'>
 							<JobDescription job={job} />
 						</div>
-						<div className='col-span-3'>
+
+						<div className='col-span-1'>
 							<Action job={job} />
 						</div>
 					</div>
