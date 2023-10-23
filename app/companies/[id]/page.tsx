@@ -8,8 +8,10 @@ import { LatLngExpression } from 'leaflet';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Button, Chip } from '.';
+
 const LocationMap = dynamic(() => import('@/components/company/LocationMap'));
-export function Contact({ address }: { address: string }) {
+
+function Contact({ address }: { address: string }) {
 	'use client';
 
 	const position: LatLngExpression = {

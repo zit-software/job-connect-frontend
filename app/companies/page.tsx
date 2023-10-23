@@ -2,7 +2,6 @@
 
 import jobProposalLottie from '@/assets/lotties/job-proposal.json';
 import CompanyCard from '@/components/company/CompanyCard';
-import { CompanySize } from '@/constant';
 import { Company } from '@/models/Company';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Input, Spinner, Tab, Tabs } from '@nextui-org/react';
@@ -17,66 +16,8 @@ function Companies() {
 	const [autoAnimateParent] = useAutoAnimate();
 
 	const router = useRouter();
-	const handleClick = (id: number) => {
-		router.push(`/companies/${id}`);
-	};
 
-	const mockedCompanies: Company[] = [
-		{
-			id: 1,
-			name: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
-			address: 'TP. Cần Thơ',
-			image: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
-			banner: 'https://github.com/zit-software.png',
-			description: 'Công ty ZIT Software',
-			owner: {
-				id: 1,
-				createdAt: new Date(),
-				updatedAt: new Date(),
-			},
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			companySize: CompanySize.FIVE_HUNDRED,
-			mapPosition: '',
-			url: '',
-		},
-		{
-			id: 2,
-			name: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
-			address: 'TP. Cần Thơ',
-			image: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
-			banner: 'https://github.com/zit-software.png',
-			description: 'Công ty ZIT Software',
-			owner: {
-				id: 1,
-				createdAt: new Date(),
-				updatedAt: new Date(),
-			},
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			companySize: CompanySize.FIVE_HUNDRED,
-			mapPosition: '',
-			url: '',
-		},
-		{
-			id: 3,
-			name: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
-			address: 'TP. Cần Thơ',
-			image: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
-			banner: 'https://github.com/zit-software.png',
-			description: 'Công ty ZIT Software',
-			owner: {
-				id: 1,
-				createdAt: new Date(),
-				updatedAt: new Date(),
-			},
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			companySize: CompanySize.FIVE_HUNDRED,
-			mapPosition: '',
-			url: '',
-		},
-	];
+	const mockedCompanies: Company[] = [];
 	return (
 		<div className='container max-w-[95%] w-[1280px] mx-auto my-5'>
 			<div className='grid grid-cols-12 bg-gradient-to-b rounded-2xl from-blue-200 to-blue-100 w-full p-10'>
