@@ -1,5 +1,5 @@
 import { User } from '@/models/User';
-import { UserState } from '@/store/user';
+import { UserState } from '@/store/userSlice';
 import createHttpClient from '@/utils/createHttpClient';
 import { AxiosInstance } from 'axios';
 

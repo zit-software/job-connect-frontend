@@ -6,7 +6,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import authService, { UpdateUserRequestDto } from '@/services/auth.service';
 import fileService from '@/services/file.service';
 import { RootState } from '@/store';
-import { setUser } from '@/store/user';
+import { setUser } from '@/store/userSlice';
 import { Button, Input, Radio, RadioGroup, Spinner } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import { Formik } from 'formik';

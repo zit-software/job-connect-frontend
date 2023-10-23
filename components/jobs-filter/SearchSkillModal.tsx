@@ -1,6 +1,9 @@
 import emptyLottie from '@/assets/lotties/empty.json';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 import useDebounce from '@/hooks/useDebounce';
 import skillService, { Skill } from '@/services/skill.service';
+import { RootState } from '@/store';
+import { addSkills } from '@/store/skillsSlice';
 import { Paginationable } from '@/types/paginationable';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import {
@@ -19,7 +22,7 @@ import {
 import Lottie from 'lottie-react';
 import { useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
-import { cachedSkills } from './cached-skills';
+import { useSelector } from 'react-redux';
 
 export type SearchSkillModalProps = {
 	isOpen: boolean;
@@ -44,6 +47,9 @@ function SkillList({ selectedSkills: _selectedSkills = [], onSubmit }: SkillList
 	const [skillListParent] = useAutoAnimate();
 	const [selectedSkillParent] = useAutoAnimate();
 
+	const dispatch = useAppDispatch();
+	const cachedSkills = useSelector((state: RootState) => state.skills.cachedSkills);
+
 	useEffect(() => {
 		(async () => {
 			try {
@@ -55,20 +61,18 @@ function SkillList({ selectedSkills: _selectedSkills = [], onSubmit }: SkillList
 
 				setSkillList(res);
 
-				for (const skill of res.content) {
-					cachedSkills.set(skill.id.toString(), skill);
-				}
+				dispatch(addSkills(res.content));
 			} catch (error: any) {
 				toast.error(error.message);
 			} finally {
 				setIsLoading(false);
 			}
 		})();
-	}, [debouncedSearchText]);
+	}, [debouncedSearchText, dispatch]);
 
 	const selectedSkills = useMemo<Skill[]>(() => {
-		return selectedSkillIds.map((skillId) => cachedSkills.get(skillId)!);
-	}, [selectedSkillIds]);
+		return selectedSkillIds.map((skillId) => cachedSkills[skillId]);
+	}, [cachedSkills, selectedSkillIds]);
 
 	const renderedSkillList = useMemo<Skill[]>(() => {
 		return (
@@ -137,7 +141,7 @@ function SkillList({ selectedSkills: _selectedSkills = [], onSubmit }: SkillList
 			</ModalBody>
 
 			<ModalFooter>
-				<Button color='primary' variant='shadow' onClick={() => onSubmit?.(selectedSkills)}>
+				<Button color='primary' variant='shadow' type='submit' onClick={() => onSubmit?.(selectedSkills)}>
 					Xác nhận
 				</Button>
 			</ModalFooter>

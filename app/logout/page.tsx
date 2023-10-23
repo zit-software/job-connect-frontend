@@ -3,7 +3,7 @@
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import authService from '@/services/auth.service';
 import tokenService from '@/services/token.service';
-import { UserState, setUser } from '@/store/user';
+import { UserState, setUser } from '@/store/userSlice';
 import { Spinner } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';

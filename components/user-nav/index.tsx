@@ -1,5 +1,5 @@
 import fileService from '@/services/file.service';
-import { UserState } from '@/store/user';
+import { UserState } from '@/store/userSlice';
 import { Avatar } from '@nextui-org/avatar';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/dropdown';
 import { useRouter } from 'next/navigation';

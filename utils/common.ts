@@ -26,6 +26,17 @@ export async function downloadURI(uri: string, name: string) {
 	URL.revokeObjectURL(a.href);
 }
 
+export function removeHtmlTag(text: string) {
+	if (typeof window === 'undefined') return text;
+
+	const div = document.createElement('div');
+	div.innerHTML = text;
+	div.remove();
+	const result = div.innerText;
+
+	return result;
+}
+
 export function formatLongText(text: string) {
 	if (!text) return 'Chưa có';
 	if (text.length > 200) {

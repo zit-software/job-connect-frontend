@@ -14,6 +14,7 @@ interface CreateJobModalProps {
 	companyId: number;
 	onClose: () => void;
 }
+
 export default function CreateJobModal({ isOpen, onOpenChange, companyId, onClose }: CreateJobModalProps) {
 	const validationSchema = yup.object().shape({
 		title: yup.string().required('Tên công việc không được để trống'),
@@ -33,7 +34,7 @@ export default function CreateJobModal({ isOpen, onOpenChange, companyId, onClos
 			} as AddJobDTO);
 			toast.success('Tạo công việc thành công');
 			onClose();
-			router.push(`companies/${companyId}/jobs/update/${job.id}`);
+			router.push(`/jobs/${job.id}/update`);
 		} catch (error: any) {
 			toast.error(error.message);
 		}

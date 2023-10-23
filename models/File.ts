@@ -1,4 +1,4 @@
-import { UserState } from '@/store/user';
+import { UserState } from '@/store/userSlice';
 import { BaseModel } from './BaseModel';
 
 export type FileModel = BaseModel & {

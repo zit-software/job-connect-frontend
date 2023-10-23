@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { idTokenSlice } from './idToken';
-import { userSlice } from './user';
+import { idTokenSlice } from './idTokenSlice';
+import skillsSlice from './skillsSlice';
+import { userSlice } from './userSlice';
 
 const store = configureStore({
 	reducer: {
 		user: userSlice.reducer,
 		idToken: idTokenSlice.reducer,
+		skills: skillsSlice.reducer,
 	},
 });
 

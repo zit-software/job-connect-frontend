@@ -1,10 +1,13 @@
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 import skillService, { Skill } from '@/services/skill.service';
+import { RootState } from '@/store';
+import { addSkills } from '@/store/skillsSlice';
 import { Paginationable } from '@/types/paginationable';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { Button, Checkbox, CheckboxGroup, Chip, Spinner } from '@nextui-org/react';
 import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import SearchSkillModal from './SearchSkillModal';
-import { cachedSkills } from './cached-skills';
 
 export interface SkillFilterProps {
 	onChange?: (skills: Skill[]) => void;
@@ -18,17 +21,18 @@ export default function SkillFilter({ onChange }: SkillFilterProps) {
 	const [selectedSkillsParent] = useAutoAnimate();
 	const [sortedSkillListParent] = useAutoAnimate();
 
+	const cachedSkills = useSelector((state: RootState) => state.skills.cachedSkills);
+	const dispatch = useAppDispatch();
+
 	useEffect(() => {
 		(async () => {
 			const res = await skillService.getAllSkills();
 
 			setSkillList(res);
 
-			for (const skill of res.content) {
-				cachedSkills.set(skill.id.toString(), skill);
-			}
+			dispatch(addSkills(res.content));
 		})();
-	}, []);
+	}, [dispatch]);
 
 	const handleShowSkillFilterModal = () => {
 		setShowSkillFilterModal(true);
@@ -44,18 +48,14 @@ export default function SkillFilter({ onChange }: SkillFilterProps) {
 
 	const handleSelectedSkillIdsChange = (skills: Skill[]) => {
 		setSelectedSkillIds(skills.map((skill) => skill.id.toString()));
-		for (const skill of skills) {
-			cachedSkills.set(skill.id.toString(), skill);
-		}
+		dispatch(addSkills(skills));
+
 		handleCloseSkillFilterModal();
 	};
 
 	const selectedSkills = useMemo(
-		() =>
-			selectedSkillIds.map((id) => {
-				return cachedSkills.get(id)!;
-			}),
-		[selectedSkillIds],
+		() => selectedSkillIds.map((id) => cachedSkills[id]),
+		[cachedSkills, selectedSkillIds],
 	);
 
 	const sortedSkillList = useMemo(() => {
