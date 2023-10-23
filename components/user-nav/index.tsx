@@ -1,3 +1,4 @@
+import { UserUserRole } from '@/models/User';
 import fileService from '@/services/file.service';
 import { UserState } from '@/store/userSlice';
 import { Avatar } from '@nextui-org/avatar';
@@ -26,7 +27,7 @@ export default function UserNav({ user, size = 'md' }: UserNavProps) {
 					Thông tin cá nhân
 				</DropdownItem>
 
-				{user.userRole === 'APPLICANT' ? (
+				{user.userRole === UserUserRole.APPLICANT ? (
 					<DropdownItem
 						startContent={<i className='bx bx-file'></i>}
 						onClick={() => router.push('/my-resumes')}

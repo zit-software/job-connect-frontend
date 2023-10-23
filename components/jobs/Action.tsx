@@ -1,6 +1,7 @@
 'use client';
 
 import { Job } from '@/models/Job';
+import { UserUserRole } from '@/models/User';
 import { RootState } from '@/store';
 import { Button, Card, CardBody } from '@nextui-org/react';
 import Link from 'next/link';
@@ -18,9 +19,11 @@ export default function Action({ job }: ActionProps) {
 			<CardBody>
 				<h3 className='text-lg font-bold mb-2'>Hành động</h3>
 
-				<Button className='my-1 text-white' color='success' startContent={<i className='bx bxs-send'></i>}>
-					Ứng tuyển
-				</Button>
+				{user?.userRole === UserUserRole.APPLICANT && (
+					<Button className='my-1 text-white' color='success' startContent={<i className='bx bxs-send'></i>}>
+						Ứng tuyển
+					</Button>
+				)}
 
 				<Link href={`/companies/${job.company.id}`} className='block my-1'>
 					<Button fullWidth color='primary' variant='flat' startContent={<i className='bx bx-building'></i>}>
@@ -28,7 +31,7 @@ export default function Action({ job }: ActionProps) {
 					</Button>
 				</Link>
 
-				{user?.userRole === 'APPLICANT' && (
+				{user?.userRole === UserUserRole.APPLICANT && (
 					<Link href={`/my-resumes?create=true`} className='block my-1'>
 						<Button
 							fullWidth

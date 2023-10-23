@@ -1,4 +1,4 @@
-import { User } from '@/models/User';
+import { User, UserUserRole } from '@/models/User';
 import { UserState } from '@/store/userSlice';
 import createHttpClient from '@/utils/createHttpClient';
 import { AxiosInstance } from 'axios';
@@ -13,7 +13,7 @@ export interface LoginResponseDto {
 	expirationTime: number;
 }
 export interface RegisterRequestDto {
-	userRole: 'APPLICANT' | 'RECRUITER';
+	userRole: UserUserRole;
 	fullName: string;
 	phoneNumber: string;
 	accessToken: string;

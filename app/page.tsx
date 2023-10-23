@@ -115,13 +115,13 @@ export default function Home() {
 
 					<Carousel
 						responsive={responsiveJobCard}
-						className='my-4 -mx-2 gap-2'
+						className='my-4 -mx-2 gap-2 overflow-y-visible'
 						autoPlaySpeed={2500}
 						autoPlay
 						infinite
 					>
 						{[1, 2, 3, 4, 5].map((_, key) => (
-							<div key={key} className='px-2'>
+							<div key={key} className='px-2 pb-12'>
 								<HotJob {...mockedJob} />
 							</div>
 						))}

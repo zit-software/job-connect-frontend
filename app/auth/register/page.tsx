@@ -5,6 +5,7 @@ import recruiterLottie from '@/assets/lotties/recruiter.json';
 import { title } from '@/components/primitives';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
+import { UserUserRole } from '@/models/User';
 import authService, { RegisterRequestDto } from '@/services/auth.service';
 import tokenService from '@/services/token.service';
 import { selectIdToken } from '@/store/idTokenSlice';
@@ -23,7 +24,7 @@ const initialValues: RegisterRequestDto = {
 	accessToken: '',
 	fullName: '',
 	phoneNumber: '',
-	userRole: 'APPLICANT',
+	userRole: UserUserRole.APPLICANT,
 	dob: '',
 	gender: 'MALE',
 };
@@ -35,7 +36,9 @@ const validationSchema = Yup.object().shape({
 		.required('Số điện thoại không được để trống')
 		.matches(/^[0-9]+$/, 'Số điện thoại không hợp lệ')
 		.length(10, 'Số điện thoại không hợp lệ'),
-	userRole: Yup.string().required('Vui lòng chọn vai trò của bạn').oneOf(['APPLICANT', 'RECRUITER']),
+	userRole: Yup.string()
+		.required('Vui lòng chọn vai trò của bạn')
+		.oneOf([UserUserRole.APPLICANT, UserUserRole.RECRUITER]),
 	dob: Yup.date().required('Vui lòng nhập ngày sinh'),
 	gender: Yup.string().required('Vui lòng chọn giới tính'),
 });
@@ -192,11 +195,11 @@ export default function RegisterPage() {
 								>
 									<div className='grid grid-cols-2 gap-5'>
 										<Radio
-											key='RECRUITER'
-											value='RECRUITER'
+											key={UserUserRole.RECRUITER}
+											value={UserUserRole.RECRUITER}
 											className={clsx('col-span-1 border-transparent border-2 rounded-xl', {
-												'opacity-50': values.userRole !== 'RECRUITER',
-												'border-blue-500': values.userRole === 'RECRUITER',
+												'opacity-50': values.userRole !== UserUserRole.RECRUITER,
+												'border-blue-500': values.userRole === UserUserRole.RECRUITER,
 											})}
 										>
 											Nhà tuyển dụng
@@ -204,11 +207,11 @@ export default function RegisterPage() {
 										</Radio>
 
 										<Radio
-											key='APPLICANT'
-											value='APPLICANT'
+											key={UserUserRole.APPLICANT}
+											value={UserUserRole.APPLICANT}
 											className={clsx('col-span-1 border-transparent border-2 rounded-xl', {
-												'opacity-50': values.userRole !== 'APPLICANT',
-												'border-blue-500': values.userRole === 'APPLICANT',
+												'opacity-50': values.userRole !== UserUserRole.APPLICANT,
+												'border-blue-500': values.userRole === UserUserRole.APPLICANT,
 											})}
 										>
 											Người tìm việc

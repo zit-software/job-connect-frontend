@@ -16,7 +16,7 @@ function HotJob(props: JobCardProps) {
 		<>
 			<Link
 				href={`/jobs/${props.jobId}`}
-				className='p-2 bg-gradient-to-tr from-red-500 to-orange-400 block rounded-2xl relative'
+				className='p-2 bg-gradient-to-tr from-red-500 to-orange-400 block rounded-2xl relative hover:shadow-2xl hover:shadow-orange-200'
 			>
 				<div className='w-10 h-full bg-white absolute left-1/2 top-0 -translate-x-1/2 bg-opacity-25 skew-x-12'></div>
 
