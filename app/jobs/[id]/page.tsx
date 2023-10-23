@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import wave from '@/assets/images/wave.svg';
 import empty from '@/assets/lotties/empty.json';
-import jobDetail from '@/assets/lotties/job-detail.json';
-import Action from '@/components/jobs/action';
-import JobDescription from '@/components/jobs/jobDescription';
+import Action from '@/components/jobs/Action';
+import JobDescription from '@/components/jobs/JobDescription';
+import { CompanySize } from '@/constant';
 import { Job } from '@/models/Job';
 import fileService from '@/services/file.service';
 import jobService from '@/services/job.service';
 import { formatVndMoney } from '@/utils/common';
+import { Chip } from '@nextui-org/react';
+import Link from 'next/link';
 import { Lottie } from '.';
 
 export interface JobDetailProps {}
@@ -15,75 +16,115 @@ export interface JobDetailProps {}
 async function JobDetail({ params }: any) {
 	try {
 		const job: Job = await jobService.getJobById(params.id);
+
 		return (
 			<>
-				<div className=' bg-gradient-to-b from-[#47a6f2] to-[#4766ef] w-full flex justify-center'>
-					<div className='grid grid-cols-12 p-10 max-w-[1280px]'>
-						<div className='col-span-8 rounded-2xl'>
-							<h1 className='text-4xl text-white font-bold'>{job?.title}</h1>
-							<div className='grid grid-cols-12 mt-10'>
-								<div className='col-span-4 pr-5'>
-									<img
-										className='rounded-full w-[250px]'
-										src={fileService.getFileUrl(job.company.image)}
-										alt={job.company.name}
-									/>
-								</div>
-								<div className='col-span-8'>
-									<ul>
-										<li>
-											<span className='font-bold text-2xl text-white mr-2'>
-												<i className='bx bxs-briefcase'></i>
-											</span>
-											<span className='text-white text-xl'>{job.company.name}</span>
-										</li>
-										<li className='my-5'>
-											<span className='font-bold  text-2xl text-white mr-2'>
-												<i className='bx bxs-location-plus'></i>
-											</span>
-											<span className='text-white text-xl'>{job.address}</span>
-										</li>
-										<li className='my-5'>
-											<span className='font-bold  text-2xl text-white mr-2'>
-												<i className='bx bx-desktop'></i>
-											</span>
-											<span className='text-white text-xl'>{job.minExp}+ năm kinh nghiệm</span>
-										</li>
-										<li className='my-5'>
-											<span className='font-bold text-2xl text-white mr-2'>
-												<i className='bx bx-money'></i>
-											</span>
-											<span className='text-white text-xl'>
+				<div className=' bg-gradient-to-b from-[#47a6f2] to-[#4766ef] w-full flex justify-center py-10'>
+					<div className='w-[1280px] max-w-[95%] mx-auto'>
+						<div className='gap-5 grid grid-cols-3'>
+							<div className='col-span-2'>
+								<h2 className='text-4xl text-white font-bold mb-5'>{job?.title}</h2>
+
+								<div className='grid grid-cols-3 gap-4 my-4'>
+									<div className='flex items-center gap-4 text-lg text-white col-span-1'>
+										<div className='w-16 aspect-square bg-gradient-to-tr from-yellow-500 to-orange-400 rounded-full flex items-center justify-center'>
+											<i className='bx bx-navigation text-white text-3xl'></i>
+										</div>
+										<div>
+											<h4>Địa điểm</h4>
+											<strong>{job.address}</strong>
+										</div>
+									</div>
+
+									<div className='flex items-center gap-4 text-lg text-white col-span-1'>
+										<div className='w-16 aspect-square bg-gradient-to-tr from-yellow-500 to-orange-400 rounded-full flex items-center justify-center'>
+											<i className='bx bx-dollar-circle text-white text-3xl'></i>
+										</div>
+										<div>
+											<h4>Mức lương</h4>
+											<strong>
 												{formatVndMoney(job.minSalary)} - {formatVndMoney(job.maxSalary)}
-											</span>
-										</li>
-									</ul>
+											</strong>
+										</div>
+									</div>
+
+									<div className='flex items-center gap-4 text-lg text-white col-span-1'>
+										<div className='w-16 aspect-square bg-gradient-to-tr from-yellow-500 to-orange-400 rounded-full flex items-center justify-center'>
+											<i className='bx bx-hourglass text-white text-3xl'></i>
+										</div>
+
+										<div>
+											<h4>Kinh nghiệm</h4>
+											<strong>{job.minExp} năm</strong>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div className='col-span-4 w-[300px] m-auto'>
-							<Lottie animationData={jobDetail} />
+
+							<div className='col-span-1 bg-background rounded-xl border overflow-hidden'>
+								<Link
+									href={`/companies/${job.company.id}`}
+									className='flex gap-4 p-4 bg-no-repeat bg-cover bg-center'
+								>
+									<img
+										src={fileService.getFileUrl(job.company.image)}
+										alt={job.company.name}
+										className='w-24 rounded-lg'
+									/>
+
+									<h3 className='flex-1 font-bold text-lg'>{job.company.name}</h3>
+								</Link>
+
+								<table className='m-4'>
+									<tbody>
+										<tr>
+											<td>
+												<Chip
+													variant='light'
+													classNames={{
+														content: 'font-semibold text-gray-500',
+													}}
+													startContent={<i className='bx bxs-group text-gray-500'></i>}
+												>
+													Quy mô:
+												</Chip>
+											</td>
+
+											<td>
+												{CompanySize[job.company.companySize as keyof typeof CompanySize]} nhân
+												viên
+											</td>
+										</tr>
+
+										<tr>
+											<td>
+												<Chip
+													variant='light'
+													classNames={{
+														content: 'font-semibold text-gray-500',
+													}}
+													startContent={<i className='bx bxs-navigation text-gray-500'></i>}
+												>
+													Địa chỉ:
+												</Chip>
+											</td>
+
+											<td>{job.company.address}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div
-					className='w-full'
-					style={{
-						aspectRatio: 16 / 9,
-						backgroundImage: `url(${wave.src})`,
-						backgroundRepeat: 'no-repeat',
-						backgroundSize: 'cover',
-						height: '320px',
-						overflow: 'hidden',
-					}}
-				></div>
+
 				<div className='container max-w-[1280px] mx-auto my-5'>
 					<div className='grid grid-cols-12 gap-5'>
 						<div className='col-span-9'>
 							<JobDescription job={job} />
 						</div>
 						<div className='col-span-3'>
-							<Action />
+							<Action job={job} />
 						</div>
 					</div>
 				</div>
