@@ -55,7 +55,7 @@ function SkillList({ selectedSkills: _selectedSkills = [], onSubmit }: SkillList
 			try {
 				setIsLoading(true);
 				const res = await skillService.getAllSkills({
-					name: debouncedSearchText,
+					name: debouncedSearchText as string,
 					pageSize: 100,
 				});
 
