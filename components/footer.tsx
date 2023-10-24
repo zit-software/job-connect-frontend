@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 export default function AppFooter() {
 	return (
-		<div className='w-full h-96 bg-gray-900 mt-12 text-white'>
-			<div className='w-[1280px] max-w[95%] mx-auto py-12'>
-				<div className='grid grid-cols-4 gap-2'>
+		<div className='w-full min-h-96 bg-gray-900 mt-12 text-white'>
+			<div className='w-[1280px] max-w-[95%] mx-auto py-12'>
+				<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
 					<div className='col-span-1'>
 						<div className='flex gap-4 items-start'>
 							<img src={logo.src} alt='ZIT Software' className='w-16 aspect-square rounded-lg' />
