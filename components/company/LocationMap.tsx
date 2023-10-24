@@ -10,7 +10,13 @@ interface LocationMapProps {
 function LocationMap({ position, height }: LocationMapProps) {
 	return (
 		<div className={height}>
-			<MapContainer style={{ height: '100%' }} zoom={13} scrollWheelZoom={false} center={position}>
+			<MapContainer
+				style={{ height: '100%' }}
+				zoom={13}
+				scrollWheelZoom={false}
+				center={position}
+				className='rounded-xl'
+			>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'

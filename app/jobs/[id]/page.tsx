@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable @next/next/no-img-element */
 import empty from '@/assets/lotties/empty.json';
 import Action from '@/components/jobs/Action';
@@ -6,6 +7,7 @@ import { CompanySize } from '@/constant';
 import { Job } from '@/models/Job';
 import fileService from '@/services/file.service';
 import jobService from '@/services/job.service';
+import urlService from '@/services/url.service';
 import { formatVndMoney } from '@/utils/common';
 import { Chip } from '@nextui-org/react';
 import Link from 'next/link';
@@ -13,7 +15,7 @@ import { Lottie } from '.';
 
 export interface JobDetailProps {}
 
-async function JobDetail({ params }: any) {
+async function JobDetail({ params }: { params: { id: number } }) {
 	try {
 		const job: Job = await jobService.getJobById(params.id);
 
@@ -31,8 +33,8 @@ async function JobDetail({ params }: any) {
 											<i className='bx bx-navigation text-white text-3xl'></i>
 										</div>
 										<div>
-											<h4>Địa điểm</h4>
-											<strong>{job.address}</strong>
+											<h4 className='text-sm'>Địa điểm</h4>
+											<strong className='text-sm'>{job.address}</strong>
 										</div>
 									</div>
 
@@ -41,8 +43,8 @@ async function JobDetail({ params }: any) {
 											<i className='bx bx-dollar-circle text-white text-3xl'></i>
 										</div>
 										<div>
-											<h4>Mức lương</h4>
-											<strong>
+											<h4 className='text-sm'>Mức lương</h4>
+											<strong className='text-sm'>
 												{formatVndMoney(job.minSalary)} - {formatVndMoney(job.maxSalary)}
 											</strong>
 										</div>
@@ -52,10 +54,9 @@ async function JobDetail({ params }: any) {
 										<div className='w-16 aspect-square bg-gradient-to-tr from-yellow-500 to-orange-400 rounded-full flex items-center justify-center'>
 											<i className='bx bx-hourglass text-white text-3xl'></i>
 										</div>
-
 										<div>
-											<h4>Kinh nghiệm</h4>
-											<strong>{job.minExp} năm</strong>
+											<h4 className='text-sm'>Kinh nghiệm</h4>
+											<strong className='text-sm'>{job.minExp} năm</strong>
 										</div>
 									</div>
 								</div>
@@ -64,7 +65,7 @@ async function JobDetail({ params }: any) {
 							<div className='col-span-1 bg-background rounded-xl border overflow-hidden'>
 								<Link
 									href={`/companies/${job.company.id}`}
-									className='flex gap-4 p-4 bg-no-repeat bg-cover bg-center'
+									className='flex gap-4 px-4 pt-4 bg-no-repeat bg-cover bg-center'
 								>
 									<img
 										src={fileService.getFileUrl(job.company.image)}
@@ -77,6 +78,30 @@ async function JobDetail({ params }: any) {
 
 								<table className='m-4'>
 									<tbody>
+										<tr>
+											<td>
+												<Chip
+													variant='light'
+													classNames={{
+														content: 'font-semibold text-gray-500',
+													}}
+													startContent={<i className='bx bx-globe text-gray-500'></i>}
+												>
+													Trang web:
+												</Chip>
+											</td>
+
+											<td>
+												<Link
+													className='text-sm font-semibold text-primary-500'
+													href={urlService.getExternalUrl(job.company.url)}
+													target='_blank'
+												>
+													{job.company.url}
+												</Link>
+											</td>
+										</tr>
+
 										<tr>
 											<td>
 												<Chip

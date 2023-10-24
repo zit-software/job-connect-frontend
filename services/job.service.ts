@@ -1,4 +1,5 @@
 import { AddJobDTO, Job } from '@/models/Job';
+import { Paginationable } from '@/types/paginationable';
 import createHttpClient from '@/utils/createHttpClient';
 
 export interface UpdateJobDto {
@@ -10,6 +11,17 @@ export interface UpdateJobDto {
 	address: string;
 	description: string;
 	skillIds: number[];
+}
+
+/**
+ * @description Find job by name, skill, worktype...
+ */
+export interface FindJobDto {
+	keyword?: string;
+	pageNo?: number;
+	pageSize?: number;
+	skillId?: number[];
+	workTypeId?: number;
 }
 
 class JobService {
@@ -36,6 +48,10 @@ class JobService {
 
 	async deleteById(id: number) {
 		return await this.userClient.delete(`/${id}`);
+	}
+
+	async getAllJobs(options?: FindJobDto) {
+		return (await this.client.get('', { params: options })) as Paginationable<Job>;
 	}
 }
 

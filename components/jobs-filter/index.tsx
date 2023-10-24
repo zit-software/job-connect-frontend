@@ -2,31 +2,36 @@
 
 import Collapse from '@/components/collapse';
 import useDebounce from '@/hooks/useDebounce';
+import { WorkType } from '@/models/WorkType';
+import { FindJobDto } from '@/services/job.service';
 import { Skill } from '@/services/skill.service';
 import { Button, Input, Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import SkillFilter from './SkillFilter';
 import WorkTypeFiltter from './WorkTypeFiltter';
 
-export default function JobsFilter() {
+export interface JobsFilterProps {
+	onFiltered?: (filterObject: FindJobDto) => void;
+	isSearching?: boolean;
+}
+
+export default function JobsFilter({ isSearching, onFiltered }: JobsFilterProps) {
 	const [showFilter, setShowFilter] = useState(false);
 	const [selectedSkills, setSelectedSkills] = useState<Skill[]>([]);
 	const [searchText, setSearchText] = useState('');
-	const [isSearching, setIsSearching] = useState(false);
+	const [selectedWorkType, setSelectedWorkType] = useState<WorkType | null>();
 
-	const debouncedSearchText = useDebounce(searchText);
-	const debouncedSelectedSkills = useDebounce(selectedSkills);
+	const debouncedSearchText = useDebounce<string>(searchText);
+	const debouncedSelectedSkills = useDebounce<Skill[]>(selectedSkills);
+	const debouncedSelectedWorkType = useDebounce<WorkType | null>(selectedWorkType);
 
 	useEffect(() => {
-		(async () => {
-			try {
-				setIsSearching(true);
-			} catch (error) {
-			} finally {
-				setIsSearching(false);
-			}
-		})();
-	}, [debouncedSearchText, debouncedSelectedSkills]);
+		onFiltered?.({
+			keyword: debouncedSearchText,
+			skillId: debouncedSelectedSkills.map((e) => e.id),
+			workTypeId: debouncedSelectedWorkType?.id,
+		});
+	}, [debouncedSearchText, debouncedSelectedSkills, debouncedSelectedWorkType?.id, onFiltered]);
 
 	return (
 		<>
@@ -58,11 +63,14 @@ export default function JobsFilter() {
 				<div className='bg-background p-4 rounded-xl shadow-lg border'>
 					<div className='grid grid-cols-2 gap-1'>
 						<div className='col-span-2 md:col-span-1'>
-							<SkillFilter onChange={setSelectedSkills} />
+							<SkillFilter
+								selectedSkillIds={selectedSkills.map((e) => e.id)}
+								onChange={setSelectedSkills}
+							/>
 						</div>
 
 						<div className='col-span-2 md:col-span-1'>
-							<WorkTypeFiltter />
+							<WorkTypeFiltter selectedWorkTypeId={selectedWorkType?.id} onChange={setSelectedWorkType} />
 						</div>
 					</div>
 				</div>

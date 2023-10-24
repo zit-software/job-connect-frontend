@@ -10,13 +10,16 @@ import { useSelector } from 'react-redux';
 import SearchSkillModal from './SearchSkillModal';
 
 export interface SkillFilterProps {
+	selectedSkillIds?: number[];
 	onChange?: (skills: Skill[]) => void;
 }
 
-export default function SkillFilter({ onChange }: SkillFilterProps) {
+export default function SkillFilter({ selectedSkillIds: _selectedSkillIds, onChange }: SkillFilterProps) {
 	const [showSkillFilterModal, setShowSkillFilterModal] = useState(false);
 	const [skillList, setSkillList] = useState<Paginationable<Skill>>();
-	const [selectedSkillIds, setSelectedSkillIds] = useState<string[]>([]);
+	const [selectedSkillIds, setSelectedSkillIds] = useState<string[]>(
+		_selectedSkillIds?.map((e) => e.toString()) || [],
+	);
 
 	const [selectedSkillsParent] = useAutoAnimate();
 	const [sortedSkillListParent] = useAutoAnimate();

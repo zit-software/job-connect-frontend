@@ -1,7 +1,7 @@
 'use client';
 import empty from '@/assets/lotties/empty.json';
 import { Job } from '@/models/Job';
-import { Card, CardBody, Chip, Divider, Tab, Tabs } from '@nextui-org/react';
+import { Card, CardBody, Chip, Tab, Tabs } from '@nextui-org/react';
 import clsx from 'clsx';
 import Lottie from 'lottie-react';
 import { title } from '../primitives';
@@ -35,8 +35,6 @@ export default function JobDescription({ job }: JobDescriptionProps) {
 									></div>
 								</div>
 
-								<Divider />
-
 								<div className='mt-2'>
 									<h3 className='font-bold text-xl my-2'>Kinh nghiệm</h3>
 
@@ -69,8 +67,6 @@ export default function JobDescription({ job }: JobDescriptionProps) {
 										)}
 									</div>
 								</div>
-
-								<Divider />
 
 								<div className='mt-2'>
 									<h3 className='font-bold text-xl'>Hình thức</h3>
@@ -112,8 +108,6 @@ export default function JobDescription({ job }: JobDescriptionProps) {
 								</div>
 
 								<div>{job.company.description}</div>
-
-								<Divider />
 
 								<div className='my-5'>
 									<div className='grid grid-cols-12'>

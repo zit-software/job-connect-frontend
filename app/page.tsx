@@ -1,13 +1,16 @@
 'use client';
 
-import HotJob, { JobCardProps } from '@/components/home/HotJob';
+import PageLoading from '@/components/PageLoader';
+import HotJob from '@/components/home/HotJob';
 import JobItem from '@/components/job-item';
 import { title } from '@/components/primitives';
 import { mockBanners } from '@/mocks/banners';
+import jobService from '@/services/job.service';
 import { Button } from '@nextui-org/react';
 import clsx from 'clsx';
 import { default as NextLink } from 'next/link';
 import Carousel from 'react-multi-carousel';
+import { useQuery } from 'react-query';
 
 const responsive = {
 	superLargeDesktop: {
@@ -47,19 +50,9 @@ const responsiveJobCard = {
 	},
 };
 
-const mockedJob: JobCardProps = {
-	jobId: 1,
-	companyImage: 'https://avatars.githubusercontent.com/u/86160567?s=200&v=4',
-	title: 'Lập trình viên Frontend',
-	companyName: 'Công Ty TNHH Công Nghệ Phần Mềm ZIT Software',
-	address: 'TP. Cần Thơ',
-	skills: ['NextJS', 'ReactJS', 'TypeScript', 'Java Spring Boot'],
-	workType: 'Fulltime',
-	minSalary: 10000000,
-	maxSalary: 15000000,
-};
-
 export default function Home() {
+	const { data: jobs, isLoading } = useQuery(['jobs'], () => jobService.getAllJobs());
+
 	return (
 		<>
 			<div className='w-full py-24 bg-gradient-to-tr from-violet-200 to-blue-200 relative overflow-clip'>
@@ -113,19 +106,23 @@ export default function Home() {
 						</NextLink>
 					</h2>
 
-					<Carousel
-						responsive={responsiveJobCard}
-						className='my-4 -mx-2 gap-2 overflow-y-visible'
-						autoPlaySpeed={2500}
-						autoPlay
-						infinite
-					>
-						{[1, 2, 3, 4, 5].map((_, key) => (
-							<div key={key} className='px-2 pb-12'>
-								<HotJob {...mockedJob} />
-							</div>
-						))}
-					</Carousel>
+					{isLoading ? (
+						<PageLoading />
+					) : (
+						<Carousel
+							responsive={responsiveJobCard}
+							className='my-4 -mx-2 gap-2 overflow-y-visible'
+							autoPlaySpeed={2500}
+							autoPlay
+							infinite
+						>
+							{jobs?.content.map((job) => (
+								<div key={job.id} className='px-2 pb-12'>
+									<HotJob job={job} />
+								</div>
+							))}
+						</Carousel>
+					)}
 				</div>
 				<h2 className='my-6 flex items-center gap-2'>
 					<span className={clsx(title({ color: 'blue', size: 'sm' }), 'flex-1')}>
@@ -145,17 +142,10 @@ export default function Home() {
 					</NextLink>
 				</h2>
 
+				{isLoading && <PageLoading />}
+
 				<div className='grid md:grid-cols-2 grid-cols-1 gap-2'>
-					<JobItem />
-					<JobItem />
-					<JobItem />
-					<JobItem />
-					<JobItem />
-					<JobItem />
-					<JobItem />
-					<JobItem />
-					<JobItem />
-					<JobItem />
+					{jobs?.content.map((job) => <JobItem key={job.id} job={job} />)}
 				</div>
 			</div>
 		</>

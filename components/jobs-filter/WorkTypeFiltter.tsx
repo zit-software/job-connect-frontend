@@ -1,47 +1,45 @@
+import { WorkType } from '@/models/WorkType';
 import workTypeService from '@/services/workType.service';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Checkbox, CheckboxGroup, Chip, Spinner } from '@nextui-org/react';
-import { useState } from 'react';
+import { Radio, RadioGroup, Spinner } from '@nextui-org/react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
-export default function WorkTypeFiltter() {
+export interface WorkTypeFiltterProps {
+	selectedWorkTypeId?: number;
+	onChange?: (workType?: WorkType) => void;
+}
+
+export default function WorkTypeFiltter({ selectedWorkTypeId: _selectedWorkTypeId, onChange }: WorkTypeFiltterProps) {
 	const { data: workTypes, isLoading: isLoadingWorkTypes } = useQuery('workTypes', () =>
 		workTypeService.getWorkTypes(),
 	);
+	const [selectedWorkTypeId, setSelectedWorkTypeId] = useState<string>(_selectedWorkTypeId?.toString() || '');
 
-	const [selectedWorkTypesIds, setSelectedWorkTypesIds] = useState<string[]>([]);
-	const [selectedWorkTypesParent] = useAutoAnimate();
+	const selectedWorkType = workTypes?.find((e) => e.id.toString() === selectedWorkTypeId);
 
-	const selectedWorkTypes =
-		workTypes?.filter((workType) => selectedWorkTypesIds.includes(workType.id.toString())) || [];
-
-	const removeWorkType = (id: number) => {
-		setSelectedWorkTypesIds(selectedWorkTypesIds.filter((_id) => id.toString() !== _id));
-	};
+	useEffect(() => {
+		onChange?.(selectedWorkType);
+	}, [onChange, selectedWorkType]);
 
 	if (isLoadingWorkTypes || !workTypes) return <Spinner />;
 
 	return (
 		<>
-			<div className='flex flex-wrap gap-1' ref={selectedWorkTypesParent}>
-				{selectedWorkTypes.map((workType) => (
-					<Chip key={workType.id} variant='dot' color='primary' onClose={() => removeWorkType(workType.id)}>
-						{workType.name}
-					</Chip>
-				))}
-			</div>
-
-			<CheckboxGroup
+			<RadioGroup
 				label='Hình thức'
-				value={selectedWorkTypesIds}
-				onChange={(value) => setSelectedWorkTypesIds(value as string[])}
+				value={selectedWorkTypeId}
+				onChange={(event) => setSelectedWorkTypeId(event.target.value)}
 			>
 				{workTypes.map((workType) => (
-					<Checkbox value={workType.id.toString()} key={workType.id}>
+					<Radio value={workType.id.toString()} key={workType.id}>
 						{workType.name}
-					</Checkbox>
+					</Radio>
 				))}
-			</CheckboxGroup>
+
+				<Radio value='' key=''>
+					Tất cả
+				</Radio>
+			</RadioGroup>
 		</>
 	);
 }
