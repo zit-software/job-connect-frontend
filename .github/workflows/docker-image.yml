@@ -11,9 +11,6 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - name: Copy firebase_credential.json
-              run: cp ./config/firebase_credential.json.example ./config/firebase_credential.json
-
             - uses: actions/checkout@v3
             - name: Build the Docker image
-              run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+              run: cp ./config/firebase_credential.json.example ./config/firebase_credential.json && docker build . --file Dockerfile --tag my-image-name:$(date +%s)
