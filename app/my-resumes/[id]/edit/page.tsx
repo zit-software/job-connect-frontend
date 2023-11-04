@@ -1,19 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import CvPreviewer from '@/components/cv-previewer';
+import SearchSkillModal from '@/components/jobs-filter/SearchSkillModal';
 import UserNav from '@/components/user-nav';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { Resume } from '@/models/Resume';
 import fileService from '@/services/file.service';
 import resumeService from '@/services/resume.service';
 import { RootState } from '@/store';
+import { addSkills } from '@/store/skillsSlice';
 import IdInParams from '@/types/IdInParams';
-import { Button, ButtonGroup, Chip, Spinner, Tab, Tabs } from '@nextui-org/react';
+import { Button, ButtonGroup, Chip, Listbox, ListboxItem, Spinner, Tab, Tabs, useDisclosure } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import { Formik } from 'formik';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
@@ -24,6 +28,9 @@ export default function EditResumePage({ params }: { params: IdInParams }) {
 	const router = useRouter();
 
 	const [zoom, setZoom] = useState<number>(1);
+	const [isOpenSelectSkillModal, setIsOpenSelectSkillModal] = useState(false);
+	const { isOpen: isOpenPreviewModal, onOpenChange: onOpenPreviewModalChange } = useDisclosure();
+	const dispatch = useAppDispatch();
 
 	const zoomIn = () => {
 		setZoom((prev) => prev + 0.1);
@@ -33,7 +40,13 @@ export default function EditResumePage({ params }: { params: IdInParams }) {
 		setZoom((prev) => prev - 0.1);
 	};
 
-	const { data } = useQuery(['resume', params.id], () => resumeService.getResumeById(params.id));
+	const { data: resume } = useQuery(['resume', params.id], () => resumeService.getResumeById(params.id));
+
+	useEffect(() => {
+		if (!resume?.skills) return;
+
+		dispatch(addSkills(resume?.skills));
+	}, [dispatch, resume?.skills]);
 
 	const user = useSelector((state: RootState) => state.user);
 
@@ -48,7 +61,7 @@ export default function EditResumePage({ params }: { params: IdInParams }) {
 	};
 
 	return (
-		<div className='w-full h-screen bg-gray-700 fixed z-[100] overflow-auto'>
+		<div className='w-full h-screen bg-gray-700 fixed z-50 overflow-auto'>
 			<div className='w-full bg-gray-600 flex h-14 sticky top-0 z-50'>
 				<div
 					className='h-full aspect-square bg-gray-500 flex justify-center items-center cursor-pointer hover:bg-gray-400 transition-all'
@@ -62,8 +75,8 @@ export default function EditResumePage({ params }: { params: IdInParams }) {
 				{user && <UserNav size='sm' user={user} />}
 			</div>
 
-			{user && data ? (
-				<Formik initialValues={data} enableReinitialize onSubmit={handleSubmit}>
+			{user && resume ? (
+				<Formik initialValues={resume} enableReinitialize onSubmit={handleSubmit}>
 					{({ values, errors, handleChange, setFieldValue, handleSubmit }) => (
 						<form className='max-w-[95%] mx-auto' onSubmit={handleSubmit}>
 							<div className='mx-auto w-fit mt-4 sticky top-10 z-[100] flex items-center gap-2'>
@@ -81,6 +94,13 @@ export default function EditResumePage({ params }: { params: IdInParams }) {
 									</Button>
 								</ButtonGroup>
 
+								<Button
+									startContent={<i className='bx bx-show'></i>}
+									onClick={onOpenPreviewModalChange}
+								>
+									Xem trước
+								</Button>
+
 								<Button type='submit' startContent={<i className='bx bx-save'></i>} color='success'>
 									Lưu
 								</Button>
@@ -97,8 +117,8 @@ export default function EditResumePage({ params }: { params: IdInParams }) {
 										<div className='px-6 py-8'>
 											<img
 												className='mx-auto w-[50%] aspect-square rounded-full'
-												src={fileService.getFileUrl(user.image)}
-												alt={user.fullName}
+												src={fileService.getFileUrl(values.applicant.user.image)}
+												alt={values.applicant.user.fullName}
 											/>
 
 											<h2 className='my-8 px-4 py-2 bg-primary-900 text-white font-bold flex items-center gap-2 rounded-xl'>
@@ -111,19 +131,20 @@ export default function EditResumePage({ params }: { params: IdInParams }) {
 													variant='light'
 													startContent={<i className='bx bx-male-female'></i>}
 												>
-													<strong>Giới tính:</strong> {user.gender}
+													<strong>Giới tính:</strong> {values.applicant.user.gender}
 												</Chip>
 
 												<Chip variant='light' startContent={<i className='bx bx-cake'></i>}>
-													<strong>Ngày sinh:</strong> {dayjs(user.dob).format('DD/MM/YYYY')}
+													<strong>Ngày sinh:</strong>{' '}
+													{dayjs(values.applicant.user.dob).format('DD/MM/YYYY')}
 												</Chip>
 
 												<Chip variant='light' startContent={<i className='bx bx-envelope'></i>}>
-													<strong>Email:</strong> {user.email}
+													<strong>Email:</strong> {values.applicant.user.email}
 												</Chip>
 
 												<Chip variant='light' startContent={<i className='bx bx-phone'></i>}>
-													<strong>Số điện thoại:</strong> {user.phoneNumber}
+													<strong>Số điện thoại:</strong> {values.applicant.user.phoneNumber}
 												</Chip>
 
 												<Chip
@@ -142,15 +163,32 @@ export default function EditResumePage({ params }: { params: IdInParams }) {
 												</Chip>
 											</div>
 
-											<h2 className='my-8 px-4 py-2 bg-primary-900 text-white font-bold flex items-center gap-2 rounded-xl'>
+											<h2 className='mt-8 mb-4 px-4 py-2 bg-primary-900 text-white font-bold flex items-center gap-2 rounded-xl'>
 												<i className='bx bx-like'></i>
-												<span>Kỹ năng</span>
+												<span className='flex-1'>Kỹ năng</span>
+
+												<Button
+													size='sm'
+													color='warning'
+													startContent={<i className='bx bx-pencil'></i>}
+													className='-mr-2'
+													isIconOnly
+													onClick={() => setIsOpenSelectSkillModal(true)}
+												></Button>
 											</h2>
+
+											<Listbox>
+												{values.skills.map((skill) => (
+													<ListboxItem key={skill.id}>{skill.name}</ListboxItem>
+												))}
+											</Listbox>
 										</div>
 									</div>
 									<div className='col-span-3 h-full bg-background'>
 										<div className='px-6 py-14'>
-											<h3 className='font-bold text-[2.5em] text-primary-600'>{user.fullName}</h3>
+											<h3 className='font-bold text-[2.5em] text-primary-600'>
+												{values.applicant.user.fullName}
+											</h3>
 											<div className='flex items-center gap-1'>
 												<input
 													className='flex-1 font-semibold rounded-lg bg-transparent text-xl px-2 -mx-2 focus:outline-none border-2 border-transparent focus:border-primary-400'
@@ -200,6 +238,22 @@ export default function EditResumePage({ params }: { params: IdInParams }) {
 									</div>
 								</div>
 							</div>
+
+							<SearchSkillModal
+								isOpen={isOpenSelectSkillModal}
+								selectedSkills={values.skills}
+								onFinish={(skills) => {
+									setFieldValue('skills', skills);
+									setIsOpenSelectSkillModal(false);
+								}}
+								onClose={() => setIsOpenSelectSkillModal(false)}
+							/>
+
+							<CvPreviewer
+								resume={values}
+								isOpen={isOpenPreviewModal}
+								onClose={onOpenPreviewModalChange}
+							/>
 						</form>
 					)}
 				</Formik>

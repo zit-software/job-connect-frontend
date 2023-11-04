@@ -1,10 +1,14 @@
 import { RefreshTokenResponseDto } from '@/services/auth.service';
 import tokenService from '@/services/token.service';
 import axios from 'axios';
+import qs from 'qs';
 
 const createHttpClient = (baseUrl: string = '') => {
 	const client = axios.create({
 		baseURL: `${process.env.NEXT_PUBLIC_API_URL}/${baseUrl}`,
+		paramsSerializer: (p) => {
+			return qs.stringify(p, { arrayFormat: 'repeat' });
+		},
 	});
 
 	client.interceptors.request.use(async (config) => {

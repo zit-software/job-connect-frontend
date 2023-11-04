@@ -30,6 +30,14 @@ export default function JobItem({ job }: JobItemProps) {
 
 				<div className='flex-1'></div>
 
+				<div className='flex flex-wrap gap-1 my-2'>
+					{job.skills.map((skill) => (
+						<Chip key={skill.id} size='sm' color='primary' variant='flat'>
+							{skill.name}
+						</Chip>
+					))}
+				</div>
+
 				<div className='flex gap-2 flex-wrap'>
 					<table>
 						<tbody>
@@ -44,7 +52,7 @@ export default function JobItem({ job }: JobItemProps) {
 										Mức lương
 									</Chip>
 								</td>
-								<td className='text-sm font-semibold italic text-default-700'>
+								<td className='text-sm font-semibold text-default-700'>
 									{formatVndMoney(job.minSalary)} - {formatVndMoney(job.maxSalary)}
 								</td>
 							</tr>
@@ -57,10 +65,10 @@ export default function JobItem({ job }: JobItemProps) {
 										classNames={{ content: 'font-semibold' }}
 										startContent={<i className='bx bx-navigation'></i>}
 									>
-										Địa điểm làm việc
+										Địa điểm
 									</Chip>
 								</td>
-								<td className='text-sm font-semibold italic text-default-700'>{job.address}</td>
+								<td className='text-sm font-semibold text-default-700'>{job.address}</td>
 							</tr>
 
 							<tr>
@@ -74,7 +82,7 @@ export default function JobItem({ job }: JobItemProps) {
 										Hình thức
 									</Chip>
 								</td>
-								<td className='text-sm font-semibold italic text-default-700'>{job.workType.name}</td>
+								<td className='text-sm font-semibold text-default-700'>{job.workType.name}</td>
 							</tr>
 						</tbody>
 					</table>
