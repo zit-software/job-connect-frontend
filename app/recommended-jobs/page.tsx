@@ -10,7 +10,8 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Lottie } from './index';
 function Page() {
-	const [selectedResume, setSelectedResume] = useState(new Set([]));
+	const [selectedResume, setSelectedResume] = useState<number>();
+
 	const { data: resumeList, isLoading } = useQuery(['my-resumes'], () => resumeService.getAllMyResumes(), {
 		initialData: [],
 	});
@@ -31,17 +32,17 @@ function Page() {
 					</div>
 				</div>
 			</div>
-			<div className='container w-[95%] max-w-[1280px] mx-auto my-5'>
-				<div className='grid grid-cols-12'>
+			<div className='container max-w-[95%] w-[1280px] mx-auto my-5'>
+				<div className='grid grid-cols-12 gap-4'>
 					<div className='col-span-4'>
 						<SelectResume
 							resumes={resumeList as Resume[]}
-							setSelectedResume={setSelectedResume as any}
+							setSelectedResume={setSelectedResume}
 							selectedResume={selectedResume}
 						/>
 					</div>
 					<div className='col-span-8'>
-						<ListJob resumeIterable={selectedResume.values()} />
+						<ListJob resumeId={selectedResume} />
 					</div>
 				</div>
 			</div>

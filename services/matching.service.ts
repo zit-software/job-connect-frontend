@@ -1,8 +1,8 @@
-import { Job } from '@/models/Job';
+import { RankedJob } from '@/models/RankedJob';
 import axios, { AxiosInstance } from 'axios';
 
 interface MatchingJobResult {
-	result: Job[];
+	result: RankedJob[];
 }
 
 class MatchingService {
