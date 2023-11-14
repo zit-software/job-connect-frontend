@@ -7,6 +7,7 @@ import { Card, CardBody, Chip, Tab, Tabs } from '@nextui-org/react';
 import clsx from 'clsx';
 import Lottie from 'lottie-react';
 import { title } from '../primitives';
+import AppliedList from './AppliedList';
 import RecommedResumeList from './RecommedResumeList';
 
 interface JobDescriptionProps {
@@ -101,6 +102,20 @@ export default function JobDescription({ job }: JobDescriptionProps) {
 								key='recommed-applicants'
 							>
 								<RecommedResumeList job={job} />
+							</Tab>
+						)}
+
+						{user?.id === job.recruiter.user.id && (
+							<Tab
+								title={
+									<div className='flex items-center gap-1'>
+										<i className='bx bx-file'></i>
+										<span>Đơn ứng tuyển</span>
+									</div>
+								}
+								key='applicants'
+							>
+								<AppliedList job={job} />
 							</Tab>
 						)}
 

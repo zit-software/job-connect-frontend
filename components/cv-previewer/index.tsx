@@ -15,16 +15,17 @@ import {
 	ModalHeader,
 } from '@nextui-org/react';
 import dayjs from 'dayjs';
-import { useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 import ReactToPrint from 'react-to-print';
 
 export interface CvPreviewerProps {
 	resume: Resume;
 	isOpen: boolean;
+	actions?: ReactNode;
 	onClose: () => void;
 }
 
-export default function CvPreviewer({ resume, isOpen, onClose }: CvPreviewerProps) {
+export default function CvPreviewer({ resume, actions, isOpen, onClose }: CvPreviewerProps) {
 	const cvRef = useRef<any>();
 
 	return (
@@ -132,6 +133,7 @@ export default function CvPreviewer({ resume, isOpen, onClose }: CvPreviewerProp
 						</ModalBody>
 
 						<ModalFooter>
+							{actions}
 							<Button onClick={onClose}>Đóng</Button>
 						</ModalFooter>
 					</>

@@ -1,4 +1,5 @@
 import { AddJobDTO, Job } from '@/models/Job';
+import { JobApply } from '@/models/JobApply';
 import { Paginationable } from '@/types/paginationable';
 import createHttpClient from '@/utils/createHttpClient';
 
@@ -52,6 +53,10 @@ class JobService {
 
 	async getAllJobs(options?: FindJobDto) {
 		return (await this.client.get('', { params: options })) as Paginationable<Job>;
+	}
+
+	async getAppliedByJobId(jobId: number) {
+		return (await this.userClient.get(`/${jobId}/applicants`)) as JobApply[];
 	}
 }
 
