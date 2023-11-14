@@ -1,8 +1,13 @@
 import { RankedJob } from '@/models/RankedJob';
+import { RankedResume } from '@/models/RankedResume';
 import axios, { AxiosInstance } from 'axios';
 
-interface MatchingJobResult {
+export interface MatchingJobResult {
 	result: RankedJob[];
+}
+
+export interface MatchingResumeResult {
+	result: RankedResume[];
 }
 
 class MatchingService {
@@ -24,7 +29,7 @@ class MatchingService {
 	}
 
 	async suggestResumesForJob(jobId: number) {
-		return await this.client.get(`/suggest/for-job/${jobId}`);
+		return (await this.client.get(`/suggest/for-job/${jobId}`)) as MatchingResumeResult;
 	}
 }
 

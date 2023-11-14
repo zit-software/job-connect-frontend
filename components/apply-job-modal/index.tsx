@@ -1,5 +1,5 @@
 import { Resume } from '@/models/Resume';
-import jobService from '@/services/job.service';
+import applyService from '@/services/apply.service';
 import resumeService from '@/services/resume.service';
 import {
 	Button,
@@ -37,7 +37,8 @@ export default function ApplyJobModal({ isOpen, jobId, onClose }: ApplyJobModalP
 
 	const handleSubmit = async () => {
 		try {
-			await jobService.applyJob(jobId, {
+			await applyService.createApplyJob({
+				jobId,
 				resumeId: selectedResume!.id,
 				coverLetter,
 			});

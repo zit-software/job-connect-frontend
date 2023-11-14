@@ -33,28 +33,42 @@ export default function Action({ job }: ActionProps) {
 						</Button>
 					)}
 
-					<Link href={`/companies/${job.company.id}`} className='block my-1'>
+					{user?.id === job.recruiter.user.id && (
 						<Button
-							fullWidth
+							className='my-1'
+							href={`/jobs/${job.id}/update`}
 							color='primary'
-							variant='flat'
-							startContent={<i className='bx bx-building'></i>}
+							startContent={<i className='bx bxs-pencil'></i>}
+							as={Link}
 						>
-							Xem công ty
+							Chỉnh sửa
 						</Button>
-					</Link>
+					)}
+
+					<Button
+						href={`/companies/${job.company.id}`}
+						className='my-1'
+						fullWidth
+						color='primary'
+						variant='flat'
+						startContent={<i className='bx bx-building'></i>}
+						as={Link}
+					>
+						Xem công ty
+					</Button>
 
 					{user?.userRole === UserUserRole.APPLICANT && (
-						<Link href={`/my-resumes?create=true`} className='block my-1'>
-							<Button
-								fullWidth
-								color='warning'
-								variant='flat'
-								startContent={<i className='bx bxs-file-plus'></i>}
-							>
-								Tạo cv ngay
-							</Button>
-						</Link>
+						<Button
+							href={`/my-resumes?create=true`}
+							className='my-1'
+							fullWidth
+							color='warning'
+							variant='flat'
+							startContent={<i className='bx bxs-file-plus'></i>}
+							as={Link}
+						>
+							Tạo cv ngay
+						</Button>
 					)}
 				</CardBody>
 			</Card>

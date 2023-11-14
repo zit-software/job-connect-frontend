@@ -1,16 +1,21 @@
 'use client';
 import empty from '@/assets/lotties/empty.json';
+import { useAppSelector } from '@/hooks/useAppSelector';
 import { Job } from '@/models/Job';
+import { RootState } from '@/store';
 import { Card, CardBody, Chip, Tab, Tabs } from '@nextui-org/react';
 import clsx from 'clsx';
 import Lottie from 'lottie-react';
 import { title } from '../primitives';
+import RecommedResumeList from './RecommedResumeList';
 
 interface JobDescriptionProps {
 	job: Job;
 }
 
 export default function JobDescription({ job }: JobDescriptionProps) {
+	const user = useAppSelector((state: RootState) => state.user);
+
 	return (
 		<Card className='shadow-none border'>
 			<CardBody>
@@ -84,6 +89,20 @@ export default function JobDescription({ job }: JobDescriptionProps) {
 								</div>
 							</div>
 						</Tab>
+
+						{user?.id === job.recruiter.user.id && (
+							<Tab
+								title={
+									<div className='flex items-center gap-1'>
+										<i className='bx bx-user'></i>
+										<span>Gợi ý ứng viên</span>
+									</div>
+								}
+								key='recommed-applicants'
+							>
+								<RecommedResumeList job={job} />
+							</Tab>
+						)}
 
 						<Tab
 							title={
