@@ -10,7 +10,7 @@ interface ListJobProps {
 export default function ListJob({ resumeId }: ListJobProps) {
 	const { data: jobList, isLoading } = useQuery(
 		['jobList', resumeId],
-		() => matchingService.suggetJobsForResume(resumeId as number),
+		() => matchingService.suggestJobsForResume(resumeId as number),
 		{ enabled: !!resumeId },
 	);
 

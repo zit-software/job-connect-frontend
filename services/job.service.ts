@@ -24,6 +24,11 @@ export interface FindJobDto {
 	workTypeId?: number;
 }
 
+export interface ApplyJobDto {
+	resumeId: number;
+	coverLetter: string;
+}
+
 class JobService {
 	constructor(
 		private readonly client = createHttpClient('jobs'),
@@ -52,6 +57,10 @@ class JobService {
 
 	async getAllJobs(options?: FindJobDto) {
 		return (await this.client.get('', { params: options })) as Paginationable<Job>;
+	}
+
+	async applyJob(jobId: number, body: ApplyJobDto) {
+		return await this.userClient.post(`${jobId}/apply`, body);
 	}
 }
 

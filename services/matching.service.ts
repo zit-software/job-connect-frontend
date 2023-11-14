@@ -18,8 +18,13 @@ class MatchingService {
 			},
 		);
 	}
-	async suggetJobsForResume(resumeId: number) {
+
+	async suggestJobsForResume(resumeId: number) {
 		return (await this.client.get(`/suggest/for-resume/${resumeId}`)) as MatchingJobResult;
+	}
+
+	async suggestResumesForJob(jobId: number) {
+		return await this.client.get(`/suggest/for-job/${jobId}`);
 	}
 }
 
