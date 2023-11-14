@@ -8,6 +8,7 @@ import useRouteGuard from '@/hooks/useRouteGuard';
 import { Company } from '@/models/Company';
 import companyService from '@/services/company.service';
 import fileService from '@/services/file.service';
+import urlService from '@/services/url.service';
 import { formatLongText } from '@/utils/common';
 import {
 	Avatar,
@@ -112,19 +113,26 @@ function MyCompanies() {
 										<TableCell>{company.address}</TableCell>
 
 										<TableCell>
-											{CompanySize[company.companySize as keyof typeof CompanySize]} nhân viên
+											<Chip
+												startContent={<i className='bx bx-user'></i>}
+												variant='light'
+												color='primary'
+											>
+												{CompanySize[company.companySize as keyof typeof CompanySize]} nhân viên
+											</Chip>
 										</TableCell>
 
 										<TableCell>
-											<Link href={company.url} target='_blank'>
-												<Chip
-													startContent={<i className='bx bx-globe'></i>}
-													color='primary'
-													variant='bordered'
-												>
-													{company.url}
-												</Chip>
-											</Link>
+											<Chip
+												startContent={<i className='bx bx-globe'></i>}
+												color='primary'
+												variant='light'
+												as={Link}
+												href={urlService.getExternalUrl(company.url)}
+												target='_blank'
+											>
+												{company.url}
+											</Chip>
 										</TableCell>
 
 										<TableCell>{formatLongText(company.description)}</TableCell>
